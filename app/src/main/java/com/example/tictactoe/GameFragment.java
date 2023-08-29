@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -34,7 +35,6 @@ public class GameFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -43,9 +43,13 @@ public class GameFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_game,container,false);
 
+        MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
+
         player1Turn = true;
-        size = 3;
         lastButtonTouched = new ArrayList<>();
+
+
+        size = mainActivityDataViewModel.getSize();
 
         TextView player1 = rootView.findViewById(R.id.player1);
         TextView player2 = rootView.findViewById(R.id.player2);
