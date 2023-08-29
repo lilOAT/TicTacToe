@@ -3,7 +3,6 @@ package com.example.tictactoe;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -25,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         //TODO Let values be set from menu fragments
         mainActivityDataViewModel.setSize(5);
-        mainActivityDataViewModel.setVsAI(true);
+        mainActivityDataViewModel.setVsAI(false);
 
         if(frag==null){
             fm.beginTransaction().add(R.id.boardFrame,gameFragment).commit();

@@ -21,6 +21,7 @@ public class GameFragment extends Fragment {
 
     private boolean player1Turn;
     private int size;
+    private boolean vsAI;
     private ArrayList<Button> lastButtonTouched;
 
     @Override
@@ -41,6 +42,7 @@ public class GameFragment extends Fragment {
 
 
         size = mainActivityDataViewModel.getSize();
+        vsAI = mainActivityDataViewModel.getVsAI();
 
         TextView player1 = rootView.findViewById(R.id.player1);
         TextView player2 = rootView.findViewById(R.id.player2);
@@ -78,6 +80,18 @@ public class GameFragment extends Fragment {
                                 button.setBackgroundResource(R.drawable.cross); //Player 1 cross
                                 gameArray[row][col] = 1;
                                 player1Turn = false;
+
+                                if(vsAI){
+                                    int aiButtonID = aiTurn(gameArray);
+
+                                    gameArray[aiButtonID/size][aiButtonID%size] = 2;
+
+                                    Button aiButton = rootView.findViewById(aiButtonID);
+                                    aiButton.setBackgroundResource(R.drawable.nought);
+                                    lastButtonTouched.add(aiButton);
+                                    checkGameWin(gameArray);
+                                    player1Turn = true;
+                                }
                             }
                             else{
                                 button.setBackgroundResource(R.drawable.nought); //Player 2 noughts
@@ -101,17 +115,12 @@ public class GameFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(!lastButtonTouched.isEmpty()){
-                    //Update board to new last turn
-                    Button lastButton = lastButtonTouched.get(lastButtonTouched.size()-1);
-                    lastButton.setBackgroundResource(R.drawable.borderbox);
-                    int row = lastButton.getId()/size;
-                    int col = lastButton.getId()%size;
-                    gameArray[row][col] = 0;
-
-                    lastButtonTouched.remove(lastButton);
-                    player1Turn = !player1Turn;
-                    changeCurrentPlayer(player1Turn, player1, player2);
+                    undoMove(gameArray,player1,player2);
+                    if(vsAI){
+                        undoMove(gameArray,player1,player2);
+                    }
                 }
+
             }
         });
 
@@ -131,6 +140,35 @@ public class GameFragment extends Fragment {
             player2.setBackgroundResource(R.color.white);
             player1.setBackgroundResource(R.color.black);
         }
+    }
+
+    public int aiTurn(int[][] gameArray){
+        ArrayList<Integer> validOptions = new ArrayList<>();
+
+        //Check for all available options to play in.
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if(gameArray[i][j]==0){
+                    validOptions.add(i*size+j);
+                }
+            }
+        }
+
+        //Randomly Select an option
+        return validOptions.get((int)(Math.random()*validOptions.size()));
+    }
+
+    public void undoMove(int[][] gameArray, TextView player1, TextView player2){
+        //Update board to new last turn
+        Button lastButton = lastButtonTouched.get(lastButtonTouched.size()-1);
+        lastButton.setBackgroundResource(R.drawable.borderbox);
+        int row = lastButton.getId()/size;
+        int col = lastButton.getId()%size;
+        gameArray[row][col] = 0;
+
+        lastButtonTouched.remove(lastButton);
+        player1Turn = !player1Turn;
+        changeCurrentPlayer(player1Turn, player1, player2);
     }
 
 }
