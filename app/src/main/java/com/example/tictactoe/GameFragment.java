@@ -1,23 +1,14 @@
 package com.example.tictactoe;
 
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.GridLayout;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -74,13 +65,13 @@ public class GameFragment extends Fragment {
                 ResizeableButton button = new ResizeableButton(getContext());
                 button.setId(i*size+j);
                 button.setLayoutParams(params);
-                button.setBackgroundColor(R.color.white);
+                button.setBackgroundResource(R.color.grey);
 
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        int row = (int)button.getId()/size;
-                        int col = (int)button.getId()%size;
+                        int row = button.getId()/size;
+                        int col = button.getId()%size;
 
                         if(gameArray[row][col]==0){//Check if empty cell
                             if(player1Turn){
@@ -92,8 +83,8 @@ public class GameFragment extends Fragment {
                                 button.setBackgroundResource(R.drawable.nought); //Player 2 noughts
                                 gameArray[row][col] = 2;
                                 player1Turn = true;
-                                player1.setBackgroundColor(R.color.white);
-                                player2.setBackgroundColor(R.color.black);
+                                player1.setBackgroundResource(R.color.white);
+                                player2.setBackgroundResource(R.color.black);
                             }
                             changeCurrentPlayer(player1Turn, player1, player2);
                             lastButtonTouched.add(button);
@@ -114,7 +105,7 @@ public class GameFragment extends Fragment {
                 if(!lastButtonTouched.isEmpty()){
                     //Update board to new last turn
                     Button lastButton = lastButtonTouched.get(lastButtonTouched.size()-1);
-                    lastButton.setBackgroundColor(R.color.white);
+                    lastButton.setBackgroundResource(R.color.grey);
                     int row = lastButton.getId()/size;
                     int col = lastButton.getId()%size;
                     gameArray[row][col] = 0;
@@ -135,12 +126,12 @@ public class GameFragment extends Fragment {
 
     public void changeCurrentPlayer(boolean player1Turn, TextView player1, TextView player2){
         if(player1Turn){
-            player1.setBackgroundColor(R.color.white);
-            player2.setBackgroundColor(R.color.black);
+            player1.setBackgroundResource(R.color.white);
+            player2.setBackgroundResource(R.color.black);
         }
         else{
-            player2.setBackgroundColor(R.color.white);
-            player1.setBackgroundColor(R.color.black);
+            player2.setBackgroundResource(R.color.white);
+            player1.setBackgroundResource(R.color.black);
         }
     }
 
