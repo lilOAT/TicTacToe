@@ -87,8 +87,6 @@ public class GameFragment extends Fragment {
                                 button.setBackgroundResource(R.drawable.cross); //Player 1 cross
                                 gameArray[row][col] = 1;
                                 player1Turn = false;
-                                player1.setBackgroundColor(R.color.black);
-                                player2.setBackgroundColor(R.color.white);
                             }
                             else{
                                 button.setBackgroundResource(R.drawable.nought); //Player 2 noughts
@@ -97,6 +95,7 @@ public class GameFragment extends Fragment {
                                 player1.setBackgroundColor(R.color.white);
                                 player2.setBackgroundColor(R.color.black);
                             }
+                            changeCurrentPlayer(player1Turn, player1, player2);
                             lastButtonTouched.add(button);
                             checkGameWin(gameArray);
 
@@ -122,6 +121,7 @@ public class GameFragment extends Fragment {
 
                     lastButtonTouched.remove(lastButton);
                     player1Turn = !player1Turn;
+                    changeCurrentPlayer(player1Turn, player1, player2);
                 }
             }
         });
@@ -132,4 +132,16 @@ public class GameFragment extends Fragment {
     public void checkGameWin(int[][] boardArray){
         //TODO Implement win logic
     }
+
+    public void changeCurrentPlayer(boolean player1Turn, TextView player1, TextView player2){
+        if(player1Turn){
+            player1.setBackgroundColor(R.color.white);
+            player2.setBackgroundColor(R.color.black);
+        }
+        else{
+            player2.setBackgroundColor(R.color.white);
+            player1.setBackgroundColor(R.color.black);
+        }
+    }
+
 }
