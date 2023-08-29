@@ -65,7 +65,7 @@ public class GameFragment extends Fragment {
                 ResizeableButton button = new ResizeableButton(getContext());
                 button.setId(i*size+j);
                 button.setLayoutParams(params);
-                button.setBackgroundResource(R.color.grey);
+                button.setBackgroundResource(R.drawable.borderbox);
 
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -83,8 +83,6 @@ public class GameFragment extends Fragment {
                                 button.setBackgroundResource(R.drawable.nought); //Player 2 noughts
                                 gameArray[row][col] = 2;
                                 player1Turn = true;
-                                player1.setBackgroundResource(R.color.white);
-                                player2.setBackgroundResource(R.color.black);
                             }
                             changeCurrentPlayer(player1Turn, player1, player2);
                             lastButtonTouched.add(button);
@@ -105,7 +103,7 @@ public class GameFragment extends Fragment {
                 if(!lastButtonTouched.isEmpty()){
                     //Update board to new last turn
                     Button lastButton = lastButtonTouched.get(lastButtonTouched.size()-1);
-                    lastButton.setBackgroundResource(R.color.grey);
+                    lastButton.setBackgroundResource(R.drawable.borderbox);
                     int row = lastButton.getId()/size;
                     int col = lastButton.getId()%size;
                     gameArray[row][col] = 0;
