@@ -8,11 +8,20 @@ public class MainActivityData  extends ViewModel {
     private MutableLiveData<Integer> size; //Size of the board
     private MutableLiveData<Boolean> vsAI; //True if versing AI
     private MutableLiveData<Integer> winCondition; //Number in a row needed to win the game
+    private MutableLiveData<Integer> player1Icon;
+    private MutableLiveData<Integer> player2Icon;
 
     public MainActivityData(){
-        size = new MutableLiveData<Integer>();
-        vsAI = new MutableLiveData<Boolean>();
-        winCondition = new MutableLiveData<Integer>();
+        size = new MutableLiveData<>();
+        vsAI = new MutableLiveData<>();
+        winCondition = new MutableLiveData<>();
+        player1Icon = new MutableLiveData<>();
+        player2Icon = new MutableLiveData<>();
+
+        //Set Default Values
+        size.setValue(3);
+        player1Icon.setValue(R.drawable.cross);
+        player2Icon.setValue(R.drawable.nought);
     }
 
     //Getter Methods
@@ -25,6 +34,8 @@ public class MainActivityData  extends ViewModel {
     public int getWinCondition(){
         return winCondition.getValue();
     }
+    public int getPlayer1Icon(){return player1Icon.getValue();}
+    public int getPlayer2Icon(){return player2Icon.getValue();}
 
     //Setter Methods
     public void setSize(int pSize){
@@ -37,4 +48,10 @@ public class MainActivityData  extends ViewModel {
         winCondition.setValue(pCondition);
     }
 
+    public void setPlayer1Icon(int p1IconRID) {
+        player1Icon.setValue(p1IconRID);
+    }
+    public void setPlayer2Icon(int p2IconRID) {
+        player2Icon.setValue(p2IconRID);
+    }
 }

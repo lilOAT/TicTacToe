@@ -23,6 +23,7 @@ public class GameFragment extends Fragment {
     private int size;
     private boolean vsAI;
     private ArrayList<Button> lastButtonTouched;
+    private int p1IconID, p2IconID;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,9 @@ public class GameFragment extends Fragment {
 
         size = mainActivityDataViewModel.getSize();
         vsAI = mainActivityDataViewModel.getVsAI();
+        p1IconID = mainActivityDataViewModel.getPlayer1Icon();
+        p2IconID = mainActivityDataViewModel.getPlayer2Icon();
+
 
         TextView player1 = rootView.findViewById(R.id.player1);
         TextView player2 = rootView.findViewById(R.id.player2);
@@ -77,7 +81,7 @@ public class GameFragment extends Fragment {
 
                         if(gameArray[row][col]==0){//Check if empty cell
                             if(player1Turn){
-                                button.setBackgroundResource(R.drawable.cross); //Player 1 cross
+                                button.setBackgroundResource(p1IconID); //Player 1 cross
                                 gameArray[row][col] = 1;
                                 player1Turn = false;
 
@@ -87,14 +91,14 @@ public class GameFragment extends Fragment {
                                     gameArray[aiButtonID/size][aiButtonID%size] = 2;
 
                                     Button aiButton = rootView.findViewById(aiButtonID);
-                                    aiButton.setBackgroundResource(R.drawable.nought);
+                                    aiButton.setBackgroundResource(p2IconID);
                                     lastButtonTouched.add(aiButton);
                                     checkGameWin(gameArray);
                                     player1Turn = true;
                                 }
                             }
                             else{
-                                button.setBackgroundResource(R.drawable.nought); //Player 2 noughts
+                                button.setBackgroundResource(p2IconID); //Player 2 noughts
                                 gameArray[row][col] = 2;
                                 player1Turn = true;
                             }
