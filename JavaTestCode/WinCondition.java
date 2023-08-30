@@ -27,9 +27,9 @@ public class WinCondition {
 
     private static char[][] game3(int size) {
         char[][] gameBoardTemp = new char[3][3];
-        gameBoardTemp[0][0]='x';  gameBoardTemp[0][1]='o';  gameBoardTemp[0][2]='x';
-        gameBoardTemp[1][0]='o';  gameBoardTemp[1][1]='x';  gameBoardTemp[1][2]='o';
-        gameBoardTemp[2][0]='o';  gameBoardTemp[2][1]='x';  gameBoardTemp[2][2]='x';
+        gameBoardTemp[0][0]=' ';  gameBoardTemp[0][1]=' ';  gameBoardTemp[0][2]=' ';
+        gameBoardTemp[1][0]=' ';  gameBoardTemp[1][1]=' ';  gameBoardTemp[1][2]=' ';
+        gameBoardTemp[2][0]=' ';  gameBoardTemp[2][1]=' ';  gameBoardTemp[2][2]=' ';
         return gameBoardTemp;
     }
 
@@ -59,7 +59,7 @@ public class WinCondition {
         for(int i = 0; i < size; i++) {
             currChar = board[i][0];
             for(int j = 0; j < size; j++) {
-                if(board[i][j] == currChar) {
+                if(board[i][j] == currChar && board[i][j]!=' ') {
                     count++;
                     if(count == condition) {
                         win = true;
@@ -80,7 +80,7 @@ public class WinCondition {
         for(int i = 0; i < size; i++) {
             currChar = board[i][0];
             for(int j = 0; j < size; j++) {
-                if(board[j][i] == currChar) {
+                if(board[j][i] == currChar && board[j][i]!=' ') {
                     count++;
                     if(count == condition) {
                         win = true;
@@ -99,7 +99,8 @@ public class WinCondition {
         boolean win1 = false;
         boolean win2 = false;
         boolean win = false;
-        char currChar;;
+
+        //Check diagonal win heading south-east 
         for(int a = 1; a < size; a++) {
             if(!win1){
                 if(checkWinDgnRec1(board, size, condition, a, 1, 1) || checkWinDgnRec1(board, size, condition, 1, a, 1)) {
@@ -107,7 +108,7 @@ public class WinCondition {
                 }
             }
         }
-        System.out.println("Next Diag");
+        //Check diagonal win heading north-west
         for(int b = size-2; b >= 0; b--) {
             if(!win2){
                 if(checkWinDgnRec2(board, size, condition, 1, b, 1) || checkWinDgnRec2(board, size, condition, size-1-b, size-2, 1)) {
@@ -121,15 +122,14 @@ public class WinCondition {
         return win;
     }
 
+    // Diagonal South-East
     private static boolean checkWinDgnRec1(char[][] board, int size, int condition, int i, int j, int count) {
         boolean win = false;
         char prevChar = board[i-1][j-1];
-        if(board[i][j] == prevChar) {
+        if(board[i][j] == prevChar && board[i][j]!=' ') {
             count++;
-            System.out.println("prev: " + prevChar + " curr: " + board[i][j] + " at: " + i + j + " Count: " + count);
         }else {
             count = 1;
-            System.out.println("Failed at " + i + j);
         }
         if(count == condition) {
             win = true;
@@ -140,16 +140,14 @@ public class WinCondition {
         return win;
     }
 
+    // Diagonal North-West
     private static boolean checkWinDgnRec2(char[][] board, int size, int condition, int i, int j, int count) {
         boolean win = false;
         char prevChar = board[i-1][j+1];
-        if(board[i][j] == prevChar) {
+        if(board[i][j] == prevChar  && board[i][j]!=' ') {
             count++;
-            System.out.println("prev: " + prevChar + " curr: " + board[i][j] + " at: " + i + j + " Count: " + count);
         }else {
             count = 1;
-            System.out.println("Failed at " + i + j);
-            //currChar = board[i][j];
         }
         if(count == condition) {
             win = true;
