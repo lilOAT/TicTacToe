@@ -44,6 +44,10 @@
         "source": "com.example.tictactoe.app-main-30:/mipmap-xhdpi/ic_launcher_round.webp"
     },
     {
+        "merged": "com.example.tictactoe.app-merged_res-28:/layout_fragment_scoreboard.xml.flat",
+        "source": "com.example.tictactoe.app-main-30:/layout/fragment_scoreboard.xml"
+    },
+    {
         "merged": "com.example.tictactoe.app-merged_res-28:/drawable_cross.xml.flat",
         "source": "com.example.tictactoe.app-main-30:/drawable/cross.xml"
     },
@@ -82,5 +86,9 @@
     {
         "merged": "com.example.tictactoe.app-merged_res-28:/mipmap-xxxhdpi_ic_launcher.webp.flat",
         "source": "com.example.tictactoe.app-main-30:/mipmap-xxxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.tictactoe.app-merged_res-28:/layout_player_list_item_layout.xml.flat",
+        "source": "com.example.tictactoe.app-main-30:/layout/player_list_item_layout.xml"
     }
 ]

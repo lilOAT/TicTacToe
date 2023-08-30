@@ -43,8 +43,14 @@ public class Player {
     public void incWins() {
         wins++;
     }
+    public int getLosses() {
+        return losses;
+    }
     public void incLosses() {
         losses++;
+    }
+    public int getDraws() {
+        return draws;
     }
     public void incDraws() {
         draws++;

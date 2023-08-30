@@ -3,6 +3,8 @@ package com.example.tictactoe;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.ArrayList;
+
 public class MainActivityData  extends ViewModel {
 
     private MutableLiveData<Integer> size; //Size of the board
@@ -10,6 +12,8 @@ public class MainActivityData  extends ViewModel {
     private MutableLiveData<Integer> winCondition; //Number in a row needed to win the game
     private MutableLiveData<Integer> player1Icon;
     private MutableLiveData<Integer> player2Icon;
+    public MutableLiveData<ArrayList<Player>> mList;
+    private ArrayList<Player> list;
 
     public MainActivityData(){
         size = new MutableLiveData<>();
@@ -23,6 +27,10 @@ public class MainActivityData  extends ViewModel {
         winCondition.setValue(3);
         player1Icon.setValue(R.drawable.cross);
         player2Icon.setValue(R.drawable.nought);
+
+        //Player Data
+        mList = new MutableLiveData<ArrayList<Player>>();
+        list = new ArrayList<Player>();
     }
 
     //Getter Methods
@@ -54,5 +62,14 @@ public class MainActivityData  extends ViewModel {
     }
     public void setPlayer2Icon(int p2IconRID) {
         player2Icon.setValue(p2IconRID);
+    }
+
+
+    public ArrayList<Player> getList() {
+        return list;
+    }
+    public void addToList(Player data) {
+        list.add(data);
+        mList.setValue(list);
     }
 }
