@@ -23,6 +23,7 @@ public class GameFragment extends Fragment {
     private int size;
     private boolean vsAI;
     private ArrayList<Button> lastButtonTouched;
+    private int p1IconID, p2IconID;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,13 +44,16 @@ public class GameFragment extends Fragment {
 
         size = mainActivityDataViewModel.getSize();
         vsAI = mainActivityDataViewModel.getVsAI();
+        p1IconID = mainActivityDataViewModel.getPlayer1Icon();
+        p2IconID = mainActivityDataViewModel.getPlayer2Icon();
+
 
         TextView player1 = rootView.findViewById(R.id.player1);
         TextView player2 = rootView.findViewById(R.id.player2);
 
-        int[][] gameArray = new int[size][size];
-        for (int[] row: gameArray) {
-            Arrays.fill(row,0);
+        char[][] gameArray = new char[size][size];
+        for (char[] row: gameArray) {
+            Arrays.fill(row,'a');
         }
 
         TableLayout tableLayout = rootView.findViewById(R.id.tableLayout);
@@ -75,27 +79,27 @@ public class GameFragment extends Fragment {
                         int row = button.getId()/size;
                         int col = button.getId()%size;
 
-                        if(gameArray[row][col]==0){//Check if empty cell
+                        if(gameArray[row][col]=='a'){//Check if empty cell
                             if(player1Turn){
-                                button.setBackgroundResource(R.drawable.cross); //Player 1 cross
-                                gameArray[row][col] = 1;
+                                button.setBackgroundResource(p1IconID); //Player 1 cross
+                                gameArray[row][col] = 'x';
                                 player1Turn = false;
 
                                 if(vsAI){
                                     int aiButtonID = aiTurn(gameArray);
 
-                                    gameArray[aiButtonID/size][aiButtonID%size] = 2;
+                                    gameArray[aiButtonID/size][aiButtonID%size] = 'o';
 
                                     Button aiButton = rootView.findViewById(aiButtonID);
-                                    aiButton.setBackgroundResource(R.drawable.nought);
+                                    aiButton.setBackgroundResource(p2IconID);
                                     lastButtonTouched.add(aiButton);
                                     checkGameWin(gameArray);
                                     player1Turn = true;
                                 }
                             }
                             else{
-                                button.setBackgroundResource(R.drawable.nought); //Player 2 noughts
-                                gameArray[row][col] = 2;
+                                button.setBackgroundResource(p2IconID); //Player 2 noughts
+                                gameArray[row][col] = 'o';
                                 player1Turn = true;
                             }
                             changeCurrentPlayer(player1Turn, player1, player2);
@@ -127,7 +131,7 @@ public class GameFragment extends Fragment {
         return rootView;
     }
 
-    public void checkGameWin(int[][] boardArray){
+    public void checkGameWin(char[][] boardArray){
         //TODO Implement win logic
     }
 
@@ -142,13 +146,13 @@ public class GameFragment extends Fragment {
         }
     }
 
-    public int aiTurn(int[][] gameArray){
+    public int aiTurn(char[][] gameArray){
         ArrayList<Integer> validOptions = new ArrayList<>();
 
         //Check for all available options to play in.
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                if(gameArray[i][j]==0){
+                if(gameArray[i][j]=='a'){
                     validOptions.add(i*size+j);
                 }
             }
@@ -158,13 +162,13 @@ public class GameFragment extends Fragment {
         return validOptions.get((int)(Math.random()*validOptions.size()));
     }
 
-    public void undoMove(int[][] gameArray, TextView player1, TextView player2){
+    public void undoMove(char[][] gameArray, TextView player1, TextView player2){
         //Update board to new last turn
         Button lastButton = lastButtonTouched.get(lastButtonTouched.size()-1);
         lastButton.setBackgroundResource(R.drawable.borderbox);
         int row = lastButton.getId()/size;
         int col = lastButton.getId()%size;
-        gameArray[row][col] = 0;
+        gameArray[row][col] = 'a';
 
         lastButtonTouched.remove(lastButton);
         player1Turn = !player1Turn;
