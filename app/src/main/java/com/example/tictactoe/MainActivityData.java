@@ -20,6 +20,7 @@ public class MainActivityData  extends ViewModel {
 
         //Set Default Values
         size.setValue(3);
+        winCondition.setValue(3);
         player1Icon.setValue(R.drawable.cross);
         player2Icon.setValue(R.drawable.nought);
     }

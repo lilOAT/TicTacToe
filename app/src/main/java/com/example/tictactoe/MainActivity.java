@@ -23,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
         //TODO Set fragment to main menu, call subsequent fragments from fragments.
 
         //TODO Let values be set from menu fragments
-        mainActivityDataViewModel.setSize(5);
+        mainActivityDataViewModel.setSize(3);
+        mainActivityDataViewModel.setWinCondition(3);
         mainActivityDataViewModel.setVsAI(false);
 
         if(frag==null){

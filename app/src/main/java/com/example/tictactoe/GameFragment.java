@@ -21,6 +21,7 @@ public class GameFragment extends Fragment {
 
     private boolean player1Turn;
     private int size;
+    private int winCondition;
     private boolean vsAI;
     private ArrayList<Button> lastButtonTouched;
     private int p1IconID, p2IconID;
@@ -43,6 +44,7 @@ public class GameFragment extends Fragment {
 
 
         size = mainActivityDataViewModel.getSize();
+        winCondition = mainActivityDataViewModel.getWinCondition();
         vsAI = mainActivityDataViewModel.getVsAI();
         p1IconID = mainActivityDataViewModel.getPlayer1Icon();
         p2IconID = mainActivityDataViewModel.getPlayer2Icon();
@@ -53,7 +55,7 @@ public class GameFragment extends Fragment {
 
         char[][] gameArray = new char[size][size];
         for (char[] row: gameArray) {
-            Arrays.fill(row,'a');
+            Arrays.fill(row,' ');
         }
 
         TableLayout tableLayout = rootView.findViewById(R.id.tableLayout);
@@ -79,7 +81,7 @@ public class GameFragment extends Fragment {
                         int row = button.getId()/size;
                         int col = button.getId()%size;
 
-                        if(gameArray[row][col]=='a'){//Check if empty cell
+                        if(gameArray[row][col]==' '){//Check if empty cell
                             if(player1Turn){
                                 button.setBackgroundResource(p1IconID); //Player 1 cross
                                 gameArray[row][col] = 'x';
@@ -132,7 +134,15 @@ public class GameFragment extends Fragment {
     }
 
     public void checkGameWin(char[][] boardArray){
-        //TODO Implement win logic
+        for (char[] row: boardArray) {
+            System.out.println(Arrays.toString(row));
+        }
+        if(WinChecker.checkWin(boardArray, size, winCondition)){
+            System.out.println("YOU WIN");
+        }
+        else{
+            System.out.println("NO WIN YET");
+        }
     }
 
     public void changeCurrentPlayer(boolean player1Turn, TextView player1, TextView player2){
@@ -152,7 +162,7 @@ public class GameFragment extends Fragment {
         //Check for all available options to play in.
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                if(gameArray[i][j]=='a'){
+                if(gameArray[i][j]==' '){
                     validOptions.add(i*size+j);
                 }
             }
@@ -168,7 +178,7 @@ public class GameFragment extends Fragment {
         lastButton.setBackgroundResource(R.drawable.borderbox);
         int row = lastButton.getId()/size;
         int col = lastButton.getId()%size;
-        gameArray[row][col] = 'a';
+        gameArray[row][col] = ' ';
 
         lastButtonTouched.remove(lastButton);
         player1Turn = !player1Turn;
