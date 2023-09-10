@@ -67,16 +67,16 @@ public class ScoreboardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_scoreboard, container, false);
         RecyclerView rv = view.findViewById(R.id.recView);
 
+        // Get list of Players
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).
                 get(MainActivityData.class);
         ArrayList<Player> data = mainActivityDataViewModel.getList();
 
-        int spanCount = 1;
+        // Apply data of each player to recyclerview using the PlayerAdapter
+        // List of players -> PlayerAdapter -> PlayerVH -> Recycler View
         rv.setLayoutManager(new LinearLayoutManager(rv.getContext(), LinearLayoutManager.VERTICAL,false));
-
         PlayerAdapter adapter = new PlayerAdapter(data);
         rv.setAdapter(adapter);
-
 
         return view;
     }

@@ -57,7 +57,7 @@ public class fragment_menu extends Fragment {
         scoresButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                // Before loading ScoreboardFragment, sort the ArrayList<Player> by wins
             }
         });
 
