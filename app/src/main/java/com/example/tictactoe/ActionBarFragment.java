@@ -14,8 +14,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 public class ActionBarFragment extends Fragment {
-    int timer_in_seconds;
-    boolean timerRunning;
+    int timer_in_seconds; //Current game time
+    boolean timerRunning; //Shows if timer is currently running
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,11 +28,13 @@ public class ActionBarFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_action_bar,container,false);
 
+        //Get access to live data and layout texts and buttons
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
         TextView turnsTaken = rootView.findViewById(R.id.turnsTaken);
         TextView turnsAvailable = rootView.findViewById(R.id.turnsAvailable);
         TextView timerText = rootView.findViewById(R.id.timer);
 
+        //Load savedInstanceState if exists
         if(savedInstanceState!=null){
             timer_in_seconds = savedInstanceState.getInt("timeSec");
             timerText.setText(getTime(timer_in_seconds));
@@ -49,9 +51,11 @@ public class ActionBarFragment extends Fragment {
             }
         });
 
+        //Establish chronometer for timer
         Chronometer chronometer = rootView.findViewById(R.id.chronometer);
         chronometer.start();
 
+        //When chronometer ticks, if the timer is running, increase it
         chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
@@ -67,12 +71,14 @@ public class ActionBarFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 timerRunning=!timerRunning;
+                //TODO Change button to play button
             }
         });
 
         return rootView;
     }
 
+    //Save instance for rotation
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState){
         super.onSaveInstanceState(outState);
@@ -80,6 +86,7 @@ public class ActionBarFragment extends Fragment {
         outState.putBoolean("timeRun",timerRunning);
     }
 
+    //Translate time in seconds to clock for printing
     public String getTime(int timeInSeconds){
         int hours = timeInSeconds/3600;
         int minutes = timeInSeconds/60;
