@@ -2,6 +2,7 @@ package com.example.tictactoe;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -25,6 +26,9 @@ public class GameFragment extends Fragment {
     private boolean vsAI;
     private ArrayList<Button> lastButtonTouched;
     private int p1IconID, p2IconID;
+    private char[][] gameArray;
+
+    private TextView player1, player2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,12 +54,24 @@ public class GameFragment extends Fragment {
         p2IconID = mainActivityDataViewModel.getPlayer2Icon();
 
 
-        TextView player1 = rootView.findViewById(R.id.player1);
-        TextView player2 = rootView.findViewById(R.id.player2);
+        player1 = rootView.findViewById(R.id.player1);
+        player2 = rootView.findViewById(R.id.player2);
 
-        char[][] gameArray = new char[size][size];
+
+
+        gameArray = new char[size][size];
         for (char[] row: gameArray) {
             Arrays.fill(row,' ');
+        }
+
+        if(savedInstanceState!=null){
+            player1Turn = savedInstanceState.getBoolean("PLAYERTURN");
+            char[] game1Line = savedInstanceState.getCharArray("GAMEBOARD");
+            for (int i = 0; i < game1Line.length; i++) {
+                gameArray[i/size][i%size] = game1Line[i];
+            }
+            lastButtonTouched.addAll((ArrayList<Button>) savedInstanceState.getSerializable("PREVTURNS"));
+            System.out.println(lastButtonTouched.size());
         }
 
         TableLayout tableLayout = rootView.findViewById(R.id.tableLayout);
@@ -73,7 +89,19 @@ public class GameFragment extends Fragment {
                 ResizeableButton button = new ResizeableButton(getContext());
                 button.setId(i*size+j);
                 button.setLayoutParams(params);
-                button.setBackgroundResource(R.drawable.borderbox);
+
+                int backgroundID;
+                switch (gameArray[i][j]){
+                    case 'x':
+                        backgroundID = p1IconID;
+                        break;
+                    case 'o':
+                        backgroundID = p2IconID;
+                        break;
+                    default:
+                        backgroundID = R.drawable.borderbox;
+                }
+                button.setBackgroundResource(backgroundID);
 
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -88,14 +116,14 @@ public class GameFragment extends Fragment {
                                 player1Turn = false;
 
                                 if(vsAI){
-                                    int aiButtonID = aiTurn(gameArray);
+                                    int aiButtonID = aiTurn();
 
                                     gameArray[aiButtonID/size][aiButtonID%size] = 'o';
 
                                     Button aiButton = rootView.findViewById(aiButtonID);
                                     aiButton.setBackgroundResource(p2IconID);
                                     lastButtonTouched.add(aiButton);
-                                    checkGameWin(gameArray);
+                                    checkGameWin();
                                     player1Turn = true;
                                 }
                             }
@@ -104,10 +132,15 @@ public class GameFragment extends Fragment {
                                 gameArray[row][col] = 'o';
                                 player1Turn = true;
                             }
-                            changeCurrentPlayer(player1Turn, player1, player2);
+                            changeCurrentPlayer(player1Turn);
                             lastButtonTouched.add(button);
-                            checkGameWin(gameArray);
+                            checkGameWin();
 
+                            //Update turns and available
+                            setTurnsTaken(lastButtonTouched.size(),mainActivityDataViewModel);
+                        }
+                        else{
+                            Alerts.invalidMoveAlert(getActivity());
                         }
                     }
                 });
@@ -121,31 +154,56 @@ public class GameFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(!lastButtonTouched.isEmpty()){
-                    undoMove(gameArray,player1,player2);
+                    undoMove();
                     if(vsAI){
-                        undoMove(gameArray,player1,player2);
+                        undoMove();
                     }
+                    setTurnsTaken(lastButtonTouched.size(),mainActivityDataViewModel);
                 }
 
+            }
+        });
+
+        Button resetButton = rootView.findViewById(R.id.resetButton);
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!lastButtonTouched.isEmpty()) {
+                    int timesToIterate = lastButtonTouched.size();
+                    for (int i = 0; i < timesToIterate; i++) {
+                        undoMove();
+                    }
+                    setTurnsTaken(lastButtonTouched.size(),mainActivityDataViewModel);
+                }
             }
         });
 
         return rootView;
     }
 
-    public void checkGameWin(char[][] boardArray){
-        for (char[] row: boardArray) {
-            System.out.println(Arrays.toString(row));
-        }
-        if(WinChecker.checkWin(boardArray, size, winCondition)){
-            System.out.println("YOU WIN");
+    public void checkGameWin(){
+        if(lastButtonTouched.size()==size*size){
+            Alerts.drawAlert(getActivity());
         }
         else{
-            System.out.println("NO WIN YET");
+            for (char[] row: gameArray) {
+                System.out.println(Arrays.toString(row));
+            }
+            if(WinChecker.checkWin(gameArray, size, winCondition)){
+                if(player1Turn){
+                    Alerts.winAlert("Player 2",getActivity());
+                }
+                else{
+                    Alerts.winAlert("Player 1",getActivity());
+                }
+            }
+            else{
+                System.out.println("NO WIN YET");
+            }
         }
     }
 
-    public void changeCurrentPlayer(boolean player1Turn, TextView player1, TextView player2){
+    public void changeCurrentPlayer(boolean player1Turn){
         if(player1Turn){
             player1.setBackgroundResource(R.color.white);
             player2.setBackgroundResource(R.color.black);
@@ -156,7 +214,7 @@ public class GameFragment extends Fragment {
         }
     }
 
-    public int aiTurn(char[][] gameArray){
+    public int aiTurn(){
         ArrayList<Integer> validOptions = new ArrayList<>();
 
         //Check for all available options to play in.
@@ -167,13 +225,15 @@ public class GameFragment extends Fragment {
                 }
             }
         }
-
         //Randomly Select an option
         return validOptions.get((int)(Math.random()*validOptions.size()));
     }
 
-    public void undoMove(char[][] gameArray, TextView player1, TextView player2){
+    public void undoMove(){
         //Update board to new last turn
+        for (char[] row: gameArray) {
+            System.out.println(Arrays.toString(row));
+        }
         Button lastButton = lastButtonTouched.get(lastButtonTouched.size()-1);
         lastButton.setBackgroundResource(R.drawable.borderbox);
         int row = lastButton.getId()/size;
@@ -182,7 +242,32 @@ public class GameFragment extends Fragment {
 
         lastButtonTouched.remove(lastButton);
         player1Turn = !player1Turn;
-        changeCurrentPlayer(player1Turn, player1, player2);
+        changeCurrentPlayer(player1Turn);
+
+        for (char[] row1: gameArray) {
+            System.out.println(Arrays.toString(row1));
+        }
     }
 
+    public void setTurnsTaken(int turns, MainActivityData mainActivityDataViewModel){
+        mainActivityDataViewModel.setTurnsTaken(turns);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("PLAYERTURN",player1Turn);
+
+        char[] gameIn1Line = new char[size*size];
+        int count = 0;
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                gameIn1Line[count]=gameArray[i][j];
+                count++;
+            }
+        }
+        outState.putCharArray("GAMEBOARD",gameIn1Line);
+
+        outState.putSerializable("PREVTURNS", lastButtonTouched);
+    }
 }

@@ -15,18 +15,22 @@ public class MainActivityData  extends ViewModel {
     public MutableLiveData<ArrayList<Player>> mList;
     private ArrayList<Player> list;
 
+    public MutableLiveData<Integer> turnsTaken;
+
     public MainActivityData(){
         size = new MutableLiveData<>();
         vsAI = new MutableLiveData<>();
         winCondition = new MutableLiveData<>();
         player1Icon = new MutableLiveData<>();
         player2Icon = new MutableLiveData<>();
+        turnsTaken = new MutableLiveData<>();
 
         //Set Default Values
         size.setValue(3);
         winCondition.setValue(3);
         player1Icon.setValue(R.drawable.cross);
         player2Icon.setValue(R.drawable.nought);
+        turnsTaken.setValue(0);
 
         //Player Data
         mList = new MutableLiveData<ArrayList<Player>>();
@@ -45,6 +49,7 @@ public class MainActivityData  extends ViewModel {
     }
     public int getPlayer1Icon(){return player1Icon.getValue();}
     public int getPlayer2Icon(){return player2Icon.getValue();}
+    public int getTurnsTaken(){return turnsTaken.getValue();}
 
     //Setter Methods
     public void setSize(int pSize){
@@ -64,6 +69,7 @@ public class MainActivityData  extends ViewModel {
         player2Icon.setValue(p2IconRID);
     }
 
+    public void setTurnsTaken(int turns){turnsTaken.setValue(turns);}
 
     public ArrayList<Player> getList() {
         return list;
