@@ -6,6 +6,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +34,15 @@ public class MainActivity extends AppCompatActivity {
             fm.beginTransaction().add(R.id.mainFrameContainer,gameFragment).commit();
         }
 
+        Button menuButton = findViewById(R.id.menuButton);
+        TextView titleText = findViewById(R.id.title);
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Alerts.menuButtonAlert(MainActivity.this);
+                titleText.setText("Main Menu");
+            }
+        });
 
     }
 }
