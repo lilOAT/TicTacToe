@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 
 public class Alerts {
+    //Alert for if player wins
     public static void winAlert(String winnerName, Activity activity){
         AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
         alertDialog.setTitle("Game Over");
@@ -18,6 +19,7 @@ public class Alerts {
         alertDialog.show();
     }
 
+    //Alert for if game is draw
     public static void drawAlert(Activity activity){
         AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
         alertDialog.setTitle("Game Over");
@@ -31,6 +33,7 @@ public class Alerts {
         alertDialog.show();
     }
 
+    //Alert for if player selects a taken square
     public static void invalidMoveAlert(Activity activity){
         AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
         alertDialog.setTitle("Invalid Move");
@@ -44,6 +47,7 @@ public class Alerts {
         alertDialog.show();
     }
 
+    //Alert for if player selects the return to menu button
     public static void menuButtonAlert(Activity activity){
         AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
         alertDialog.setTitle("Menu Button");

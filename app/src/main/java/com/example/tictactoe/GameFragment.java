@@ -43,12 +43,14 @@ public class GameFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_game,container,false);
 
+        //Get access to data
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
 
+        //Set defaults
         player1Turn = true;
         lastButtonTouched = new ArrayList<>();
 
-
+        //Get data from dataviewmodel
         size = mainActivityDataViewModel.getSize();
         winCondition = mainActivityDataViewModel.getWinCondition();
         vsAI = mainActivityDataViewModel.getVsAI();
@@ -57,19 +59,20 @@ public class GameFragment extends Fragment {
         player1 = mainActivityDataViewModel.getPlayer1();
         player2 = mainActivityDataViewModel.getPlayer2();
 
+        //Find and adjust xml placeholders
         player1Name = rootView.findViewById(R.id.player1);
         player1Name.setText(player1.getName());
         player2Name = rootView.findViewById(R.id.player2);
         player2Name.setText(player2.getName());
         player1Turn=true;
 
-
-
+        //Establish background game board
         gameArray = new char[size][size];
         for (char[] row: gameArray) {
             Arrays.fill(row,' ');
         }
 
+        //Update if saved state exists
         if(savedInstanceState!=null){
             player1Turn = savedInstanceState.getBoolean("PLAYERTURN");
             char[] game1Line = savedInstanceState.getCharArray("GAMEBOARD");
@@ -80,6 +83,7 @@ public class GameFragment extends Fragment {
             System.out.println(lastButtonTouched.size());
         }
 
+        //Begin creating grid of buttons
         TableLayout tableLayout = rootView.findViewById(R.id.tableLayout);
 
         //For every row, create a tableRow
@@ -97,6 +101,7 @@ public class GameFragment extends Fragment {
                 button.setLayoutParams(params);
 
                 int backgroundID;
+                //Set button background based on game array
                 switch (gameArray[i][j]){
                     case 'x':
                         backgroundID = p1IconID;
@@ -112,16 +117,17 @@ public class GameFragment extends Fragment {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        //get button location from id
                         int row = button.getId()/size;
                         int col = button.getId()%size;
 
                         if(gameArray[row][col]==' '){//Check if empty cell
-                            if(player1Turn){
-                                button.setBackgroundResource(p1IconID); //Player 1 cross
+                            if(player1Turn){//Assign background to number applicable
+                                button.setBackgroundResource(p1IconID);
                                 gameArray[row][col] = 'x';
                                 player1Turn = false;
 
-                                if(vsAI){
+                                if(vsAI){//Run additional turn based on AI if AI selected
                                     int aiButtonID = aiTurn();
 
                                     gameArray[aiButtonID/size][aiButtonID%size] = 'o';
@@ -138,21 +144,22 @@ public class GameFragment extends Fragment {
                                 gameArray[row][col] = 'o';
                                 player1Turn = true;
                             }
-                            changeCurrentPlayer(player1Turn);
-                            lastButtonTouched.add(button);
-                            checkGameWin();
+                            changeCurrentPlayer(player1Turn); //Next players turn
+                            lastButtonTouched.add(button); //Add last turn to list
+                            checkGameWin(); //Check if new turn has won the game
 
                             //Update turns and available
-                            setTurnsTaken(lastButtonTouched.size(),mainActivityDataViewModel);
+                            mainActivityDataViewModel.setTurnsTaken(lastButtonTouched.size());
                         }
                         else{
+                            //If player selects an invalid move, warn them
                             Alerts.invalidMoveAlert(getActivity());
                         }
                     }
                 });
-                tableRow.addView(button);
+                tableRow.addView(button); //Add button to table row
             }
-            tableLayout.addView(tableRow);
+            tableLayout.addView(tableRow); //Add table row to table
         }
 
         Button undoButton = rootView.findViewById(R.id.undoButton);
@@ -164,7 +171,7 @@ public class GameFragment extends Fragment {
                     if(vsAI){
                         undoMove();
                     }
-                    setTurnsTaken(lastButtonTouched.size(),mainActivityDataViewModel);
+                    mainActivityDataViewModel.setTurnsTaken(lastButtonTouched.size());
                 }
 
             }
@@ -179,7 +186,7 @@ public class GameFragment extends Fragment {
                     for (int i = 0; i < timesToIterate; i++) {
                         undoMove();
                     }
-                    setTurnsTaken(lastButtonTouched.size(),mainActivityDataViewModel);
+                    mainActivityDataViewModel.setTurnsTaken(lastButtonTouched.size());
                 }
             }
         });
@@ -188,39 +195,31 @@ public class GameFragment extends Fragment {
     }
 
     public void checkGameWin(){
-        if(lastButtonTouched.size()==size*size){
+        if(lastButtonTouched.size()==size*size){ //Check if max turns have been reached
             Alerts.drawAlert(getActivity());
+            player1.incDraws();
+            player2.incDraws();
         }
-        else{
-            for (char[] row: gameArray) {
-                System.out.println(Arrays.toString(row));
-            }
-            if(lastButtonTouched.size()==size*size){
-                Alerts.drawAlert(getActivity());
-                player1.incDraws();
-                player2.incDraws();
-            }
-            else{
-                if(WinChecker.checkWin(gameArray, size, winCondition)){
-                    if(player1Turn){
-                        player2.incWins();
-                        player1.incLosses();
-                        Alerts.winAlert("Player 2",getActivity());
-                    }
-                    else{
-                        player1.incWins();
-                        player2.incLosses();
-                        Alerts.winAlert("Player 1",getActivity());
-                    }
+        else{ //Check for wins
+            if(WinChecker.checkWin(gameArray, size, winCondition)){
+                if(player1Turn){
+                    player2.incWins();
+                    player1.incLosses();
+                    Alerts.winAlert("Player 2",getActivity());
                 }
                 else{
-                    System.out.println("NO WIN YET");
+                    player1.incWins();
+                    player2.incLosses();
+                    Alerts.winAlert("Player 1",getActivity());
                 }
+            }
+            else{
+                System.out.println("NO WIN YET");
             }
         }
     }
 
-    public void changeCurrentPlayer(boolean player1Turn){
+    public void changeCurrentPlayer(boolean player1Turn){//Alternate player icons each turn
         if(player1Turn){
             player1Name.setBackgroundResource(R.color.white);
             player2Name.setBackgroundResource(R.color.black);
@@ -252,29 +251,27 @@ public class GameFragment extends Fragment {
             System.out.println(Arrays.toString(row));
         }
         Button lastButton = lastButtonTouched.get(lastButtonTouched.size()-1);
+        //Reset last button background colour
         lastButton.setBackgroundResource(R.drawable.borderbox);
         int row = lastButton.getId()/size;
         int col = lastButton.getId()%size;
+        //Reset last button in array
         gameArray[row][col] = ' ';
 
+        //Remove undone button form list
         lastButtonTouched.remove(lastButton);
+
+        //Update player turns
         player1Turn = !player1Turn;
         changeCurrentPlayer(player1Turn);
-
-        for (char[] row1: gameArray) {
-            System.out.println(Arrays.toString(row1));
-        }
-    }
-
-    public void setTurnsTaken(int turns, MainActivityData mainActivityDataViewModel){
-        mainActivityDataViewModel.setTurnsTaken(turns);
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState){
         super.onSaveInstanceState(outState);
-        outState.putBoolean("PLAYERTURN",player1Turn);
+        outState.putBoolean("PLAYERTURN",player1Turn); //Save the players turn
 
+        //Save game array in single row char array
         char[] gameIn1Line = new char[size*size];
         int count = 0;
         for (int i = 0; i < size; i++) {
@@ -285,6 +282,7 @@ public class GameFragment extends Fragment {
         }
         outState.putCharArray("GAMEBOARD",gameIn1Line);
 
+        //Save previous turns taken
         outState.putSerializable("PREVTURNS", lastButtonTouched);
     }
 }
