@@ -29,6 +29,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerVH> {
     @Override
     public void onBindViewHolder(@NonNull PlayerVH holder, int position) {
         Player singleData = data.get(position);
+        holder.avatar.setImageResource(singleData.getAvatar());
         holder.name.setText(singleData.getName());
         holder.wins.setText(singleData.getWins());
         holder.losses.setText(singleData.getLosses());
