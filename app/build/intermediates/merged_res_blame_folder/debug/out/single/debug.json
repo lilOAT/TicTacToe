@@ -96,6 +96,10 @@
         "source": "com.example.tictactoe.app-main-30:/drawable/borderbox.xml"
     },
     {
+        "merged": "com.example.tictactoe.app-merged_res-28:/drawable_basic_profile_pic.png.flat",
+        "source": "com.example.tictactoe.app-main-30:/drawable/basic_profile_pic.png"
+    },
+    {
         "merged": "com.example.tictactoe.app-merged_res-28:/drawable_square_button.xml.flat",
         "source": "com.example.tictactoe.app-main-30:/drawable/square_button.xml"
     },
@@ -162,10 +166,6 @@
     {
         "merged": "com.example.tictactoe.app-merged_res-28:/mipmap-xhdpi_ic_launcher.webp.flat",
         "source": "com.example.tictactoe.app-main-30:/mipmap-xhdpi/ic_launcher.webp"
-    },
-    {
-        "merged": "com.example.tictactoe.app-merged_res-28:/drawable_profile_pic.png.flat",
-        "source": "com.example.tictactoe.app-main-30:/drawable/profile_pic.png"
     },
     {
         "merged": "com.example.tictactoe.app-merged_res-28:/drawable_ic_launcher_foreground.xml.flat",

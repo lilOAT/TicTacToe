@@ -1,6 +1,8 @@
 package com.example.tictactoe;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -16,6 +18,8 @@ public class FragmentMenu extends Fragment {
     Button soloButton;
     Button versusButton;
     Button scoresButton;
+
+    //TODO add settings button
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,11 @@ public class FragmentMenu extends Fragment {
                     false);
         }
 
+        //Linking MutableLiveData
+        MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).
+                get(MainActivityData.class);
+
+
         //Linking to XML file.
 
         soloButton = rootView.findViewById(R.id.soloButton);
@@ -53,7 +62,8 @@ public class FragmentMenu extends Fragment {
         soloButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //TODO set game mode to solo vs AI
+                mainActivityDataViewModel.currentFrag.setValue(1);
             }
         });
 
@@ -61,7 +71,8 @@ public class FragmentMenu extends Fragment {
         versusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //TODO set game mode to player vs mode
+                mainActivityDataViewModel.currentFrag.setValue(1);
             }
         });
 
@@ -69,7 +80,7 @@ public class FragmentMenu extends Fragment {
         scoresButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                mainActivityDataViewModel.currentFrag.setValue(4);
             }
         });
 

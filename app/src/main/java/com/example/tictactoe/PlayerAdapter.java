@@ -31,9 +31,9 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerVH> {
         Player singleData = data.get(position);
         holder.avatar.setImageResource(singleData.getAvatar());
         holder.name.setText(singleData.getName());
-        holder.wins.setText(singleData.getWins());
-        holder.losses.setText(singleData.getLosses());
-        holder.draws.setText(singleData.getDraws());
+        holder.wins.setText(String.valueOf(singleData.getWins()));
+        holder.losses.setText(String.valueOf(singleData.getLosses()));
+        holder.draws.setText(String.valueOf(singleData.getDraws()));
     }
 
     @Override

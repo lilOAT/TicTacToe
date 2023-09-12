@@ -1,5 +1,7 @@
 package com.example.tictactoe;
 
+import android.content.res.Resources;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -30,6 +32,7 @@ public class MainActivityData  extends ViewModel {
         turnsTaken = new MutableLiveData<>();
         userSelection_profileToEdit = new MutableLiveData<>();
         userCustomization_profileID = new MutableLiveData<>();
+        currentFrag = new MutableLiveData<>();
 
         //Set Default Values
         size.setValue(3);
@@ -39,7 +42,9 @@ public class MainActivityData  extends ViewModel {
         turnsTaken.setValue(0);
 
         //Player Data
+        ArrayList<Player> list = new ArrayList<Player>();
         playerList = new MutableLiveData<ArrayList<Player>>();
+        playerList.setValue(list);
     }
 
     //Getter Methods
@@ -105,5 +110,4 @@ public class MainActivityData  extends ViewModel {
     public int getCurrentFrag() {return currentFrag.getValue();}
 
     public void setCurrentFrag(int fragNum) {currentFrag.setValue(fragNum);}
-
 }

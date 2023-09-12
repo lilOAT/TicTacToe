@@ -9,6 +9,7 @@ color light_red
 color paled_blue
 color white
 drawable baseball
+drawable basic_profile_pic
 drawable basketball
 drawable borderbox
 drawable bowlingball
@@ -25,7 +26,6 @@ drawable ic_launcher_foreground
 drawable nought
 drawable pause
 drawable profile_edit_mode
-drawable profile_pic
 drawable profile_select
 drawable soccerball
 drawable square_button
