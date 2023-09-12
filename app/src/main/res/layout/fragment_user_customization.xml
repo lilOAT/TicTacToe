@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/layout_user_selection"
-    tools:context=".fragment_user_selection">
+    android:id="@+id/layout_user_customization">
 
     <!-- Set the boundaries of each section in settings. -->
     <androidx.constraintlayout.widget.Guideline
@@ -35,6 +34,8 @@
         android:gravity="center"
         android:textSize="30sp"
         android:textStyle="bold"
+        android:autofillHints="username"
+        android:inputType=""
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
