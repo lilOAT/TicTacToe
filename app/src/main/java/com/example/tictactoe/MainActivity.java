@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(this).get(MainActivityData.class);
 
         FragmentManager fm = getSupportFragmentManager();
-        Fragment boardFrag = fm.findFragmentById(R.id.boardFrame); //Set fragment to board frame.
+        Fragment boardFrag = fm.findFragmentById(R.id.mainFrameContainer); //Set fragment to board frame.
         //TODO Set fragment to main menu, call subsequent fragments from fragments.
 
         //TODO Let values be set from menu fragments
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         mainActivityDataViewModel.setVsAI(false);
 
         if(boardFrag==null){
-            fm.beginTransaction().add(R.id.boardFrame,gameFragment).commit();
+            fm.beginTransaction().add(R.id.mainFrameContainer,gameFragment).commit();
         }
 
 
