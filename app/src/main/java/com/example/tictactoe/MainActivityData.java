@@ -16,6 +16,8 @@ public class MainActivityData  extends ViewModel {
 
     public MutableLiveData<Integer> turnsTaken;
 
+    private MutableLiveData<Player> player1, player2;
+
     public MainActivityData(){
         size = new MutableLiveData<>();
         vsAI = new MutableLiveData<>();
@@ -49,6 +51,9 @@ public class MainActivityData  extends ViewModel {
     public int getPlayer2Icon(){return player2Icon.getValue();}
     public int getTurnsTaken(){return turnsTaken.getValue();}
 
+    public Player getPlayer1(){return player1.getValue();}
+    public Player getPlayer2(){return player2.getValue();}
+
     //Setter Methods
     public void setSize(int pSize){
         size.setValue(pSize);
@@ -72,4 +77,8 @@ public class MainActivityData  extends ViewModel {
     public ArrayList<Player> getPlayerList() {
         return playerList.getValue();
     }
+    public void setPlayer1(Player player){player1.setValue(player);}
+    public void setPlayer2(Player player){player2.setValue(player);}
+
+
 }
