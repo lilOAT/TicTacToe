@@ -28,7 +28,9 @@ public class GameFragment extends Fragment {
     private int p1IconID, p2IconID;
     private char[][] gameArray;
 
-    private TextView player1, player2;
+    private Player player1, player2;
+
+    private TextView player1Name, player2Name;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,10 +54,14 @@ public class GameFragment extends Fragment {
         vsAI = mainActivityDataViewModel.getVsAI();
         p1IconID = mainActivityDataViewModel.getPlayer1Icon();
         p2IconID = mainActivityDataViewModel.getPlayer2Icon();
+        player1 = mainActivityDataViewModel.getPlayer1();
+        player2 = mainActivityDataViewModel.getPlayer2();
 
-
-        player1 = rootView.findViewById(R.id.player1);
-        player2 = rootView.findViewById(R.id.player2);
+        player1Name = rootView.findViewById(R.id.player1);
+        player1Name.setText(player1.getName());
+        player2Name = rootView.findViewById(R.id.player2);
+        player2Name.setText(player2.getName());
+        player1Turn=true;
 
 
 
@@ -189,28 +195,39 @@ public class GameFragment extends Fragment {
             for (char[] row: gameArray) {
                 System.out.println(Arrays.toString(row));
             }
-            if(WinChecker.checkWin(gameArray, size, winCondition)){
-                if(player1Turn){
-                    Alerts.winAlert("Player 2",getActivity());
-                }
-                else{
-                    Alerts.winAlert("Player 1",getActivity());
-                }
+            if(lastButtonTouched.size()==size*size){
+                Alerts.drawAlert(getActivity());
+                player1.incDraws();
+                player2.incDraws();
             }
             else{
-                System.out.println("NO WIN YET");
+                if(WinChecker.checkWin(gameArray, size, winCondition)){
+                    if(player1Turn){
+                        player2.incWins();
+                        player1.incLosses();
+                        Alerts.winAlert("Player 2",getActivity());
+                    }
+                    else{
+                        player1.incWins();
+                        player2.incLosses();
+                        Alerts.winAlert("Player 1",getActivity());
+                    }
+                }
+                else{
+                    System.out.println("NO WIN YET");
+                }
             }
         }
     }
 
     public void changeCurrentPlayer(boolean player1Turn){
         if(player1Turn){
-            player1.setBackgroundResource(R.color.white);
-            player2.setBackgroundResource(R.color.black);
+            player1Name.setBackgroundResource(R.color.white);
+            player2Name.setBackgroundResource(R.color.black);
         }
         else{
-            player2.setBackgroundResource(R.color.white);
-            player1.setBackgroundResource(R.color.black);
+            player2Name.setBackgroundResource(R.color.white);
+            player1Name.setBackgroundResource(R.color.black);
         }
     }
 
