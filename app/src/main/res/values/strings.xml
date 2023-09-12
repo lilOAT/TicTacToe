@@ -1,5 +1,52 @@
 <resources>
     <string name="app_name">TicTacToe</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!-- Strings for the Game's board size -->
+    <string name="fragment_settings_section_one_title">Board Size</string>
+
+    <string name="fragment_settings_boardsize_1">3 X 3</string>
+    <string name="fragment_settings_boardsize_2">4 X 4</string>
+    <string name="fragment_settings_boardsize_3">5 X 5</string>
+
+    <!-- Strings for the Game's win conditions -->
+    <string name="fragment_settings_section_two_title">Win Conditions</string>
+
+    <string name="fragment_settings_wincondition_1">3</string>
+    <string name="fragment_settings_wincondition_2">4</string>
+    <string name="fragment_settings_wincondition_3">5</string>
+
+    <!-- Strings for the Game's character selection -->
+    <string name="fragment_settings_section_three_title">Character Selection</string>
+
+    <string name="fragment_settings_character_selection_p1">P1</string>
+    <string name="fragment_settings_character_selection_p2">P2</string>
+
+    <string name="fragment_settings_character_selection_X">X</string>
+    <string name="fragment_settings_character_selection_O">O</string>
+
+    <!-- ******************************************************************************* -->
+
+    <!-- Strings for Menu -->
+    <string name="fragment_menu_solo">SOLO</string>
+    <string name="fragment_menu_versus">VERSUS</string>
+    <string name="fragment_menu_scores">SCORES</string>
+
+    <!-- ******************************************************************************* -->
+
+    <!-- Strings for User Selection -->
+    <string name="fragment_user_selection_profiles">PLAYERS</string>
+
+    <string name="VS">VS</string>
+
+    <string name="profile_1_image">Profile 1 Image</string>
+    <string name="back">BACK</string>
+    <string name="edit">EDIT</string>
+    <string name="play">PLAY</string>
+
+    <!-- ******************************************************************************* -->
+
+    <!-- Strings for User Customization -->
+    <string name="fragment_user_customization_back">BACK</string>
+    <string name="fragment_user_customization_save">SAVE</string>
 </resources>

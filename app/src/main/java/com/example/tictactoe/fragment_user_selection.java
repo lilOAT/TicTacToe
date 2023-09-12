@@ -11,12 +11,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class fragment_user_selection extends Fragment {
 
     //Declaring all actionable elements.
+    EditText p1_name;
+    EditText p2_name;
     Button p1_button;
     Button p2_button;
     Button editButton;
@@ -46,10 +51,14 @@ public class fragment_user_selection extends Fragment {
         }
 
         // Introduce the Activity Data Store
-        ActivityDataStore dataStore = new ViewModelProvider(getActivity()).
-                get(ActivityDataStore.class);
+        MainActivityData dataStore = new ViewModelProvider(getActivity()).
+                get(MainActivityData.class);
 
         //Linking to XML file.
+
+        //Player Usernames
+        p1_name = rootView.findViewById(R.id.profile1_name);
+        p2_name = rootView.findViewById(R.id.profile2_name);
 
         //Player Avatars
         p1_button = rootView.findViewById(R.id.profile1);
@@ -67,10 +76,10 @@ public class fragment_user_selection extends Fragment {
             @Override
             public void onClick(View view) {
                 //When selected, change the colour of the button's edge and set edit value to 1.
-                if(dataStore.userSelection_profileToEdit.getValue() == 0 ||
-                    dataStore.userSelection_profileToEdit.getValue() == 2)
+                if(dataStore.getUserSelection_profileToEdit() == 0 ||
+                    dataStore.getUserSelection_profileToEdit() == 2)
                 {
-                    dataStore.userSelection_profileToEdit.setValue(1);
+                    dataStore.setUserSelection_profileToEdit(1);
                     p1_button.setBackgroundResource(R.drawable.profile_edit_mode);
                     Toast toast = Toast.makeText(getContext(),
                             "Player 1 Selected!", Toast.LENGTH_SHORT);
@@ -84,10 +93,10 @@ public class fragment_user_selection extends Fragment {
             @Override
             public void onClick(View view) {
                 //When selected, change the colour of the button's edge and set edit value to 2.
-                if(dataStore.userSelection_profileToEdit.getValue() == 0 ||
-                        dataStore.userSelection_profileToEdit.getValue() == 1)
+                if(dataStore.getUserSelection_profileToEdit() == 0 ||
+                        dataStore.getUserSelection_profileToEdit() == 1)
                 {
-                    dataStore.userSelection_profileToEdit.setValue(2);
+                    dataStore.setUserSelection_profileToEdit(2);
                     p2_button.setBackgroundResource(R.drawable.profile_edit_mode);
                     Toast toast = Toast.makeText(getContext(),
                             "Player 2 Selected!", Toast.LENGTH_SHORT);
@@ -101,13 +110,13 @@ public class fragment_user_selection extends Fragment {
             @Override
             public void onClick(View view) {
                 //First, check if a Profile has been selected to edit.
-                if(dataStore.userSelection_profileToEdit.getValue() == 0) {
+                if(dataStore.getUserSelection_profileToEdit() == 0) {
                     Toast toast = Toast.makeText(getContext(),
                             "Please select a Profile to edit!", Toast.LENGTH_SHORT);
                     toast.show();
                 }
                 else {
-                    dataStore.userSelection_switcher.setValue(1);
+                    dataStore.setUserSelection_switcher(1);
                 }
             }
         });
@@ -116,6 +125,15 @@ public class fragment_user_selection extends Fragment {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Check whether player 1 is already in the table.
+                ArrayList<Player> list = dataStore.getPlayerList();
+                for(int i = 0; i < list.size(); i++) {
+                    if (!list.get(i).getName().equals(p1_name)) {
+                        dataStore.addToList(new Player(p1_name.toString(), R.drawable.empty_profile_pic_background));
+                        
+                    }
+
+                }
 
             }
         });

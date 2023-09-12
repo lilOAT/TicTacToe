@@ -13,6 +13,9 @@ public class MainActivityData  extends ViewModel {
     private MutableLiveData<Integer> player1Icon;
     private MutableLiveData<Integer> player2Icon;
     public MutableLiveData<ArrayList<Player>> playerList;
+    MutableLiveData<Integer> userSelection_switcher;
+    MutableLiveData<Integer> userSelection_profileToEdit;
+    MutableLiveData<Integer> userCustomization_profileID;
 
     public MutableLiveData<Integer> turnsTaken;
 
@@ -25,6 +28,9 @@ public class MainActivityData  extends ViewModel {
         player1Icon = new MutableLiveData<>();
         player2Icon = new MutableLiveData<>();
         turnsTaken = new MutableLiveData<>();
+        userSelection_switcher = new MutableLiveData<>();
+        userSelection_profileToEdit = new MutableLiveData<>();
+        userCustomization_profileID = new MutableLiveData<>();
 
         //Set Default Values
         size.setValue(3);
@@ -54,6 +60,13 @@ public class MainActivityData  extends ViewModel {
     public Player getPlayer1(){return player1.getValue();}
     public Player getPlayer2(){return player2.getValue();}
 
+    public int getUserSelection_switcher() {
+        return userSelection_switcher.getValue();
+    }
+    public int getUserSelection_profileToEdit() {
+        return userSelection_profileToEdit.getValue();
+    }
+
     //Setter Methods
     public void setSize(int pSize){
         size.setValue(pSize);
@@ -74,9 +87,24 @@ public class MainActivityData  extends ViewModel {
 
     public void setTurnsTaken(int turns){turnsTaken.setValue(turns);}
 
+    public void setUserSelection_switcher(int value) {
+        userSelection_switcher.setValue(value);
+    }
+    public void setUserSelection_profileToEdit(int value) {
+        userSelection_profileToEdit.setValue(value);
+    }
+    public void setUserCustomization_profileID(int value) {
+        userCustomization_profileID.setValue(value);
+    }
+
     public ArrayList<Player> getPlayerList() {
         return playerList.getValue();
     }
+
+    public void addToList(Player player) {
+        playerList.getValue().add(player);
+    }
+
     public void setPlayer1(Player player){player1.setValue(player);}
     public void setPlayer2(Player player){player2.setValue(player);}
 

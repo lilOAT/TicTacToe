@@ -88,10 +88,10 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/profile_select"
                 android:padding="30dp"
-                android:src="@drawable/profile_pic"
-                android:scaleType="fitCenter" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/profile_pic" />
 
-            <TextView
+            <EditText
                 android:id="@+id/profile1_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -135,7 +135,7 @@
                 android:src="@drawable/profile_pic"
                 android:scaleType="fitCenter" />
 
-            <TextView
+            <EditText
                 android:id="@+id/profile2_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
