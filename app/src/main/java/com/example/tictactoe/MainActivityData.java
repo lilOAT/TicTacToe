@@ -12,8 +12,7 @@ public class MainActivityData  extends ViewModel {
     private MutableLiveData<Integer> winCondition; //Number in a row needed to win the game
     private MutableLiveData<Integer> player1Icon;
     private MutableLiveData<Integer> player2Icon;
-    public MutableLiveData<ArrayList<Player>> mList;
-    private ArrayList<Player> list;
+    public MutableLiveData<ArrayList<Player>> playerList;
 
     public MutableLiveData<Integer> turnsTaken;
 
@@ -33,8 +32,7 @@ public class MainActivityData  extends ViewModel {
         turnsTaken.setValue(0);
 
         //Player Data
-        mList = new MutableLiveData<ArrayList<Player>>();
-        list = new ArrayList<Player>();
+        playerList = new MutableLiveData<ArrayList<Player>>();
     }
 
     //Getter Methods
@@ -71,11 +69,7 @@ public class MainActivityData  extends ViewModel {
 
     public void setTurnsTaken(int turns){turnsTaken.setValue(turns);}
 
-    public ArrayList<Player> getList() {
-        return list;
-    }
-    public void addToList(Player data) {
-        list.add(data);
-        mList.setValue(list);
+    public ArrayList<Player> getPlayerList() {
+        return playerList.getValue();
     }
 }

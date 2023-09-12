@@ -3,6 +3,7 @@ package com.example.tictactoe;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -70,12 +71,12 @@ public class ScoreboardFragment extends Fragment {
         // Get list of Players
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).
                 get(MainActivityData.class);
-        ArrayList<Player> data = mainActivityDataViewModel.getList();
+        ArrayList<Player> playerList = mainActivityDataViewModel.getPlayerList();
 
         // Apply data of each player to recyclerview using the PlayerAdapter
         // List of players -> PlayerAdapter -> PlayerVH -> Recycler View
         rv.setLayoutManager(new LinearLayoutManager(rv.getContext(), LinearLayoutManager.VERTICAL,false));
-        PlayerAdapter adapter = new PlayerAdapter(data);
+        PlayerAdapter adapter = new PlayerAdapter(playerList);
         rv.setAdapter(adapter);
 
         return view;

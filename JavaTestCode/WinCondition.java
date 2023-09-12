@@ -27,9 +27,9 @@ public class WinCondition {
 
     private static char[][] game3(int size) {
         char[][] gameBoardTemp = new char[3][3];
-        gameBoardTemp[0][0]=' ';  gameBoardTemp[0][1]=' ';  gameBoardTemp[0][2]=' ';
-        gameBoardTemp[1][0]=' ';  gameBoardTemp[1][1]=' ';  gameBoardTemp[1][2]=' ';
-        gameBoardTemp[2][0]=' ';  gameBoardTemp[2][1]=' ';  gameBoardTemp[2][2]=' ';
+        gameBoardTemp[0][0]='x';  gameBoardTemp[0][1]='x';  gameBoardTemp[0][2]=' ';
+        gameBoardTemp[1][0]=' ';  gameBoardTemp[1][1]='x';  gameBoardTemp[1][2]=' ';
+        gameBoardTemp[2][0]=' ';  gameBoardTemp[2][1]='x';  gameBoardTemp[2][2]='x';
         return gameBoardTemp;
     }
 
