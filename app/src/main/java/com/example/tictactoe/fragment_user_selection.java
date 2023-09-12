@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Dialog;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,9 +31,19 @@ public class fragment_user_selection extends Fragment {
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_user_selection, container,
-                false);
+        int screenOrientation = getResources().getConfiguration().orientation;
+
+        View rootView;
+
+        if (screenOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // Inflate the layout for this fragment
+            rootView = inflater.inflate(R.layout.fragment_user_selection_landscape, container,
+                    false);
+        } else {
+            // Inflate the layout for this fragment
+            rootView = inflater.inflate(R.layout.fragment_user_selection, container,
+                    false);
+        }
 
         // Introduce the Activity Data Store
         ActivityDataStore dataStore = new ViewModelProvider(getActivity()).
