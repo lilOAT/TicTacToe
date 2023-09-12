@@ -12,6 +12,7 @@ public class MainActivityData  extends ViewModel {
     private MutableLiveData<Integer> winCondition; //Number in a row needed to win the game
     private MutableLiveData<Integer> player1Icon;
     private MutableLiveData<Integer> player2Icon;
+    public MutableLiveData<Integer> currentFrag; //Represents current fragment displayed
     public MutableLiveData<ArrayList<Player>> playerList;
     MutableLiveData<Integer> userSelection_switcher;
     MutableLiveData<Integer> userSelection_profileToEdit;
@@ -108,5 +109,6 @@ public class MainActivityData  extends ViewModel {
     public void setPlayer1(Player player){player1.setValue(player);}
     public void setPlayer2(Player player){player2.setValue(player);}
 
+    public int getCurrentFrag() {return currentFrag.getValue();}
 
 }
