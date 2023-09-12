@@ -1,10 +1,8 @@
 package com.example.tictactoe;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.app.Dialog;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -116,7 +113,14 @@ public class fragment_user_selection extends Fragment {
                     toast.show();
                 }
                 else {
-                    dataStore.setUserSelection_switcher(1);
+                    ArrayList<Player> list = dataStore.getPlayerList();
+                    for(int i = 0; i < list.size(); i++) {
+                        if(list.get(i).getName().equals(p1_name) ||
+                                list.get(i).getName().equals(p2_name)) {
+                            dataStore.setUserCustomization_profileID(i);
+                        }
+                    }
+                    dataStore.setCurrentFrag(5);
                 }
             }
         });
@@ -125,16 +129,28 @@ public class fragment_user_selection extends Fragment {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Check whether player 1 is already in the table.
+                //Checks whether a profile with the same name already exists, if it does, update
+                //the image.
+                int profileChecker = 0;
+
+                // Check whether player 1 / player 2 are already in the table.
                 ArrayList<Player> list = dataStore.getPlayerList();
                 for(int i = 0; i < list.size(); i++) {
-                    if (!list.get(i).getName().equals(p1_name)) {
-                        dataStore.addToList(new Player(p1_name.toString(), R.drawable.empty_profile_pic_background));
-                        
+                    if (list.get(i).getName().equals(p1_name)) {
+                        dataStore.getPlayerList().get(i).setAvatar((int)p1_button.getTag());
+                        profileChecker++;
                     }
-
+                    if (list.get(i).getName().equals(p2_name)) {
+                        dataStore.getPlayerList().get(i).setAvatar((int)p2_button.getTag());
+                    }
                 }
-                // TODO currentFrag = 2
+                if(profileChecker == 0) {
+                    dataStore.addToList(
+                            new Player(
+                                    p1_name.toString(),
+                                    R.drawable.basic_profile_pic)
+                    );
+                }
             }
         });
 
@@ -142,7 +158,8 @@ public class fragment_user_selection extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //Takes the user back to the Menu page.
+                dataStore.setCurrentFrag(0);
             }
         });
 

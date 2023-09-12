@@ -1,10 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
-    <color name="grey">#FF808080</color>
+    <color name="button_blue">#63C5DA</color>
+    <color name="label_orange">#FECC91</color>
+    <color name="light_beige">#FFFDE7</color>
+    <color name="light_green">#C1E1C1</color>
+    <color name="light_red">#FAA0A0</color>
+    <color name="paled_blue">#757C88</color>
     <color name="white">#FFFFFFFF</color>
+    <string name="VS">VS</string>
     <string name="app_name">TicTacToe</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="back">BACK</string>
+    <string name="edit">EDIT</string>
+    <string name="fragment_menu_scores">SCORES</string>
+    <string name="fragment_menu_solo">SOLO</string>
+    <string name="fragment_menu_versus">VERSUS</string>
+    <string name="fragment_settings_boardsize_1">3 X 3</string>
+    <string name="fragment_settings_boardsize_2">4 X 4</string>
+    <string name="fragment_settings_boardsize_3">5 X 5</string>
+    <string name="fragment_settings_character_selection_O">O</string>
+    <string name="fragment_settings_character_selection_X">X</string>
+    <string name="fragment_settings_character_selection_p1">P1</string>
+    <string name="fragment_settings_character_selection_p2">P2</string>
+    <string name="fragment_settings_section_one_title">Board Size</string>
+    <string name="fragment_settings_section_three_title">Character Selection</string>
+    <string name="fragment_settings_section_two_title">Win Conditions</string>
+    <string name="fragment_settings_wincondition_1">3</string>
+    <string name="fragment_settings_wincondition_2">4</string>
+    <string name="fragment_settings_wincondition_3">5</string>
+    <string name="fragment_user_customization_back">BACK</string>
+    <string name="fragment_user_customization_save">SAVE</string>
+    <string name="fragment_user_selection_profiles">PLAYERS</string>
+    <string name="play">PLAY</string>
+    <string name="profile_1_image">Profile 1 Image</string>
     <style name="Base.Theme.TicTacToe" parent="Theme.Material3.DayNight.NoActionBar">
         
         

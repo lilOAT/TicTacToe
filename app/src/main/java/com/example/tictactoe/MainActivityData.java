@@ -14,7 +14,6 @@ public class MainActivityData  extends ViewModel {
     private MutableLiveData<Integer> player2Icon;
     public MutableLiveData<Integer> currentFrag; //Represents current fragment displayed
     public MutableLiveData<ArrayList<Player>> playerList;
-    MutableLiveData<Integer> userSelection_switcher;
     MutableLiveData<Integer> userSelection_profileToEdit;
     MutableLiveData<Integer> userCustomization_profileID;
 
@@ -29,7 +28,6 @@ public class MainActivityData  extends ViewModel {
         player1Icon = new MutableLiveData<>();
         player2Icon = new MutableLiveData<>();
         turnsTaken = new MutableLiveData<>();
-        userSelection_switcher = new MutableLiveData<>();
         userSelection_profileToEdit = new MutableLiveData<>();
         userCustomization_profileID = new MutableLiveData<>();
 
@@ -61,12 +59,10 @@ public class MainActivityData  extends ViewModel {
     public Player getPlayer1(){return player1.getValue();}
     public Player getPlayer2(){return player2.getValue();}
 
-    public int getUserSelection_switcher() {
-        return userSelection_switcher.getValue();
-    }
     public int getUserSelection_profileToEdit() {
         return userSelection_profileToEdit.getValue();
     }
+    public int getUserCustomization_profileID() {return userCustomization_profileID.getValue();}
 
     //Setter Methods
     public void setSize(int pSize){
@@ -88,9 +84,6 @@ public class MainActivityData  extends ViewModel {
 
     public void setTurnsTaken(int turns){turnsTaken.setValue(turns);}
 
-    public void setUserSelection_switcher(int value) {
-        userSelection_switcher.setValue(value);
-    }
     public void setUserSelection_profileToEdit(int value) {
         userSelection_profileToEdit.setValue(value);
     }
@@ -110,5 +103,7 @@ public class MainActivityData  extends ViewModel {
     public void setPlayer2(Player player){player2.setValue(player);}
 
     public int getCurrentFrag() {return currentFrag.getValue();}
+
+    public void setCurrentFrag(int fragNum) {currentFrag.setValue(fragNum);}
 
 }

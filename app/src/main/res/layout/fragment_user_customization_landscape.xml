@@ -101,7 +101,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/profile_select"
                 android:padding="10dp"
-                android:src="@drawable/profile_pic"
+                android:src="@drawable/basic_profile_pic"
                 android:scaleType="fitCenter" />
 
         </FrameLayout>

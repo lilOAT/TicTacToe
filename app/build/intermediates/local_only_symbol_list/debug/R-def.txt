@@ -1,7 +1,12 @@
 R_DEF: Internal format may change without notice
 local
 color black
-color grey
+color button_blue
+color label_orange
+color light_beige
+color light_green
+color light_red
+color paled_blue
 color white
 drawable baseball
 drawable basketball
@@ -28,12 +33,12 @@ drawable swap
 drawable tennisball
 drawable title_label
 drawable volleyball
+id actionBarFrame
 id actionBar_guideline1
 id actionBar_guideline2
 id action_bar
 id actionbutton
 id back_button
-id boardFrame
 id board_size_five
 id board_size_four
 id board_size_three
@@ -63,7 +68,8 @@ id ll_section_three_icons
 id ll_section_three_title
 id ll_section_two_buttons
 id ll_section_two_title
-id menuBar
+id mainFrameContainer
+id menuButton
 id menu_layout
 id p1_label
 id p1_logo
@@ -73,6 +79,7 @@ id pauseButton
 id play_button
 id player1
 id player2
+id playerAvatar
 id playerDraws
 id playerDrawsHeader
 id playerLosses
@@ -112,6 +119,7 @@ id swap_button
 id tableLayout
 id timer
 id title
+id titleBar
 id turnsAvailable
 id turnsTaken
 id undoButton
@@ -134,8 +142,31 @@ layout fragment_user_selection_landscape
 layout player_list_item_layout
 mipmap ic_launcher
 mipmap ic_launcher_round
+string VS
 string app_name
-string hello_blank_fragment
+string back
+string edit
+string fragment_menu_scores
+string fragment_menu_solo
+string fragment_menu_versus
+string fragment_settings_boardsize_1
+string fragment_settings_boardsize_2
+string fragment_settings_boardsize_3
+string fragment_settings_character_selection_O
+string fragment_settings_character_selection_X
+string fragment_settings_character_selection_p1
+string fragment_settings_character_selection_p2
+string fragment_settings_section_one_title
+string fragment_settings_section_three_title
+string fragment_settings_section_two_title
+string fragment_settings_wincondition_1
+string fragment_settings_wincondition_2
+string fragment_settings_wincondition_3
+string fragment_user_customization_back
+string fragment_user_customization_save
+string fragment_user_selection_profiles
+string play
+string profile_1_image
 style Base.Theme.TicTacToe
 style Theme.TicTacToe
 xml backup_rules
