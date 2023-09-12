@@ -43,4 +43,25 @@ public class Alerts {
         });
         alertDialog.show();
     }
+
+    public static void menuButtonAlert(Activity activity){
+        AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
+        alertDialog.setTitle("Menu Button");
+        alertDialog.setMessage("All game progress and settings will be reset");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                /*TODO set to main page
+                mainActivityDataViewModel.setPageNumber(MAINMENU)
+                 */
+            }
+        });
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Resume", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //do nothing
+            }
+        });
+        alertDialog.show();
+    }
 }
