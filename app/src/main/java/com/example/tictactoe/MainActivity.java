@@ -20,12 +20,15 @@ public class MainActivity extends AppCompatActivity {
     ScoreboardFragment scoreboardFragment = new ScoreboardFragment(); // 4
     UserCustomizationFragment userCustomizationFragment = new UserCustomizationFragment(); // 5
 
+
     private static final int MENUPAGE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        TextView titleText = findViewById(R.id.title);
 
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(this).get(MainActivityData.class);
 
@@ -39,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
         mainActivityDataViewModel.setVsAI(false);
 
         if(boardFrag==null){
-            fm.beginTransaction().add(R.id.mainFrameContainer,gameFragment).commit();
+            fm.beginTransaction().add(R.id.mainFrameContainer,menuFragment).commit();
+            titleText.setText("Main Menu");
         }
 
         mainActivityDataViewModel.currentFrag.observe(this, new Observer<Integer>() {
@@ -48,43 +52,45 @@ public class MainActivity extends AppCompatActivity {
                 // Menu Frag
                 if (mainActivityDataViewModel.getCurrentFrag() == 0) {
                     //TODO
-                    fm.beginTransaction().replace(R.id.);
+                    fm.beginTransaction().replace(R.id.mainFrameContainer,menuFragment);
+                    titleText.setText("Main Menu");
                 }
                 // User Select Frag
                 else if (mainActivityDataViewModel.getCurrentFrag() == 1) {
                     //TODO
-                    fm.beginTransaction().replace(R.id.);
+                    fm.beginTransaction().replace(R.id.mainFrameContainer,userSelectionFragment);
+                    titleText.setText("Main Menu");
                 }
                 // Game Frag
                 else if (mainActivityDataViewModel.getCurrentFrag() == 2) {
                     //TODO
-                    fm.beginTransaction().replace(R.id.);
+                    fm.beginTransaction().replace(R.id.mainFrameContainer,gameFragment);
                 }
                 // Settings Frag
                 else if (mainActivityDataViewModel.getCurrentFrag() == 3) {
                     //TODO
-                    fm.beginTransaction().replace(R.id.);
+                    fm.beginTransaction().replace(R.id.mainFrameContainer,settingsFragment);
+                    titleText
                 }
                 // Scores Frag
                 else if (mainActivityDataViewModel.getCurrentFrag() == 4) {
                     //TODO
-                    fm.beginTransaction().replace(R.id.);
+                    fm.beginTransaction().replace(R.id.mainFrameContainer,scoreboardFragment);
                 }
-                // Avatar Select Frag
+                // User Customization Frag
                 else if (mainActivityDataViewModel.getCurrentFrag() == 5) {
                     //TODO
-                    fm.beginTransaction().replace(R.id.);
+                    fm.beginTransaction().replace(R.id.mainFrameContainer,userCustomizationFragment);
                 }
             }
         });
 
         Button menuButton = findViewById(R.id.menuButton);
-        TextView titleText = findViewById(R.id.title);
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Alerts.menuButtonAlert(MainActivity.this);
-                titleText.setText("Main Menu");
+
             }
         });
     }

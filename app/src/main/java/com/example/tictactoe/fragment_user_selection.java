@@ -134,7 +134,7 @@ public class fragment_user_selection extends Fragment {
                     }
 
                 }
-
+                // TODO currentFrag = 2
             }
         });
 
