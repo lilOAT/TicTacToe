@@ -3,6 +3,7 @@ package com.example.tictactoe;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -44,9 +45,19 @@ public class fragment_settings extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_settings, container,
-                false);
+        int screenOrientation = getResources().getConfiguration().orientation;
+
+        View rootView;
+
+        if (screenOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // Inflate the layout for this fragment
+            rootView = inflater.inflate(R.layout.fragment_settings_landscape, container,
+                    false);
+        } else {
+            // Inflate the layout for this fragment
+            rootView = inflater.inflate(R.layout.fragment_settings, container,
+                    false);
+        }
 
         //Linking java to XML layout.
 

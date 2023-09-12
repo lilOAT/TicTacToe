@@ -3,6 +3,7 @@ package com.example.tictactoe;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,16 +19,28 @@ public class fragment_menu extends Fragment {
     Button scoresButton;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_menu, container,
-                false);
+        int screenOrientation = getResources().getConfiguration().orientation;
+
+        View rootView;
+
+        if (screenOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // Inflate the layout for this fragment
+            rootView = inflater.inflate(R.layout.fragment_menu_landscape, container,
+                    false);
+        } else {
+            // Inflate the layout for this fragment
+            rootView = inflater.inflate(R.layout.fragment_menu, container,
+                    false);
+        }
 
         //Linking to XML file.
 
@@ -57,7 +70,7 @@ public class fragment_menu extends Fragment {
         scoresButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Before loading ScoreboardFragment, sort the ArrayList<Player> by wins
+
             }
         });
 
