@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class fragment_user_selection extends Fragment {
+public class FragmentUserSelection extends Fragment {
 
     //Declaring all actionable elements.
     EditText p1_name;

@@ -12,10 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
 
-public class fragment_user_customization extends Fragment {
+public class FragmentUserCustomization extends Fragment {
 
     //Declaring all actionable elements.
     //Profile Name.

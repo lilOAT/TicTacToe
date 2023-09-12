@@ -1,10 +1,8 @@
 package com.example.tictactoe;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class fragment_settings extends Fragment {
+public class FragmentSettings extends Fragment {
     //Declaring all actionable elements.
 
     //Board size.

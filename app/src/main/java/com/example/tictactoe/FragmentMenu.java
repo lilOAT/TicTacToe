@@ -1,6 +1,5 @@
 package com.example.tictactoe;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.res.Configuration;
@@ -10,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-public class fragment_menu extends Fragment {
+public class FragmentMenu extends Fragment {
 
     //Declaring all actionable elements.
 

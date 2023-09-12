@@ -5,7 +5,7 @@
     android:id="@+id/layout_settings"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment_settings">
+    tools:context=".FragmentSettings">
 
     <!-- Set the boundaries of each section in settings. -->
     <androidx.constraintlayout.widget.Guideline
