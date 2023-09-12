@@ -36,7 +36,7 @@ public class WinChecker {
         int count = 0;
         char currChar;
         for(int i = 0; i < size; i++) {
-            currChar = board[i][0];
+            currChar = board[0][i];
             for(int j = 0; j < size; j++) {
                 if(board[j][i] == currChar && board[j][i]!=' ') {
                     count++;
