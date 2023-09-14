@@ -1,7 +1,5 @@
 package com.example.tictactoe;
 
-import android.content.res.Resources;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -19,8 +17,6 @@ public class MainActivityData  extends ViewModel {
     MutableLiveData<Integer> userSelection_profileToEdit;
     MutableLiveData<Integer> userCustomization_profileID;
 
-    public MutableLiveData<Integer> turnsTaken;
-
     private MutableLiveData<Player> player1, player2;
 
     public MainActivityData(){
@@ -29,7 +25,6 @@ public class MainActivityData  extends ViewModel {
         winCondition = new MutableLiveData<>();
         player1Icon = new MutableLiveData<>();
         player2Icon = new MutableLiveData<>();
-        turnsTaken = new MutableLiveData<>();
         userSelection_profileToEdit = new MutableLiveData<>();
         userCustomization_profileID = new MutableLiveData<>();
         currentFrag = new MutableLiveData<>();
@@ -39,7 +34,6 @@ public class MainActivityData  extends ViewModel {
         winCondition.setValue(3);
         player1Icon.setValue(R.drawable.cross);
         player2Icon.setValue(R.drawable.nought);
-        turnsTaken.setValue(0);
 
         //Player Data
         ArrayList<Player> list = new ArrayList<Player>();
@@ -59,7 +53,6 @@ public class MainActivityData  extends ViewModel {
     }
     public int getPlayer1Icon(){return player1Icon.getValue();}
     public int getPlayer2Icon(){return player2Icon.getValue();}
-    public int getTurnsTaken(){return turnsTaken.getValue();}
 
     public Player getPlayer1(){return player1.getValue();}
     public Player getPlayer2(){return player2.getValue();}
@@ -86,8 +79,6 @@ public class MainActivityData  extends ViewModel {
     public void setPlayer2Icon(int p2IconRID) {
         player2Icon.setValue(p2IconRID);
     }
-
-    public void setTurnsTaken(int turns){turnsTaken.setValue(turns);}
 
     public void setUserSelection_profileToEdit(int value) {
         userSelection_profileToEdit.setValue(value);

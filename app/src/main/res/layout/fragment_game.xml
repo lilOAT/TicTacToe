@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/buttonLayout"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -74,6 +74,69 @@
             android:text="Reset"
             android:id="@+id/resetButton"
             android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/buttonLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.25"
+            android:orientation="vertical"
+            android:id="@+id/turnsLayout"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="Turn: 0"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:id="@+id/turnsTakenText"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="Available: "
+                android:textAlignment="center"
+                android:gravity="center"
+                android:id="@+id/turnsAvailableText"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:id="@+id/timer"
+            android:text="0"
+            android:textAlignment="center"
+            android:gravity="center"
+            />
+
+        <Chronometer
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:id="@+id/chronometer"
+            android:textAlignment="center"
+            android:gravity="center"/>
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.25"
+            android:scaleType="fitCenter"
+            android:src="@drawable/pause"
+            android:id="@+id/pauseButton"/>
 
     </LinearLayout>
 

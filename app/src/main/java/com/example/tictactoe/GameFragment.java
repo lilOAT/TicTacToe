@@ -4,12 +4,16 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Chronometer;
+import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -31,6 +35,9 @@ public class GameFragment extends Fragment {
     private Player player1, player2;
 
     private TextView player1Name, player2Name;
+    private int timer_in_seconds;
+    private MutableLiveData<Integer> turnsTaken;
+    private boolean timerRunning;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +56,8 @@ public class GameFragment extends Fragment {
         //Set defaults
         player1Turn = true;
         lastButtonTouched = new ArrayList<>();
+        turnsTaken = new MutableLiveData<>();
+        turnsTaken.setValue(0);
 
         //Get data from dataviewmodel
         size = mainActivityDataViewModel.getSize();
@@ -65,6 +74,11 @@ public class GameFragment extends Fragment {
         player2Name = rootView.findViewById(R.id.player2);
         player2Name.setText(player2.getName());
         player1Turn=true;
+        TextView turnsTakenText = rootView.findViewById(R.id.turnsTakenText);
+
+        TextView turnsAvailableText = rootView.findViewById(R.id.turnsAvailableText);
+        TextView timerText = rootView.findViewById(R.id.timer);
+        ImageButton pauseButton = rootView.findViewById(R.id.pauseButton);
 
         //Establish background game board
         gameArray = new char[size][size];
@@ -74,13 +88,21 @@ public class GameFragment extends Fragment {
 
         //Update if saved state exists
         if(savedInstanceState!=null){
-            player1Turn = savedInstanceState.getBoolean("PLAYERTURN");
-            char[] game1Line = savedInstanceState.getCharArray("GAMEBOARD");
+            player1Turn = savedInstanceState.getBoolean("PLAYERTURN"); //Find out who's turn it currently is
+            char[] game1Line = savedInstanceState.getCharArray("GAMEBOARD"); //Access the previous game board
             for (int i = 0; i < game1Line.length; i++) {
                 gameArray[i/size][i%size] = game1Line[i];
             }
-            lastButtonTouched.addAll((ArrayList<Button>) savedInstanceState.getSerializable("PREVTURNS"));
+            lastButtonTouched.addAll((ArrayList<Button>) savedInstanceState.getSerializable("PREVTURNS")); //Get the list of buttons touched
             System.out.println(lastButtonTouched.size());
+
+            timer_in_seconds = savedInstanceState.getInt("timeSec");
+            timerText.setText(getTime(timer_in_seconds));
+            timerRunning = savedInstanceState.getBoolean("timeRun");
+
+            turnsTaken.setValue(savedInstanceState.getInt("turnsTakenInt"));
+            turnsTakenText.setText("Turns: "+String.valueOf(turnsTaken.getValue()));
+            turnsAvailableText.setText("Available: "+String.valueOf(size*size-turnsTaken.getValue()));
         }
 
         //Begin creating grid of buttons
@@ -149,7 +171,7 @@ public class GameFragment extends Fragment {
                             checkGameWin(); //Check if new turn has won the game
 
                             //Update turns and available
-                            mainActivityDataViewModel.setTurnsTaken(lastButtonTouched.size());
+                            turnsTaken.setValue(lastButtonTouched.size());
                         }
                         else{
                             //If player selects an invalid move, warn them
@@ -171,7 +193,7 @@ public class GameFragment extends Fragment {
                     if(vsAI){
                         undoMove();
                     }
-                    mainActivityDataViewModel.setTurnsTaken(lastButtonTouched.size());
+                    turnsTaken.setValue(lastButtonTouched.size());
                 }
 
             }
@@ -186,8 +208,40 @@ public class GameFragment extends Fragment {
                     for (int i = 0; i < timesToIterate; i++) {
                         undoMove();
                     }
-                    mainActivityDataViewModel.setTurnsTaken(lastButtonTouched.size());
+                    turnsTaken.setValue(lastButtonTouched.size());
                 }
+            }
+        });
+
+        //Observe when players make turns, update turns available and taken
+        turnsTaken.observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                turnsTakenText.setText("Turns: "+turnsTaken.getValue());
+                turnsAvailableText.setText("Available: "+(size*size-turnsTaken.getValue()));
+            }
+        });
+
+        //Establish chronometer for timer
+        Chronometer chronometer = rootView.findViewById(R.id.chronometer);
+        chronometer.start();
+
+        //When chronometer ticks, if the timer is running, increase it
+        chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+            @Override
+            public void onChronometerTick(Chronometer chronometer) {
+                if(timerRunning){
+                    timer_in_seconds++;
+                    timerText.setText(getTime(timer_in_seconds));
+                }
+            }
+        });
+
+        pauseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                timerRunning=!timerRunning;
+                //TODO Change button to play button
             }
         });
 
@@ -284,5 +338,17 @@ public class GameFragment extends Fragment {
 
         //Save previous turns taken
         outState.putSerializable("PREVTURNS", lastButtonTouched);
+
+        outState.putInt("timeSec",timer_in_seconds); //Save timer value
+        outState.putBoolean("timeRun",timerRunning); //Save if timer is running
+        outState.putInt("turnsTakenInt", turnsTaken.getValue());
+    }
+
+    //Translate time in seconds to clock for printing
+    public String getTime(int timeInSeconds){
+        int hours = timeInSeconds/3600;
+        int minutes = timeInSeconds/60;
+        int seconds = timeInSeconds%60;
+        return hours+":"+minutes+":"+seconds;
     }
 }
