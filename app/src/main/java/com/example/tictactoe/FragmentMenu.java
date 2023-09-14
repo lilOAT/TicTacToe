@@ -1,7 +1,6 @@
 package com.example.tictactoe;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.res.Configuration;
@@ -62,7 +61,8 @@ public class FragmentMenu extends Fragment {
         soloButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO set game mode to solo vs AI
+                //TODO Update player selection menu to only allow 1 player to be selected vs AI
+                mainActivityDataViewModel.setVsAI(true);
                 mainActivityDataViewModel.currentFrag.setValue(1);
             }
         });
@@ -71,7 +71,7 @@ public class FragmentMenu extends Fragment {
         versusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO set game mode to player vs mode
+                mainActivityDataViewModel.setVsAI(false);
                 mainActivityDataViewModel.currentFrag.setValue(1);
             }
         });
