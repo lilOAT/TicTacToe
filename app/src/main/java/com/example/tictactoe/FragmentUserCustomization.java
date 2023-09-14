@@ -73,63 +73,63 @@ public class FragmentUserCustomization extends Fragment {
             @Override
             public void onClick(View view) {
                 profile1Image.setBackgroundResource(R.drawable.profile_edit_mode);
-                dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar((int)profile1Image.getTag());
+                dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar("basic");
             }
         });
         profile2Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 profile2Image.setBackgroundResource(R.drawable.profile_edit_mode);
-                dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar((int)profile2Image.getTag());
+                dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar("baseball");
             }
         });
         profile3Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 profile3Image.setBackgroundResource(R.drawable.profile_edit_mode);
-                dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar((int)profile3Image.getTag());
+                dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar("basketball");
             }
         });
         profile4Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 profile4Image.setBackgroundResource(R.drawable.profile_edit_mode);
-                dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar((int)profile4Image.getTag());
+                dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar("bowlingball");
             }
         });
         profile5Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 profile5Image.setBackgroundResource(R.drawable.profile_edit_mode);
-                dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar((int)profile5Image.getTag());
+                dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar("eightball");
             }
         });
         profile6Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 profile6Image.setBackgroundResource(R.drawable.profile_edit_mode);
-                dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar((int)profile6Image.getTag());
+                dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar("charpic");
             }
         });
         profile7Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 profile7Image.setBackgroundResource(R.drawable.profile_edit_mode);
-                dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar((int)profile7Image.getTag());
+                dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar("soccerball");
             }
         });
         profile8Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 profile8Image.setBackgroundResource(R.drawable.profile_edit_mode);
-                dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar((int)profile8Image.getTag());
+                dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar("volleyball");
             }
         });
         profile9Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 profile9Image.setBackgroundResource(R.drawable.profile_edit_mode);
-                dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar((int)profile9Image.getTag());
+                dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar("tennisball");
             }
         });
 

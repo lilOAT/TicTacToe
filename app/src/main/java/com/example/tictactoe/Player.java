@@ -12,12 +12,12 @@ import androidx.lifecycle.MutableLiveData;
  */
 public class Player {
     private String name;
-    private int avatar;
+    private String avatar;
     private int wins;
     private int losses;
     private int draws;
 
-    public Player(String inName, int inAvatar) {
+    public Player(String inName, String inAvatar) {
         name = inName;
         avatar = inAvatar;
         wins = 0;
@@ -31,10 +31,10 @@ public class Player {
     public void setName(String inName) {
         name = inName;
     }
-    public int getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
-    public void setAvatar(int inAvatar) {
+    public void setAvatar(String inAvatar) {
         avatar = inAvatar;
     }
     public int getWins() {

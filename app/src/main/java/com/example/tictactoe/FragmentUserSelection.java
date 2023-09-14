@@ -4,12 +4,14 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.res.Configuration;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -19,8 +21,8 @@ public class FragmentUserSelection extends Fragment {
     //Declaring all actionable elements.
     EditText p1_name;
     EditText p2_name;
-    Button p1_button;
-    Button p2_button;
+    ImageButton p1_button;
+    ImageButton p2_button;
     Button editButton;
     Button playButton;
     Button backButton;
@@ -72,6 +74,18 @@ public class FragmentUserSelection extends Fragment {
         p1_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(dataStore.getUserSelection_profileToEdit() == 2) {
+                    p2_button.setBackgroundResource(R.drawable.profile_standby);
+                }
+
+                for(int i = 0; i < dataStore.getPlayerList().size(); i++) {
+                    if(dataStore.getPlayerList().get(i).getName().equals(p1_name)) {
+                        p1_button.setImageBitmap(
+                                dataStore.getImagesList()
+                                        .get(dataStore.getPlayerList().get(i).getAvatar()));
+                    }
+                }
+
                 //When selected, change the colour of the button's edge and set edit value to 1.
                 if(dataStore.getUserSelection_profileToEdit() == 0 ||
                     dataStore.getUserSelection_profileToEdit() == 2)
@@ -89,6 +103,18 @@ public class FragmentUserSelection extends Fragment {
         p2_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(dataStore.getUserSelection_profileToEdit() == 1) {
+                    p1_button.setBackgroundResource(R.drawable.profile_standby);
+                }
+
+                for(int i = 0; i < dataStore.getPlayerList().size(); i++) {
+                    if(dataStore.getPlayerList().get(i).getName().equals(p2_name)) {
+                        p2_button.setImageBitmap(
+                                dataStore.getImagesList()
+                                        .get(dataStore.getPlayerList().get(i).getAvatar()));
+                    }
+                }
+
                 //When selected, change the colour of the button's edge and set edit value to 2.
                 if(dataStore.getUserSelection_profileToEdit() == 0 ||
                         dataStore.getUserSelection_profileToEdit() == 1)
@@ -113,13 +139,30 @@ public class FragmentUserSelection extends Fragment {
                     toast.show();
                 }
                 else {
-                    ArrayList<Player> list = dataStore.getPlayerList();
-                    for(int i = 0; i < list.size(); i++) {
-                        if(list.get(i).getName().equals(p1_name) ||
-                                list.get(i).getName().equals(p2_name)) {
+                    /*for(int i  = 0; i < dataStore.getPlayerList().size(); i++) {
+                        if(dataStore.getPlayerList().get(i).getName().equals(p1_name)) {
                             dataStore.setUserCustomization_profileID(i);
                         }
-                    }
+                        else if(dataStore.getPlayerList().get(i).getName().equals(p2_name)) {
+                            dataStore.setUserCustomization_profileID(i);
+                        }
+                        else if(i == dataStore.getPlayerList().size() - 1) {
+                            System.out.println("player list size : " + dataStore.getPlayerList().size());
+                            if(dataStore.getUserSelection_profileToEdit() == 1) {
+                                dataStore.addProfile(
+                                        new Player(p1_name.toString(), "basic")
+                                );
+                            }
+                            else if(dataStore.getUserSelection_profileToEdit() == 2) {
+                                dataStore.addProfile(
+                                        new Player(p2_name.toString(), "basic")
+                                );
+                            }
+                        }
+                    } */
+
+                    System.out.println("size : " + dataStore.getPlayerList().toString());
+
                     dataStore.setCurrentFrag(5);
                 }
             }
@@ -137,18 +180,18 @@ public class FragmentUserSelection extends Fragment {
                 ArrayList<Player> list = dataStore.getPlayerList();
                 for(int i = 0; i < list.size(); i++) {
                     if (list.get(i).getName().equals(p1_name)) {
-                        dataStore.getPlayerList().get(i).setAvatar((int)p1_button.getTag());
+                        dataStore.getPlayerList().get(i).setAvatar("");
                         profileChecker++;
                     }
                     if (list.get(i).getName().equals(p2_name)) {
-                        dataStore.getPlayerList().get(i).setAvatar((int)p2_button.getTag());
+                        dataStore.getPlayerList().get(i).setAvatar("");
                     }
                 }
                 if(profileChecker == 0) {
-                    dataStore.addToList(
+                    dataStore.addProfile(
                             new Player(
                                     p1_name.toString(),
-                                    R.drawable.basic_profile_pic)
+                                    "")
                     );
                 }
             }

@@ -10,6 +10,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -35,11 +37,33 @@ public class MainActivity extends AppCompatActivity {
 
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(this).get(MainActivityData.class);
 
+        //Setting up the profile images list.
+        Bitmap baseball = BitmapFactory.decodeResource(getResources(), R.drawable.baseball);
+        Bitmap basic_profile_pic = BitmapFactory.decodeResource(getResources(), R.drawable.basic_profile_pic);
+        Bitmap basketball = BitmapFactory.decodeResource(getResources(), R.drawable.basketball);
+        Bitmap bowlingball = BitmapFactory.decodeResource(getResources(), R.drawable.bowlingball);
+        Bitmap eightball = BitmapFactory.decodeResource(getResources(), R.drawable.eightball);
+        Bitmap charpic = BitmapFactory.decodeResource(getResources(), R.drawable.charpic1);
+        Bitmap soccerball = BitmapFactory.decodeResource(getResources(), R.drawable.soccerball);
+        Bitmap tennisball = BitmapFactory.decodeResource(getResources(), R.drawable.tennisball);
+        Bitmap volleyball = BitmapFactory.decodeResource(getResources(), R.drawable.volleyball);
+
+        mainActivityDataViewModel.addProfileImage("baseball", baseball);
+        mainActivityDataViewModel.addProfileImage("basic", basic_profile_pic);
+        mainActivityDataViewModel.addProfileImage("basketball", basketball);
+        mainActivityDataViewModel.addProfileImage("bowlingball", bowlingball);
+        mainActivityDataViewModel.addProfileImage("eightball", eightball);
+        mainActivityDataViewModel.addProfileImage("charpic", charpic);
+        mainActivityDataViewModel.addProfileImage("soccerball", soccerball);
+        mainActivityDataViewModel.addProfileImage("tennisball", tennisball);
+        mainActivityDataViewModel.addProfileImage("volleyball", volleyball);
+
+
         //TODO DEBUGGING
         //The following method is to populate the player list with dummy players for debugging
-            Player player1 = new Player("player1", getResources().getIdentifier("baseball", null,null));
-            Player player2 = new Player("player2", getResources().getIdentifier("baseball", null,null));
-            Player player3 = new Player("player3", getResources().getIdentifier("baseball", null,null));
+            Player player1 = new Player("player1", "baseball");
+            Player player2 = new Player("player2", "baseball");
+            Player player3 = new Player("player3", "baseball");
             ArrayList<Player> list = new ArrayList<Player>();
             list.add(player1);
             list.add(player2);

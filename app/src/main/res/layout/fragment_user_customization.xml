@@ -101,7 +101,7 @@
                 android:id="@+id/profile1Image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/profile_select"
+                android:background="@drawable/profile_standby"
                 android:padding="10dp"
                 android:src="@drawable/basic_profile_pic"
                 android:scaleType="fitCenter" />
@@ -122,7 +122,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/baseball"
-                android:background="@drawable/profile_select"
+                android:background="@drawable/profile_standby"
                 android:padding="10dp"
                 android:scaleType="fitCenter" />
 
@@ -142,7 +142,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/basketball"
-                android:background="@drawable/profile_select"
+                android:background="@drawable/profile_standby"
                 android:padding="10dp"
                 android:scaleType="fitCenter" />
 
@@ -162,7 +162,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/bowlingball"
-                android:background="@drawable/profile_select"
+                android:background="@drawable/profile_standby"
                 android:padding="10dp"
                 android:scaleType="fitCenter"  />
 
@@ -182,7 +182,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/eightball"
-                android:background="@drawable/profile_select"
+                android:background="@drawable/profile_standby"
                 android:padding="10dp"
                 android:scaleType="fitCenter" />
 
@@ -202,7 +202,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/charpic1"
-                android:background="@drawable/profile_select"
+                android:background="@drawable/profile_standby"
                 android:padding="10dp"
                 android:scaleType="fitCenter" />
 
@@ -222,7 +222,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/soccerball"
-                android:background="@drawable/profile_select"
+                android:background="@drawable/profile_standby"
                 android:padding="10dp"
                 android:scaleType="fitCenter"  />
 
@@ -242,7 +242,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/volleyball"
-                android:background="@drawable/profile_select"
+                android:background="@drawable/profile_standby"
                 android:padding="10dp"
                 android:scaleType="fitCenter" />
 
@@ -262,7 +262,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/tennisball"
-                android:background="@drawable/profile_select"
+                android:background="@drawable/profile_standby"
                 android:padding="10dp"
                 android:scaleType="fitCenter" />
 

@@ -29,7 +29,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerVH> {
     @Override
     public void onBindViewHolder(@NonNull PlayerVH holder, int position) {
         Player singleData = data.get(position);
-        holder.avatar.setImageResource(singleData.getAvatar());
+        //TODO change this to get image bitmap : holder.avatar.setImageBitmap(singleData. GET BITMAP THINGS);
         holder.name.setText(singleData.getName());
         holder.wins.setText(String.valueOf(singleData.getWins()));
         holder.losses.setText(String.valueOf(singleData.getLosses()));

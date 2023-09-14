@@ -75,7 +75,7 @@
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@drawable/profile_select"
+            android:background="@drawable/profile_standby"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="@id/profilesGuideline1"
@@ -85,7 +85,7 @@
                 android:id="@+id/profile1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/profile_select"
+                android:background="@drawable/profile_standby"
                 android:padding="30dp"
                 android:src="@drawable/basic_profile_pic"
                 android:scaleType="fitCenter" />
@@ -120,7 +120,7 @@
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@drawable/profile_select"
+            android:background="@drawable/profile_standby"
             app:layout_constraintStart_toStartOf="@id/profilesGuideline2"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent  "
@@ -130,7 +130,7 @@
                 android:id="@+id/profile2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/profile_select"
+                android:background="@drawable/profile_standby"
                 android:padding="30dp"
                 android:src="@drawable/basic_profile_pic"
                 android:scaleType="fitCenter" />

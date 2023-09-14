@@ -1,9 +1,12 @@
 package com.example.tictactoe;
 
+import android.graphics.Bitmap;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 public class MainActivityData  extends ViewModel {
 
@@ -14,8 +17,10 @@ public class MainActivityData  extends ViewModel {
     private MutableLiveData<Integer> player2Icon;
     public MutableLiveData<Integer> currentFrag; //Represents current fragment displayed
     public MutableLiveData<ArrayList<Player>> playerList;
-    MutableLiveData<Integer> userSelection_profileToEdit;
-    MutableLiveData<Integer> userCustomization_profileID;
+
+    private MutableLiveData<Hashtable<String, Bitmap>> imagesTable;
+    private MutableLiveData<Integer> userSelection_profileToEdit;
+    private MutableLiveData<Integer> userCustomization_profileID;
 
     private MutableLiveData<Player> player1, player2;
 
@@ -34,11 +39,17 @@ public class MainActivityData  extends ViewModel {
         winCondition.setValue(3);
         player1Icon.setValue(R.drawable.cross);
         player2Icon.setValue(R.drawable.nought);
+        userSelection_profileToEdit.setValue(0);
+        userCustomization_profileID.setValue(-1);
 
         //Player Data
         ArrayList<Player> list = new ArrayList<Player>();
         playerList = new MutableLiveData<ArrayList<Player>>();
         playerList.setValue(list);
+
+        //Profile Images.
+        imagesTable = new MutableLiveData<Hashtable<String, Bitmap>>();
+        imagesTable.setValue(new Hashtable<String, Bitmap>());
     }
 
     //Getter Methods
@@ -56,6 +67,10 @@ public class MainActivityData  extends ViewModel {
 
     public Player getPlayer1(){return player1.getValue();}
     public Player getPlayer2(){return player2.getValue();}
+
+    public Hashtable<String, Bitmap> getImagesList() {
+        return imagesTable.getValue();
+    }
 
     public int getUserSelection_profileToEdit() {
         return userSelection_profileToEdit.getValue();
@@ -80,6 +95,10 @@ public class MainActivityData  extends ViewModel {
         player2Icon.setValue(p2IconRID);
     }
 
+    public void addProfileImage(String name, Bitmap newImage) {
+        imagesTable.getValue().put(name, newImage);
+    }
+
     public void setUserSelection_profileToEdit(int value) {
         userSelection_profileToEdit.setValue(value);
     }
@@ -91,7 +110,7 @@ public class MainActivityData  extends ViewModel {
         return playerList.getValue();
     }
 
-    public void addToList(Player player) {
+    public void addProfile(Player player) {
         playerList.getValue().add(player);
     }
 
