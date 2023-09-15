@@ -6,10 +6,20 @@
     android:layout_height="match_parent"
     android:id="@+id/fragmentContainer">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Player Turn:"
+        android:textAlignment="center"
+        android:id="@+id/playerTurnText"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playerTurnText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/playerNames">
@@ -50,8 +60,7 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/actionBar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        style="?android:attr/buttonBarStyle">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <Button
             android:layout_width="wrap_content"
@@ -63,8 +72,7 @@
             android:layout_marginTop="10dp"
             android:text="Undo"
             android:id="@+id/undoButton"
-            android:layout_weight="1"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:layout_weight="1"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -76,8 +84,7 @@
             android:layout_marginTop="10dp"
             android:text="Reset"
             android:id="@+id/resetButton"
-            android:layout_weight="1"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:layout_weight="1"/>
 
     </LinearLayout>
 
