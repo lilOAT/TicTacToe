@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
             list.add(player2);
             list.add(player3);
             mainActivityDataViewModel.playerList.setValue(list);
+            // TODO Debugging: allocate player1 and player2 for testing
             mainActivityDataViewModel.setPlayer1(player1);
             mainActivityDataViewModel.setPlayer2(player2);
 
