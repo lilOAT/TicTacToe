@@ -17,6 +17,7 @@ public class FragmentMenu extends Fragment {
     Button soloButton;
     Button versusButton;
     Button scoresButton;
+    Button settingsButton;
 
     //TODO add settings button
 
@@ -54,6 +55,7 @@ public class FragmentMenu extends Fragment {
         soloButton = rootView.findViewById(R.id.soloButton);
         versusButton = rootView.findViewById(R.id.versusButton);
         scoresButton = rootView.findViewById(R.id.scoresButton);
+        settingsButton = rootView.findViewById(R.id.settingsButton);
 
         // **********************************************
 
@@ -81,6 +83,13 @@ public class FragmentMenu extends Fragment {
             @Override
             public void onClick(View view) {
                 mainActivityDataViewModel.currentFrag.setValue(4);
+            }
+        });
+
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivityDataViewModel.currentFrag.setValue(3);
             }
         });
 
