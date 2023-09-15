@@ -25,7 +25,6 @@ public class FragmentUserSelection extends Fragment {
     ImageButton p2_button;
     Button editButton;
     Button playButton;
-    Button backButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
@@ -66,7 +65,6 @@ public class FragmentUserSelection extends Fragment {
         //Action Bar
         editButton = rootView.findViewById(R.id.edit_button);
         playButton = rootView.findViewById(R.id.play_button);
-        backButton = rootView.findViewById(R.id.back_button);
 
         // **********************************************
 
@@ -174,7 +172,7 @@ public class FragmentUserSelection extends Fragment {
             public void onClick(View view) {
                 //Checks whether a profile with the same name already exists, if it does, update
                 //the image.
-                int profileChecker = 0;
+                int profileChecker = -1; //TODO - Debugging: change back to 0
 
                 // Check whether player 1 / player 2 are already in the table.
                 ArrayList<Player> list = dataStore.getPlayerList();
@@ -194,15 +192,8 @@ public class FragmentUserSelection extends Fragment {
                                     "")
                     );
                 }
-            }
-        });
-
-        //Logic for the Back Button.
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Takes the user back to the Menu page.
-                dataStore.setCurrentFrag(0);
+                //TODO - Debugging
+                    dataStore.setCurrentFrag(2);
             }
         });
 

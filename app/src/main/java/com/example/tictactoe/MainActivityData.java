@@ -17,11 +17,9 @@ public class MainActivityData  extends ViewModel {
     private MutableLiveData<Integer> player2Icon;
     public MutableLiveData<Integer> currentFrag; //Represents current fragment displayed
     public MutableLiveData<ArrayList<Player>> playerList;
-
     private MutableLiveData<Hashtable<String, Bitmap>> imagesTable;
     private MutableLiveData<Integer> userSelection_profileToEdit;
     private MutableLiveData<Integer> userCustomization_profileID;
-
     private MutableLiveData<Player> player1, player2;
 
     public MainActivityData(){
@@ -33,6 +31,9 @@ public class MainActivityData  extends ViewModel {
         userSelection_profileToEdit = new MutableLiveData<>();
         userCustomization_profileID = new MutableLiveData<>();
         currentFrag = new MutableLiveData<>();
+        currentFrag.setValue(-1);
+        player1 = new MutableLiveData<Player>();
+        player2 = new MutableLiveData<Player>();
 
         //Set Default Values
         size.setValue(3);

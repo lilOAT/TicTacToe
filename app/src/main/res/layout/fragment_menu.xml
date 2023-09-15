@@ -51,8 +51,20 @@
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/square_button"
             android:text="@string/fragment_menu_scores"
+            android:textSize="30sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/settingsButton"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/square_button"
+            android:text="SETTINGS"
             android:textSize="30sp" />
 
     </LinearLayout>

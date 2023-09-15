@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         TextView titleText = findViewById(R.id.title);
+        Button menuButton = findViewById(R.id.menuButton);
 
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(this).get(MainActivityData.class);
 
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         mainActivityDataViewModel.addProfileImage("volleyball", volleyball);
 
 
-        //TODO DEBUGGING
+        //TODO DEBUGGING - REMOVE AFTER TESTING COMPLETE!!!!!!!!!
         //The following method is to populate the player list with dummy players for debugging
             Player player1 = new Player("player1", "baseball");
             Player player2 = new Player("player2", "baseball");
@@ -69,19 +70,19 @@ public class MainActivity extends AppCompatActivity {
             list.add(player2);
             list.add(player3);
             mainActivityDataViewModel.playerList.setValue(list);
-            //playerList.getValue().add(player1);
-            //playerList.getValue().add(player2);
-            //playerList.getValue().add(player3);
-
-        //TODO Set fragment to main menu, call subsequent fragments from fragments.
+            mainActivityDataViewModel.setPlayer1(player1);
+            mainActivityDataViewModel.setPlayer2(player2);
 
         //TODO Let values be set from menu fragments
         mainActivityDataViewModel.setSize(3);
         mainActivityDataViewModel.setWinCondition(3);
         mainActivityDataViewModel.setVsAI(false);
 
-        loadMenuFragment();
-        titleText.setText("Main Menu");
+        //Loads menu fragment
+        if(mainActivityDataViewModel.getCurrentFrag() == -1) {
+            mainActivityDataViewModel.setCurrentFrag(0);
+        }
+
 
         mainActivityDataViewModel.currentFrag.observe(this, new Observer<Integer>() {
             @Override
@@ -117,10 +118,15 @@ public class MainActivity extends AppCompatActivity {
                     loadUserCustomizationFragment();
                     titleText.setText("Player Customization");
                 }
+                //Hide Menu button if at menu
+                if(mainActivityDataViewModel.getCurrentFrag() == 0) {
+                    findViewById(R.id.menuButton).setVisibility(View.INVISIBLE);
+                } else {
+                    findViewById(R.id.menuButton).setVisibility(View.VISIBLE);
+                }
             }
         });
 
-        Button menuButton = findViewById(R.id.menuButton);
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
