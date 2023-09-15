@@ -137,29 +137,29 @@ public class FragmentUserSelection extends Fragment {
                     toast.show();
                 }
                 else {
-                    /*for(int i  = 0; i < dataStore.getPlayerList().size(); i++) {
+                    int i = 0;
+                    while(i < dataStore.getPlayerList().size()) {
                         if(dataStore.getPlayerList().get(i).getName().equals(p1_name)) {
                             dataStore.setUserCustomization_profileID(i);
                         }
                         else if(dataStore.getPlayerList().get(i).getName().equals(p2_name)) {
                             dataStore.setUserCustomization_profileID(i);
                         }
-                        else if(i == dataStore.getPlayerList().size() - 1) {
-                            System.out.println("player list size : " + dataStore.getPlayerList().size());
-                            if(dataStore.getUserSelection_profileToEdit() == 1) {
-                                dataStore.addProfile(
-                                        new Player(p1_name.toString(), "basic")
-                                );
-                            }
-                            else if(dataStore.getUserSelection_profileToEdit() == 2) {
-                                dataStore.addProfile(
-                                        new Player(p2_name.toString(), "basic")
-                                );
-                            }
+                        i++;
+                    }
+                    if(i == dataStore.getPlayerList().size()) {
+                        if(dataStore.getUserSelection_profileToEdit() == 1) {
+                            dataStore.addProfile(
+                                    new Player(p1_name.getText().toString(), "basic")
+                            );
                         }
-                    } */
-
-                    System.out.println("size : " + dataStore.getPlayerList().toString());
+                        else if(dataStore.getUserSelection_profileToEdit() == 2) {
+                            dataStore.addProfile(
+                                    new Player(p2_name.getText().toString(), "basic")
+                            );
+                        }
+                        dataStore.setUserCustomization_profileID(dataStore.getPlayerList().size() - 1);
+                    }
 
                     dataStore.setCurrentFrag(5);
                 }
@@ -172,7 +172,7 @@ public class FragmentUserSelection extends Fragment {
             public void onClick(View view) {
                 //Checks whether a profile with the same name already exists, if it does, update
                 //the image.
-                int profileChecker = -1; //TODO - Debugging: change back to 0
+                int profileChecker = 0;
 
                 // Check whether player 1 / player 2 are already in the table.
                 ArrayList<Player> list = dataStore.getPlayerList();

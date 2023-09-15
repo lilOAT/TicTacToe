@@ -30,8 +30,14 @@ public class FragmentUserCustomization extends Fragment {
     ImageButton profile8Image;
     ImageButton profile9Image;
 
+    //Save Button.
+    Button saveButton;
+
     //Back Button.
     Button backButton;
+
+    //Profile picture number.
+    private String profilePicName = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
@@ -59,10 +65,26 @@ public class FragmentUserCustomization extends Fragment {
         MainActivityData dataStore = new ViewModelProvider(getActivity()).
                 get(MainActivityData.class);
 
+        // Importing the images from the list to the activity.
+
         //Linking to XML file.
         //Profile Name.
         profileName = rootView.findViewById(R.id.profileName);
         profileName.setText(dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).getName());
+
+        // Image Buttons.
+        profile1Image = rootView.findViewById(R.id.profile1Image);
+        profile2Image = rootView.findViewById(R.id.profile2Image);
+        profile3Image = rootView.findViewById(R.id.profile3Image);
+        profile4Image = rootView.findViewById(R.id.profile4Image);
+        profile5Image = rootView.findViewById(R.id.profile5Image);
+        profile6Image = rootView.findViewById(R.id.profile6Image);
+        profile7Image = rootView.findViewById(R.id.profile7Image);
+        profile8Image = rootView.findViewById(R.id.profile8Image);
+        profile9Image = rootView.findViewById(R.id.profile9Image);
+
+        // Save Button
+        saveButton = rootView.findViewById(R.id.save_button);
 
         // Back Button
         backButton = rootView.findViewById(R.id.back_button);
@@ -72,64 +94,84 @@ public class FragmentUserCustomization extends Fragment {
         profile1Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                resetOtherImages();
                 profile1Image.setBackgroundResource(R.drawable.profile_edit_mode);
-                dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar("basic");
+                profilePicName = "basic";
             }
         });
         profile2Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                resetOtherImages();
                 profile2Image.setBackgroundResource(R.drawable.profile_edit_mode);
-                dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar("baseball");
+                profilePicName = "baseball";
             }
         });
         profile3Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                resetOtherImages();
                 profile3Image.setBackgroundResource(R.drawable.profile_edit_mode);
-                dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar("basketball");
+                profilePicName = "basketball";
             }
         });
         profile4Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                resetOtherImages();
                 profile4Image.setBackgroundResource(R.drawable.profile_edit_mode);
-                dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar("bowlingball");
+                profilePicName = "bowlingball";
             }
         });
         profile5Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                resetOtherImages();
                 profile5Image.setBackgroundResource(R.drawable.profile_edit_mode);
-                dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar("eightball");
+                profilePicName = "eightball";
             }
         });
         profile6Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                resetOtherImages();
                 profile6Image.setBackgroundResource(R.drawable.profile_edit_mode);
-                dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar("charpic");
+                profilePicName = "charpic";
             }
         });
         profile7Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                resetOtherImages();
                 profile7Image.setBackgroundResource(R.drawable.profile_edit_mode);
-                dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar("soccerball");
+                profilePicName = "soccerball";
             }
         });
         profile8Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                resetOtherImages();
                 profile8Image.setBackgroundResource(R.drawable.profile_edit_mode);
-                dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar("volleyball");
+                profilePicName = "volleyball";
             }
         });
         profile9Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                resetOtherImages();
                 profile9Image.setBackgroundResource(R.drawable.profile_edit_mode);
-                dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar("tennisball");
+                profilePicName = "tennisball";
+            }
+        });
+
+        //Logic for the Save Button.
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dataStore.getPlayerList().get(
+                        dataStore.getUserCustomization_profileID()).setName(profileName.getText().toString());
+                dataStore.getPlayerList().get(
+                        dataStore.getUserCustomization_profileID()).setAvatar(profilePicName);
             }
         });
 
@@ -144,4 +186,22 @@ public class FragmentUserCustomization extends Fragment {
 
         return rootView;
     }
+
+    private void resetOtherImages() {
+        ImageButton[] list = {
+                profile1Image,
+                profile2Image,
+                profile3Image,
+                profile4Image,
+                profile5Image,
+                profile6Image,
+                profile7Image,
+                profile8Image,
+                profile9Image };
+
+        for (ImageButton imageButton : list) {
+            imageButton.setBackgroundResource(R.drawable.profile_standby);
+        }
+    }
+
 }
