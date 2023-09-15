@@ -41,6 +41,7 @@ public class GameFragment extends Fragment {
     private int timer_in_seconds;
     private MutableLiveData<Integer> turnsTaken;
     private boolean timerRunning;
+    private boolean gameOver;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,7 @@ public class GameFragment extends Fragment {
         turnsTaken.setValue(0);
         timerRunning = true;
         timer_in_seconds = 0;
+        gameOver = false;
 
         //Get data from dataviewmodel
         size = mainActivityDataViewModel.getSize();
@@ -158,8 +160,9 @@ public class GameFragment extends Fragment {
                                     button.setBackgroundResource(p1IconID);
                                     gameArray[row][col] = 'x';
                                     player1Turn = false;
+                                    checkGameWin();
 
-                                    if(vsAI){//Run additional turn based on AI if AI selected
+                                    if(vsAI&&!gameOver){//Run additional turn based on AI if AI selected
                                         int aiButtonID = aiTurn();
 
                                         gameArray[aiButtonID/size][aiButtonID%size] = 'o';
@@ -175,10 +178,10 @@ public class GameFragment extends Fragment {
                                     button.setBackgroundResource(p2IconID); //Player 2 noughts
                                     gameArray[row][col] = 'o';
                                     player1Turn = true;
+                                    checkGameWin();
                                 }
                                 changeCurrentPlayer(player1Turn); //Next players turn
                                 lastButtonTouched.add(button); //Add last turn to list
-                                checkGameWin(); //Check if new turn has won the game
 
                                 //Update turns and available
                                 turnsTaken.setValue(lastButtonTouched.size());
@@ -277,19 +280,21 @@ public class GameFragment extends Fragment {
             drawAlert(getActivity());
             player1.incDraws();
             player2.incDraws();
+            gameOver = true;
         }
         else{ //Check for wins
             if(WinChecker.checkWin(gameArray, size, winCondition)){
                 if(player1Turn){
                     player2.incWins();
                     player1.incLosses();
-                    winAlert("Player 2",getActivity());
+                    winAlert(player2.getName(),getActivity());
                 }
                 else{
                     player1.incWins();
                     player2.incLosses();
-                    winAlert("Player 1",getActivity());
+                    winAlert(player1.getName(),getActivity());
                 }
+                gameOver = true;
             }
         }
     }
