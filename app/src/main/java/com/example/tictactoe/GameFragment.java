@@ -98,8 +98,6 @@ public class GameFragment extends Fragment {
             for (int i = 0; i < game1Line.length; i++) {
                 gameArray[i/size][i%size] = game1Line[i];
             }
-            lastButtonTouched.addAll((ArrayList<Button>) savedInstanceState.getSerializable("PREVTURNS")); //Get the list of buttons touched
-            System.out.println(lastButtonTouched.size());
 
             timer_in_seconds = savedInstanceState.getInt("timeSec");
             timerRunning = savedInstanceState.getBoolean("timeRun");
@@ -195,6 +193,14 @@ public class GameFragment extends Fragment {
                 tableRow.addView(button); //Add button to table row
             }
             tableLayout.addView(tableRow); //Add table row to table
+        }
+
+        if(savedInstanceState!=null){//Must be done after button creation as buttons are not simple data types
+            int[] buttonIDList = savedInstanceState.getIntArray("PREVTURNS");
+            for (int i = 0; i < buttonIDList.length; i++) {
+               Button button = rootView.findViewById(buttonIDList[i]);
+               lastButtonTouched.add(button);
+            }
         }
 
         Button undoButton = rootView.findViewById(R.id.undoButton);
@@ -316,9 +322,6 @@ public class GameFragment extends Fragment {
 
     private void undoMove(){
         //Update board to new last turn
-        for (char[] row: gameArray) {
-            System.out.println(Arrays.toString(row));
-        }
         Button lastButton = lastButtonTouched.get(lastButtonTouched.size()-1);
         //Reset last button background colour
         lastButton.setBackgroundResource(R.drawable.borderbox);
@@ -352,7 +355,11 @@ public class GameFragment extends Fragment {
         outState.putCharArray("GAMEBOARD",gameIn1Line);
 
         //Save previous turns taken
-        outState.putSerializable("PREVTURNS", lastButtonTouched);
+        int[] lastButtonTouchedInt = new int[lastButtonTouched.size()];
+        for (int i = 0; i < lastButtonTouched.size(); i++) {
+            lastButtonTouchedInt[i] = lastButtonTouched.get(i).getId();
+        }
+        outState.putIntArray("PREVTURNS", lastButtonTouchedInt);
 
         outState.putInt("timeSec",timer_in_seconds); //Save timer value
         outState.putBoolean("timeRun",timerRunning); //Save if timer is running
