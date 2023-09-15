@@ -8,8 +8,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import android.content.res.Configuration;
-import android.content.res.Resources;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -73,6 +74,11 @@ public class MainActivity extends AppCompatActivity {
             // TODO Debugging: allocate player1 and player2 for testing
             mainActivityDataViewModel.setPlayer1(player1);
             mainActivityDataViewModel.setPlayer2(player2);
+            //playerList.getValue().add(player1);
+            //playerList.getValue().add(player2);
+            //playerList.getValue().add(player3);
+
+        //TODO Set fragment to main menu, call subsequent fragments from fragments.
 
         //TODO Let values be set from menu fragments
         mainActivityDataViewModel.setSize(3);
@@ -133,9 +139,27 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //If current frag is the game board, presses menu button will alert user that game progress will be lost
                 if(mainActivityDataViewModel.getCurrentFrag() == 2) {
-                    Alerts.menuButtonAlert(MainActivity.this);
+                    //Alert for if player selects the return to menu button
+                    AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                    alertDialog.setTitle("Menu Button");
+                    alertDialog.setMessage("All game progress and settings will be reset");
+                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Return to Menu", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            mainActivityDataViewModel.setCurrentFrag(0);
+                        }
+                    });
+                    alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Resume Game", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            alertDialog.dismiss();
+                        }
+                    });
+                    alertDialog.show();
                 }
-                mainActivityDataViewModel.setCurrentFrag(0);
+                else{
+                    mainActivityDataViewModel.setCurrentFrag(0);
+                }
             }
         });
     }
@@ -155,7 +179,11 @@ public class MainActivity extends AppCompatActivity {
     }
     private void loadGameFragment(){
         FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction().replace(R.id.mainFrameContainer,gameFragment).commit();
+        Fragment frag = fm.findFragmentById(R.id.mainFrameContainer);
+        //Do no replace instances of gameFrag already running
+        if(!(frag instanceof GameFragment)){
+            fm.beginTransaction().replace(R.id.mainFrameContainer,gameFragment).commit();
+        }
     }
     private void loadSettingsFragment(){
         FragmentManager fm = getSupportFragmentManager();

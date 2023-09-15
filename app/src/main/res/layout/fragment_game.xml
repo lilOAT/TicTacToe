@@ -6,10 +6,20 @@
     android:layout_height="match_parent"
     android:id="@+id/fragmentContainer">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Player Turn:"
+        android:textAlignment="center"
+        android:id="@+id/playerTurnText"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playerTurnText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/playerNames">
@@ -33,11 +43,12 @@
 
     <TableLayout
         android:id="@+id/tableLayout"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_width="0dp"
+        app:layout_constraintDimensionRatio="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/playerNames"
+        app:layout_constraintTop_toBottomOf="@id/playerNames"
         app:layout_constraintBottom_toTopOf="@+id/buttonLayout">
 
     </TableLayout>
@@ -47,7 +58,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/buttonLayout"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout"
+        app:layout_constraintBottom_toTopOf="@+id/actionBar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -80,9 +91,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/buttonLayout"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/actionBar">
 
         <LinearLayout
             android:layout_width="0dp"

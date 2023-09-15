@@ -15,22 +15,20 @@
         android:orientation="horizontal">
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Menu"
             android:id="@+id/menuButton"
-            android:layout_weight="2"
+            android:layout_weight="1"
             />
 
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="TITLE"
             android:gravity="center"
-            android:layout_weight="1"
+            android:layout_weight="10"
             android:id="@+id/title"/>
 
 
@@ -40,17 +38,10 @@
         android:id="@+id/mainFrameContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/actionBarFrame"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleBar" />
-
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:id="@+id/actionBarFrame"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
