@@ -1,5 +1,8 @@
 package com.example.tictactoe;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -58,6 +61,8 @@ public class GameFragment extends Fragment {
         lastButtonTouched = new ArrayList<>();
         turnsTaken = new MutableLiveData<>();
         turnsTaken.setValue(0);
+        timerRunning = true;
+        timer_in_seconds = 0;
 
         //Get data from dataviewmodel
         size = mainActivityDataViewModel.getSize();
@@ -97,13 +102,16 @@ public class GameFragment extends Fragment {
             System.out.println(lastButtonTouched.size());
 
             timer_in_seconds = savedInstanceState.getInt("timeSec");
-            timerText.setText(getTime(timer_in_seconds));
             timerRunning = savedInstanceState.getBoolean("timeRun");
 
             turnsTaken.setValue(savedInstanceState.getInt("turnsTakenInt"));
-            turnsTakenText.setText("Turns: "+String.valueOf(turnsTaken.getValue()));
-            turnsAvailableText.setText("Available: "+String.valueOf(size*size-turnsTaken.getValue()));
         }
+
+        //Update player turn signals
+        changeCurrentPlayer(player1Turn);
+        timerText.setText(getTime(timer_in_seconds));
+        turnsTakenText.setText("Turns: "+turnsTaken.getValue());
+        turnsAvailableText.setText("Available: "+(size*size-turnsTaken.getValue()));
 
         //Begin creating grid of buttons
         TableLayout tableLayout = rootView.findViewById(R.id.tableLayout);
@@ -143,39 +151,44 @@ public class GameFragment extends Fragment {
                         int row = button.getId()/size;
                         int col = button.getId()%size;
 
-                        if(gameArray[row][col]==' '){//Check if empty cell
-                            if(player1Turn){//Assign background to number applicable
-                                button.setBackgroundResource(p1IconID);
-                                gameArray[row][col] = 'x';
-                                player1Turn = false;
-
-                                if(vsAI){//Run additional turn based on AI if AI selected
-                                    int aiButtonID = aiTurn();
-
-                                    gameArray[aiButtonID/size][aiButtonID%size] = 'o';
-
-                                    Button aiButton = rootView.findViewById(aiButtonID);
-                                    aiButton.setBackgroundResource(p2IconID);
-                                    lastButtonTouched.add(aiButton);
-                                    checkGameWin();
-                                    player1Turn = true;
-                                }
-                            }
-                            else{
-                                button.setBackgroundResource(p2IconID); //Player 2 noughts
-                                gameArray[row][col] = 'o';
-                                player1Turn = true;
-                            }
-                            changeCurrentPlayer(player1Turn); //Next players turn
-                            lastButtonTouched.add(button); //Add last turn to list
-                            checkGameWin(); //Check if new turn has won the game
-
-                            //Update turns and available
-                            turnsTaken.setValue(lastButtonTouched.size());
+                        if(!timerRunning){//If game is paused, alert players and do not allow moves
+                            gamePuasedAlert(getActivity());
                         }
                         else{
-                            //If player selects an invalid move, warn them
-                            Alerts.invalidMoveAlert(getActivity());
+                            if(gameArray[row][col]==' '){//Check if empty cell
+                                if(player1Turn){//Assign background to number applicable
+                                    button.setBackgroundResource(p1IconID);
+                                    gameArray[row][col] = 'x';
+                                    player1Turn = false;
+
+                                    if(vsAI){//Run additional turn based on AI if AI selected
+                                        int aiButtonID = aiTurn();
+
+                                        gameArray[aiButtonID/size][aiButtonID%size] = 'o';
+
+                                        Button aiButton = rootView.findViewById(aiButtonID);
+                                        aiButton.setBackgroundResource(p2IconID);
+                                        lastButtonTouched.add(aiButton);
+                                        checkGameWin();
+                                        player1Turn = true;
+                                    }
+                                }
+                                else{
+                                    button.setBackgroundResource(p2IconID); //Player 2 noughts
+                                    gameArray[row][col] = 'o';
+                                    player1Turn = true;
+                                }
+                                changeCurrentPlayer(player1Turn); //Next players turn
+                                lastButtonTouched.add(button); //Add last turn to list
+                                checkGameWin(); //Check if new turn has won the game
+
+                                //Update turns and available
+                                turnsTaken.setValue(lastButtonTouched.size());
+                            }
+                            else{
+                                //If player selects an invalid move, warn them
+                                invalidMoveAlert(getActivity());
+                            }
                         }
                     }
                 });
@@ -241,16 +254,21 @@ public class GameFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 timerRunning=!timerRunning;
-                //TODO Change button to play button
+                if(timerRunning){
+                    pauseButton.setImageResource(R.drawable.pause);
+                }
+                else{
+                    pauseButton.setImageResource(R.drawable.play);
+                }
             }
         });
 
         return rootView;
     }
 
-    public void checkGameWin(){
+    private void checkGameWin(){
         if(lastButtonTouched.size()==size*size){ //Check if max turns have been reached
-            Alerts.drawAlert(getActivity());
+            drawAlert(getActivity());
             player1.incDraws();
             player2.incDraws();
         }
@@ -259,12 +277,12 @@ public class GameFragment extends Fragment {
                 if(player1Turn){
                     player2.incWins();
                     player1.incLosses();
-                    Alerts.winAlert("Player 2",getActivity());
+                    winAlert("Player 2",getActivity());
                 }
                 else{
                     player1.incWins();
                     player2.incLosses();
-                    Alerts.winAlert("Player 1",getActivity());
+                    winAlert("Player 1",getActivity());
                 }
             }
             else{
@@ -273,18 +291,18 @@ public class GameFragment extends Fragment {
         }
     }
 
-    public void changeCurrentPlayer(boolean player1Turn){//Alternate player icons each turn
+    private void changeCurrentPlayer(boolean player1Turn){//Alternate player icons each turn
         if(player1Turn){
-            player1Name.setBackgroundResource(R.color.white);
-            player2Name.setBackgroundResource(R.color.black);
+            player1Name.setBackgroundResource(R.drawable.borderbox);
+            player2Name.setBackgroundResource(0);
         }
         else{
-            player2Name.setBackgroundResource(R.color.white);
-            player1Name.setBackgroundResource(R.color.black);
+            player2Name.setBackgroundResource(R.drawable.borderbox);
+            player1Name.setBackgroundResource(0);
         }
     }
 
-    public int aiTurn(){
+    private int aiTurn(){
         ArrayList<Integer> validOptions = new ArrayList<>();
 
         //Check for all available options to play in.
@@ -299,7 +317,7 @@ public class GameFragment extends Fragment {
         return validOptions.get((int)(Math.random()*validOptions.size()));
     }
 
-    public void undoMove(){
+    private void undoMove(){
         //Update board to new last turn
         for (char[] row: gameArray) {
             System.out.println(Arrays.toString(row));
@@ -345,10 +363,79 @@ public class GameFragment extends Fragment {
     }
 
     //Translate time in seconds to clock for printing
-    public String getTime(int timeInSeconds){
-        int hours = timeInSeconds/3600;
-        int minutes = timeInSeconds/60;
-        int seconds = timeInSeconds%60;
-        return hours+":"+minutes+":"+seconds;
+    private String getTime(int timeInSeconds){
+        int hoursInt = timeInSeconds/3600;
+        int minutesInt = timeInSeconds/60;
+        int secondsInt = timeInSeconds%60;
+        return "Game time: "+parseTime(hoursInt)+":"+parseTime(minutesInt)+":"+parseTime(secondsInt);
+    }
+
+    private String parseTime(int time){
+        if(time<10){
+            return "0"+time;
+        }
+        else{
+            return String.valueOf(time);
+        }
+    }
+
+    private void winAlert(String winnerName, Activity activity){
+        AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
+        alertDialog.setTitle("Game Over");
+        alertDialog.setMessage(winnerName+" won!");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Return to Menu", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).
+                        get(MainActivityData.class);
+                mainActivityDataViewModel.setCurrentFrag(0);
+                dialogInterface.dismiss();
+            }
+        });
+        alertDialog.show();
+    }
+
+    //Alert for if game is draw
+    private void drawAlert(Activity activity){
+        AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
+        alertDialog.setTitle("Game Over");
+        alertDialog.setMessage("This game is a draw");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Return to Menu", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).
+                        get(MainActivityData.class);
+                mainActivityDataViewModel.setCurrentFrag(0);
+                dialogInterface.dismiss();
+            }
+        });
+        alertDialog.show();
+    }
+
+    //Alert for if player selects a taken square
+    private void invalidMoveAlert(Activity activity){
+        AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
+        alertDialog.setTitle("Invalid Move");
+        alertDialog.setMessage("This square is already taken");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        alertDialog.show();
+    }
+
+    private void gamePuasedAlert(Activity activity){
+        AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
+        alertDialog.setTitle("Game Paused");
+        alertDialog.setMessage("The game is currently paused");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        alertDialog.show();
     }
 }
