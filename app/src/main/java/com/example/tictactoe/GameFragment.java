@@ -276,7 +276,8 @@ public class GameFragment extends Fragment {
     }
 
     private void checkGameWin(){
-        if(lastButtonTouched.size()==size*size){ //Check if max turns have been reached
+        System.out.println(lastButtonTouched.size());
+        if(lastButtonTouched.size()+1==size*size){ //Check if max turns have been reached
             drawAlert(getActivity());
             player1.incDraws();
             player2.incDraws();
