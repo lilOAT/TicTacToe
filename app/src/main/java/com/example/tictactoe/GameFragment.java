@@ -152,7 +152,7 @@ public class GameFragment extends Fragment {
                         int col = button.getId()%size;
 
                         if(!timerRunning){//If game is paused, alert players and do not allow moves
-                            gamePuasedAlert(getActivity());
+                            gamePausedAlert(getActivity());
                         }
                         else{
                             if(gameArray[row][col]==' '){//Check if empty cell
@@ -284,9 +284,6 @@ public class GameFragment extends Fragment {
                     player2.incLosses();
                     winAlert("Player 1",getActivity());
                 }
-            }
-            else{
-                System.out.println("NO WIN YET");
             }
         }
     }
@@ -426,7 +423,7 @@ public class GameFragment extends Fragment {
         alertDialog.show();
     }
 
-    private void gamePuasedAlert(Activity activity){
+    private void gamePausedAlert(Activity activity){
         AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
         alertDialog.setTitle("Game Paused");
         alertDialog.setMessage("The game is currently paused");
