@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             list.add(player3);
             mainActivityDataViewModel.playerList.setValue(list);
             // TODO Debugging: allocate player1 and player2 for testing
-            mainActivityDataViewModel.setPlayer1(player1);
+            mainActivityDataViewModel.setPlayer1(player3);
             mainActivityDataViewModel.setPlayer2(player2);
             //playerList.getValue().add(player1);
             //playerList.getValue().add(player2);

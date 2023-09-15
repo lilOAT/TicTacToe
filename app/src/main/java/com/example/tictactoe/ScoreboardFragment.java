@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -72,7 +74,9 @@ public class ScoreboardFragment extends Fragment {
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).
                 get(MainActivityData.class);
         ArrayList<Player> playerList = mainActivityDataViewModel.getPlayerList();
-
+        //Sort playerList by wins
+        playerList.sort(Comparator.comparingInt(Player::getWins));
+        Collections.reverse(playerList);
         // Apply data of each player to recyclerview using the PlayerAdapter
         // List of players -> PlayerAdapter -> PlayerVH -> Recycler View
         rv.setLayoutManager(new LinearLayoutManager(rv.getContext(), LinearLayoutManager.VERTICAL,false));
