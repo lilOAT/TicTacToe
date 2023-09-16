@@ -19,6 +19,7 @@ public class MainActivityData  extends ViewModel {
     public MutableLiveData<ArrayList<Player>> playerList;
     private MutableLiveData<Hashtable<String, Bitmap>> imagesTable;
     private MutableLiveData<Integer> userSelection_profileToEdit;
+    public MutableLiveData<Boolean> hasProfileUpdated;
     private MutableLiveData<Integer> userCustomization_profileID;
     private MutableLiveData<Player> player1, player2;
 
@@ -30,6 +31,7 @@ public class MainActivityData  extends ViewModel {
         player2Icon = new MutableLiveData<>();
         userSelection_profileToEdit = new MutableLiveData<>();
         userCustomization_profileID = new MutableLiveData<>();
+        hasProfileUpdated = new MutableLiveData<>();
         currentFrag = new MutableLiveData<>();
         currentFrag.setValue(-1);
         player1 = new MutableLiveData<Player>();
@@ -42,6 +44,7 @@ public class MainActivityData  extends ViewModel {
         player2Icon.setValue(R.drawable.nought);
         userSelection_profileToEdit.setValue(0);
         userCustomization_profileID.setValue(-1);
+        hasProfileUpdated.setValue(false);
 
         //Player Data
         ArrayList<Player> list = new ArrayList<Player>();

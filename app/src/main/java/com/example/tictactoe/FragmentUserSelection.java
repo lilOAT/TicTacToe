@@ -1,6 +1,7 @@
 package com.example.tictactoe;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.res.Configuration;
@@ -68,20 +69,50 @@ public class FragmentUserSelection extends Fragment {
 
         // **********************************************
 
+        // Checks to see whether player's info has been updated.
+        dataStore.hasProfileUpdated.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean hasProfileUpdated) {
+                if(hasProfileUpdated) {
+                    if(dataStore.getUserSelection_profileToEdit() == 1) {
+                        p1_button.setImageBitmap(
+                                dataStore.getImagesList().get(dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).getAvatar())
+                        );
+                    }
+                    else if(dataStore.getUserSelection_profileToEdit() == 2) {
+                        p2_button.setImageBitmap(
+                            dataStore.getImagesList().get(dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).getAvatar())
+                        );
+                    }
+                    dataStore.setUserSelection_profileToEdit(0);
+                    dataStore.setUserCustomization_profileID(-1);
+                    dataStore.hasProfileUpdated.setValue(false);
+                }
+            }
+        });
+
+        dataStore.currentFrag.observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if(integer == 1) {
+                    for(Player player : dataStore.getPlayerList()) {
+                        if(player.getName().equals(p1_name.getText().toString())) {
+                            p1_button.setImageBitmap(dataStore.getImagesList().get(player.getAvatar()));
+                        }
+                        else if(player.getName().equals(p2_name.getText().toString())) {
+                            p2_button.setImageBitmap(dataStore.getImagesList().get(player.getAvatar()));
+                        }
+                    }
+                }
+            }
+        });
+
         //Logic for P1's Button.
         p1_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(dataStore.getUserSelection_profileToEdit() == 2) {
                     p2_button.setBackgroundResource(R.drawable.profile_standby);
-                }
-
-                for(int i = 0; i < dataStore.getPlayerList().size(); i++) {
-                    if(dataStore.getPlayerList().get(i).getName().equals(p1_name)) {
-                        p1_button.setImageBitmap(
-                                dataStore.getImagesList()
-                                        .get(dataStore.getPlayerList().get(i).getAvatar()));
-                    }
                 }
 
                 //When selected, change the colour of the button's edge and set edit value to 1.
@@ -103,14 +134,6 @@ public class FragmentUserSelection extends Fragment {
             public void onClick(View view) {
                 if(dataStore.getUserSelection_profileToEdit() == 1) {
                     p1_button.setBackgroundResource(R.drawable.profile_standby);
-                }
-
-                for(int i = 0; i < dataStore.getPlayerList().size(); i++) {
-                    if(dataStore.getPlayerList().get(i).getName().equals(p2_name)) {
-                        p2_button.setImageBitmap(
-                                dataStore.getImagesList()
-                                        .get(dataStore.getPlayerList().get(i).getAvatar()));
-                    }
                 }
 
                 //When selected, change the colour of the button's edge and set edit value to 2.
@@ -138,15 +161,14 @@ public class FragmentUserSelection extends Fragment {
                 }
                 else {
                     int i = 0;
-                    while(i < dataStore.getPlayerList().size()) {
-                        if(dataStore.getPlayerList().get(i).getName().equals(p1_name)) {
-                            dataStore.setUserCustomization_profileID(i);
-                        }
-                        else if(dataStore.getPlayerList().get(i).getName().equals(p2_name)) {
+                    for(Player player : dataStore.getPlayerList()) {
+                        if(player.getName().equals(p1_name.getText().toString()) ||
+                                player.getName().equals(p2_name.getText().toString())) {
                             dataStore.setUserCustomization_profileID(i);
                         }
                         i++;
                     }
+
                     if(i == dataStore.getPlayerList().size()) {
                         if(dataStore.getUserSelection_profileToEdit() == 1) {
                             dataStore.addProfile(
@@ -192,8 +214,8 @@ public class FragmentUserSelection extends Fragment {
                                     "")
                     );
                 }
-                //TODO - Debugging
-                    dataStore.setCurrentFrag(2);
+
+                dataStore.setCurrentFrag(2);
             }
         });
 

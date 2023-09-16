@@ -12,12 +12,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class FragmentUserCustomization extends Fragment {
 
     //Declaring all actionable elements.
     //Profile Name.
-    EditText profileName;
+    TextView profileName;
 
     //Profile Avatar Images.
     ImageButton profile1Image;
@@ -168,10 +169,14 @@ public class FragmentUserCustomization extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dataStore.getPlayerList().get(
-                        dataStore.getUserCustomization_profileID()).setName(profileName.getText().toString());
-                dataStore.getPlayerList().get(
-                        dataStore.getUserCustomization_profileID()).setAvatar(profilePicName);
+                dataStore.getPlayerList().
+                        get(dataStore.getUserCustomization_profileID()).
+                        setName(profileName.getText().toString());
+                dataStore.getPlayerList().
+                        get(dataStore.getUserCustomization_profileID()).
+                        setAvatar(profilePicName);
+                dataStore.hasProfileUpdated.setValue(true);
+
             }
         });
 
