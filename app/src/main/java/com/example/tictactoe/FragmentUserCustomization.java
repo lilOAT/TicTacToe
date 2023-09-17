@@ -4,6 +4,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
@@ -66,8 +67,6 @@ public class FragmentUserCustomization extends Fragment {
         MainActivityData dataStore = new ViewModelProvider(getActivity()).
                 get(MainActivityData.class);
 
-        // Importing the images from the list to the activity.
-
         //Linking to XML file.
         //Profile Name.
         profileName = rootView.findViewById(R.id.profileName);
@@ -91,11 +90,58 @@ public class FragmentUserCustomization extends Fragment {
         backButton = rootView.findViewById(R.id.back_button);
         // **********************************************
 
+        // Keeps a user's avatar selection updated.
+        String[] possibleAvatars = {
+                "basic",
+                "baseball",
+                "basketball",
+                "bowlingball",
+                "eightball",
+                "charpic",
+                "soccerball",
+                "volleyball",
+                "tennisball"
+        };
+
+        ImageButton[] buttonList = {
+                profile1Image,
+                profile2Image,
+                profile3Image,
+                profile4Image,
+                profile5Image,
+                profile6Image,
+                profile7Image,
+                profile8Image,
+                profile9Image
+        };
+
+        //First, checks the current editable player's data to see if there is already a selected avatar.
+        //If yes, then that avatar's image will be pre-selected - else the basic profile will be selected.
+        dataStore.currentFrag.observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if(integer == 5) {
+                    for(Player player : dataStore.getPlayerList()) {
+                        if(player.getName().equals(profileName.getText().toString())) {
+                            if(!player.getAvatar().equals("")) {
+                                int i = 0;
+                                for(String possibleAvatarName : possibleAvatars) {
+                                    if(possibleAvatarName.equals(player.getAvatar())) {
+                                        buttonList[i].setBackgroundResource(R.drawable.profile_edit_mode);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
         //Logic for Profile Avatar Buttons.
         profile1Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetOtherImages();
+                resetOtherImages(buttonList);
                 profile1Image.setBackgroundResource(R.drawable.profile_edit_mode);
                 profilePicName = "basic";
             }
@@ -103,7 +149,7 @@ public class FragmentUserCustomization extends Fragment {
         profile2Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetOtherImages();
+                resetOtherImages(buttonList);
                 profile2Image.setBackgroundResource(R.drawable.profile_edit_mode);
                 profilePicName = "baseball";
             }
@@ -111,7 +157,7 @@ public class FragmentUserCustomization extends Fragment {
         profile3Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetOtherImages();
+                resetOtherImages(buttonList);
                 profile3Image.setBackgroundResource(R.drawable.profile_edit_mode);
                 profilePicName = "basketball";
             }
@@ -119,7 +165,7 @@ public class FragmentUserCustomization extends Fragment {
         profile4Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetOtherImages();
+                resetOtherImages(buttonList);
                 profile4Image.setBackgroundResource(R.drawable.profile_edit_mode);
                 profilePicName = "bowlingball";
             }
@@ -127,7 +173,7 @@ public class FragmentUserCustomization extends Fragment {
         profile5Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetOtherImages();
+                resetOtherImages(buttonList);
                 profile5Image.setBackgroundResource(R.drawable.profile_edit_mode);
                 profilePicName = "eightball";
             }
@@ -135,7 +181,7 @@ public class FragmentUserCustomization extends Fragment {
         profile6Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetOtherImages();
+                resetOtherImages(buttonList);
                 profile6Image.setBackgroundResource(R.drawable.profile_edit_mode);
                 profilePicName = "charpic";
             }
@@ -143,7 +189,7 @@ public class FragmentUserCustomization extends Fragment {
         profile7Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetOtherImages();
+                resetOtherImages(buttonList);
                 profile7Image.setBackgroundResource(R.drawable.profile_edit_mode);
                 profilePicName = "soccerball";
             }
@@ -151,7 +197,7 @@ public class FragmentUserCustomization extends Fragment {
         profile8Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetOtherImages();
+                resetOtherImages(buttonList);
                 profile8Image.setBackgroundResource(R.drawable.profile_edit_mode);
                 profilePicName = "volleyball";
             }
@@ -159,7 +205,7 @@ public class FragmentUserCustomization extends Fragment {
         profile9Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetOtherImages();
+                resetOtherImages(buttonList);
                 profile9Image.setBackgroundResource(R.drawable.profile_edit_mode);
                 profilePicName = "tennisball";
             }
@@ -175,7 +221,6 @@ public class FragmentUserCustomization extends Fragment {
                 dataStore.getPlayerList().
                         get(dataStore.getUserCustomization_profileID()).
                         setAvatar(profilePicName);
-                dataStore.hasProfileUpdated.setValue(true);
 
             }
         });
@@ -192,19 +237,8 @@ public class FragmentUserCustomization extends Fragment {
         return rootView;
     }
 
-    private void resetOtherImages() {
-        ImageButton[] list = {
-                profile1Image,
-                profile2Image,
-                profile3Image,
-                profile4Image,
-                profile5Image,
-                profile6Image,
-                profile7Image,
-                profile8Image,
-                profile9Image };
-
-        for (ImageButton imageButton : list) {
+    private void resetOtherImages(ImageButton[] buttonList) {
+       for (ImageButton imageButton : buttonList) {
             imageButton.setBackgroundResource(R.drawable.profile_standby);
         }
     }

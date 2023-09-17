@@ -69,32 +69,26 @@ public class FragmentUserSelection extends Fragment {
 
         // **********************************************
 
-        // Checks to see whether player's info has been updated.
-        dataStore.hasProfileUpdated.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean hasProfileUpdated) {
-                if(hasProfileUpdated) {
-                    if(dataStore.getUserSelection_profileToEdit() == 1) {
-                        p1_button.setImageBitmap(
-                                dataStore.getImagesList().get(dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).getAvatar())
-                        );
-                    }
-                    else if(dataStore.getUserSelection_profileToEdit() == 2) {
-                        p2_button.setImageBitmap(
-                            dataStore.getImagesList().get(dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).getAvatar())
-                        );
-                    }
-                    dataStore.setUserSelection_profileToEdit(0);
-                    dataStore.setUserCustomization_profileID(-1);
-                    dataStore.hasProfileUpdated.setValue(false);
-                }
-            }
-        });
-
         dataStore.currentFrag.observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
                 if(integer == 1) {
+                    //Checks whether we are vsing an AI.
+                    if(dataStore.getVsAI()) {
+                        p2_name.setText("AI");
+                        p2_name.setEnabled(false);
+                        p2_button.setEnabled(false);
+                    }
+                    else {
+                        p2_name.setText("");
+                        p2_name.setEnabled(true);
+                        p2_button.setEnabled(true);
+                    }
+
+                    //Reset profile to edit.
+                    dataStore.setUserSelection_profileToEdit(0);
+
+                    //Retain the selected image for the player upon fragment loading.
                     for(Player player : dataStore.getPlayerList()) {
                         if(player.getName().equals(p1_name.getText().toString())) {
                             p1_button.setImageBitmap(dataStore.getImagesList().get(player.getAvatar()));
@@ -109,6 +103,7 @@ public class FragmentUserSelection extends Fragment {
 
         //Logic for P1's Button.
         p1_button.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 if(dataStore.getUserSelection_profileToEdit() == 2) {
@@ -116,15 +111,11 @@ public class FragmentUserSelection extends Fragment {
                 }
 
                 //When selected, change the colour of the button's edge and set edit value to 1.
-                if(dataStore.getUserSelection_profileToEdit() == 0 ||
-                    dataStore.getUserSelection_profileToEdit() == 2)
-                {
-                    dataStore.setUserSelection_profileToEdit(1);
-                    p1_button.setBackgroundResource(R.drawable.profile_edit_mode);
-                    Toast toast = Toast.makeText(getContext(),
-                            "Player 1 Selected!", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
+                dataStore.setUserSelection_profileToEdit(1);
+                p1_button.setBackgroundResource(R.drawable.profile_edit_mode);
+                Toast toast = Toast.makeText(getContext(),
+                        "Player 1 Selected!", Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
 
@@ -137,15 +128,11 @@ public class FragmentUserSelection extends Fragment {
                 }
 
                 //When selected, change the colour of the button's edge and set edit value to 2.
-                if(dataStore.getUserSelection_profileToEdit() == 0 ||
-                        dataStore.getUserSelection_profileToEdit() == 1)
-                {
-                    dataStore.setUserSelection_profileToEdit(2);
-                    p2_button.setBackgroundResource(R.drawable.profile_edit_mode);
-                    Toast toast = Toast.makeText(getContext(),
-                            "Player 2 Selected!", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
+                dataStore.setUserSelection_profileToEdit(2);
+                p2_button.setBackgroundResource(R.drawable.profile_edit_mode);
+                Toast toast = Toast.makeText(getContext(),
+                        "Player 2 Selected!", Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
 
@@ -153,6 +140,8 @@ public class FragmentUserSelection extends Fragment {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dataStore.setUserCustomization_profileID(-1);
+
                 //First, check if a Profile has been selected to edit.
                 if(dataStore.getUserSelection_profileToEdit() == 0) {
                     Toast toast = Toast.makeText(getContext(),
@@ -161,29 +150,71 @@ public class FragmentUserSelection extends Fragment {
                 }
                 else {
                     int i = 0;
-                    for(Player player : dataStore.getPlayerList()) {
-                        if(player.getName().equals(p1_name.getText().toString()) ||
-                                player.getName().equals(p2_name.getText().toString())) {
-                            dataStore.setUserCustomization_profileID(i);
+
+                    //Check whether selected profile is is table.
+                    if(dataStore.getUserSelection_profileToEdit() == 1) {
+                        for(Player player : dataStore.getPlayerList()) {
+                            if(player.getName().equals(p1_name.getText().toString())) {
+                                dataStore.setUserCustomization_profileID(i);
+                            }
+                            i++;
                         }
-                        i++;
+                    }
+                    else if(dataStore.getUserSelection_profileToEdit() == 2) {
+                        for(Player player : dataStore.getPlayerList()) {
+                            if(player.getName().equals(p2_name.getText().toString())) {
+                                dataStore.setUserCustomization_profileID(i);
+                            }
+                            i++;
+                        }
                     }
 
-                    if(i == dataStore.getPlayerList().size()) {
-                        if(dataStore.getUserSelection_profileToEdit() == 1) {
-                            dataStore.addProfile(
-                                    new Player(p1_name.getText().toString(), "basic")
-                            );
+
+                    //Profile doesn't exist in table yet.
+                    if(dataStore.getUserCustomization_profileID() == -1) {
+                        if(dataStore.getPlayerList().size() == 9) {
+                            Toast toast = Toast.makeText(getContext(),
+                                    "Maximum Profiles Reached! Please use an existing one...", Toast.LENGTH_SHORT);
+                            toast.show();
                         }
-                        else if(dataStore.getUserSelection_profileToEdit() == 2) {
-                            dataStore.addProfile(
-                                    new Player(p2_name.getText().toString(), "basic")
-                            );
+                        else {
+                            if(dataStore.getUserSelection_profileToEdit() == 1) {
+                                if(p1_name.getText().toString().equals("")) {
+                                    Toast toast = Toast.makeText(getContext(),
+                                            "Player's must have a name!", Toast.LENGTH_SHORT);
+                                    toast.show();
+                                }
+                                else {
+                                    dataStore.addProfile(
+                                            new Player(p1_name.getText().toString(), "basic")
+                                    );
+                                    dataStore.setUserCustomization_profileID(dataStore.getPlayerList().size() - 1);
+                                }
+                            }
+                            else if(dataStore.getUserSelection_profileToEdit() == 2) {
+                                if(p2_name.getText().toString().equals("")) {
+                                    Toast toast = Toast.makeText(getContext(),
+                                            "Player's must have a name!", Toast.LENGTH_SHORT);
+                                    toast.show();
+                                }
+                                else {
+                                    dataStore.addProfile(
+                                            new Player(p2_name.getText().toString(), "basic")
+                                    );
+                                    dataStore.setUserCustomization_profileID(dataStore.getPlayerList().size() - 1);
+                                }
+                            }
                         }
-                        dataStore.setUserCustomization_profileID(dataStore.getPlayerList().size() - 1);
                     }
 
-                    dataStore.setCurrentFrag(5);
+                    //If no errors have occurred, proceed with the customization.
+                    if(dataStore.getUserCustomization_profileID() != -1) {
+                        dataStore.setCurrentFrag(5);
+                    }
+                    //If something has gone wrong, reset all parameters and allow user to try again.
+                    else {
+                        resetSelectionFragment(dataStore);
+                    }
                 }
             }
         });
@@ -192,33 +223,45 @@ public class FragmentUserSelection extends Fragment {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Checks whether a profile with the same name already exists, if it does, update
-                //the image.
-                int profileChecker = 0;
-
-                // Check whether player 1 / player 2 are already in the table.
-                ArrayList<Player> list = dataStore.getPlayerList();
-                for(int i = 0; i < list.size(); i++) {
-                    if (list.get(i).getName().equals(p1_name)) {
-                        dataStore.getPlayerList().get(i).setAvatar("");
-                        profileChecker++;
-                    }
-                    if (list.get(i).getName().equals(p2_name)) {
-                        dataStore.getPlayerList().get(i).setAvatar("");
-                    }
+                if(p1_name.getText().toString().equals("") || p2_name.getText().toString().equals("")) {
+                    Toast toast = Toast.makeText(getContext(),
+                            "Player's must have a name!", Toast.LENGTH_LONG);
+                    toast.show();
                 }
-                if(profileChecker == 0) {
-                    dataStore.addProfile(
-                            new Player(
-                                    p1_name.toString(),
-                                    "")
-                    );
-                }
+                else {
+                    // Set active Player 1 and Player 2.
+                    for(Player player : dataStore.getPlayerList()) {
+                        if(player.getName().equals(p1_name.getText().toString())) {
+                            dataStore.setPlayer1(player);
+                        }
+                        if(player.getName().equals(p2_name.getText().toString())) {
+                            dataStore.setPlayer2(player);
+                        }
+                    }
 
-                dataStore.setCurrentFrag(2);
+                    if(dataStore.getPlayer1().getName().equals(dataStore.getPlayer2().getName())) {
+                        Toast toast = Toast.makeText(getContext(),
+                                "Player's cannot be the same!", Toast.LENGTH_LONG);
+                        toast.show();
+
+                        resetSelectionFragment(dataStore);
+                    }
+
+                    // Continue with the game.
+                    dataStore.setCurrentFrag(2);
+                }
             }
         });
 
         return rootView;
+    }
+
+    private void resetSelectionFragment(MainActivityData dataStore) {
+        p1_name.setText("");
+        p2_name.setText("");
+        dataStore.setUserSelection_profileToEdit(0);
+        dataStore.setUserCustomization_profileID(-1);
+        p1_button.setBackgroundResource(R.drawable.profile_standby);
+        p2_button.setBackgroundResource(R.drawable.profile_standby);
     }
 }
