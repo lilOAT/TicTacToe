@@ -10,118 +10,104 @@ import java.util.Hashtable;
 
 public class MainActivityData  extends ViewModel {
 
-    private MutableLiveData<Integer> size; //Size of the board
-    private MutableLiveData<Boolean> vsAI; //True if versing AI
-    private MutableLiveData<Integer> winCondition; //Number in a row needed to win the game
-    private MutableLiveData<Integer> player1Icon;
-    private MutableLiveData<Integer> player2Icon;
+    private int size; //Size of the board
+    private boolean vsAI; //True if versing AI
+    private int winCondition; //Number in a row needed to win the game
+    private int player1Icon, player2Icon;
     public MutableLiveData<Integer> currentFrag; //Represents current fragment displayed
-    public MutableLiveData<ArrayList<Player>> playerList;
-    private MutableLiveData<Hashtable<String, Bitmap>> imagesTable;
-    private MutableLiveData<Integer> userSelection_profileToEdit;
-    private MutableLiveData<Integer> userCustomization_profileID;
-    private MutableLiveData<Player> player1, player2;
-    private Player ai;
+    public ArrayList<Player> playerList;
+    private Hashtable<String, Bitmap> imagesTable;
+    private int userSelection_profileToEdit;
+    private int userCustomization_profileID;
+    private Player player1, player2, ai;
 
     public MainActivityData(){
-        size = new MutableLiveData<>();
-        vsAI = new MutableLiveData<>();
-        winCondition = new MutableLiveData<>();
-        player1Icon = new MutableLiveData<>();
-        player2Icon = new MutableLiveData<>();
-        userSelection_profileToEdit = new MutableLiveData<>();
-        userCustomization_profileID = new MutableLiveData<>();
+        size = 3;
+        vsAI = true;
+        winCondition = 3;
+        player1Icon = R.drawable.cross;
+        player2Icon = R.drawable.nought;
         currentFrag = new MutableLiveData<>();
         currentFrag.setValue(-1);
-        player1 = new MutableLiveData<Player>();
-        player2 = new MutableLiveData<Player>();
         ai = new Player("AI", "basic");
+        playerList = new ArrayList<>();
 
         //Set Default Values
-        size.setValue(3);
-        winCondition.setValue(3);
-        player1Icon.setValue(R.drawable.cross);
-        player2Icon.setValue(R.drawable.nought);
-        userSelection_profileToEdit.setValue(0);
-        userCustomization_profileID.setValue(-1);
+        userSelection_profileToEdit = 0;
+        userCustomization_profileID = -1;
 
         //Player Data
-        ArrayList<Player> list = new ArrayList<Player>();
-        playerList = new MutableLiveData<ArrayList<Player>>();
-        playerList.setValue(list);
-        list.add(ai);
-        playerList.setValue(list);
+        playerList.add(ai);
 
         //Profile Images.
-        imagesTable = new MutableLiveData<Hashtable<String, Bitmap>>();
-        imagesTable.setValue(new Hashtable<String, Bitmap>());
+        imagesTable = new Hashtable<String, Bitmap>();
     }
 
     //Getter Methods
     public int getSize(){
-        return size.getValue();
+        return size;
     }
     public boolean getVsAI(){
-        return vsAI.getValue();
+        return vsAI;
     }
     public int getWinCondition(){
-        return winCondition.getValue();
+        return winCondition;
     }
-    public int getPlayer1Icon(){return player1Icon.getValue();}
-    public int getPlayer2Icon(){return player2Icon.getValue();}
+    public int getPlayer1Icon(){return player1Icon;}
+    public int getPlayer2Icon(){return player2Icon;}
 
-    public Player getPlayer1(){return player1.getValue();}
-    public Player getPlayer2(){return player2.getValue();}
+    public Player getPlayer1(){return player1;}
+    public Player getPlayer2(){return player2;}
 
     public Hashtable<String, Bitmap> getImagesList() {
-        return imagesTable.getValue();
+        return imagesTable;
     }
 
     public int getUserSelection_profileToEdit() {
-        return userSelection_profileToEdit.getValue();
+        return userSelection_profileToEdit;
     }
-    public int getUserCustomization_profileID() {return userCustomization_profileID.getValue();}
+    public int getUserCustomization_profileID() {return userCustomization_profileID;}
 
     //Setter Methods
     public void setSize(int pSize){
-        size.setValue(pSize);
+        size=pSize;
     }
     public void setVsAI(boolean pAI){
-        vsAI.setValue(pAI);
+        vsAI = pAI;
         setPlayer2(ai);
     }
     public void setWinCondition(int pCondition){
-        winCondition.setValue(pCondition);
+        winCondition = pCondition;
     }
 
     public void setPlayer1Icon(int p1IconRID) {
-        player1Icon.setValue(p1IconRID);
+        player1Icon = p1IconRID;
     }
     public void setPlayer2Icon(int p2IconRID) {
-        player2Icon.setValue(p2IconRID);
+        player2Icon = p2IconRID;
     }
 
     public void addProfileImage(String name, Bitmap newImage) {
-        imagesTable.getValue().put(name, newImage);
+        imagesTable.put(name, newImage);
     }
 
     public void setUserSelection_profileToEdit(int value) {
-        userSelection_profileToEdit.setValue(value);
+        userSelection_profileToEdit = value;
     }
     public void setUserCustomization_profileID(int value) {
-        userCustomization_profileID.setValue(value);
+        userCustomization_profileID = value;
     }
 
     public ArrayList<Player> getPlayerList() {
-        return playerList.getValue();
+        return playerList;
     }
 
     public void addProfile(Player player) {
-        playerList.getValue().add(player);
+        playerList.add(player);
     }
 
-    public void setPlayer1(Player player){player1.setValue(player);}
-    public void setPlayer2(Player player){player2.setValue(player);}
+    public void setPlayer1(Player player){player1 = player;}
+    public void setPlayer2(Player player){player2 = player;}
 
     public int getCurrentFrag() {return currentFrag.getValue();}
 
