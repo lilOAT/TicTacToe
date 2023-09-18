@@ -170,8 +170,8 @@ public class GameFragment extends Fragment {
                                         Button aiButton = rootView.findViewById(aiButtonID);
                                         aiButton.setBackgroundResource(p2IconID);
                                         lastButtonTouched.add(aiButton);
-                                        checkGameWin();
                                         player1Turn = true;
+                                        checkGameWin();
                                     }
                                 }
                                 else{
@@ -276,27 +276,27 @@ public class GameFragment extends Fragment {
     }
 
     private void checkGameWin(){
-        System.out.println(lastButtonTouched.size());
-        if(lastButtonTouched.size()+1==size*size){ //Check if max turns have been reached
+        if(WinChecker.checkWin(gameArray, size, winCondition)){
+            if(player1Turn){
+                player2.incWins();
+                player1.incLosses();
+                winAlert(player2.getName(),getActivity());
+            }
+            else{
+                player1.incWins();
+                player2.incLosses();
+                winAlert(player1.getName(),getActivity());
+            }
+            gameOver = true;
+        }
+        if(!gameOver&&lastButtonTouched.size()+1==size*size){ //Check if max turns have been reached
             drawAlert(getActivity());
             player1.incDraws();
             player2.incDraws();
             gameOver = true;
         }
         else{ //Check for wins
-            if(WinChecker.checkWin(gameArray, size, winCondition)){
-                if(player1Turn){
-                    player2.incWins();
-                    player1.incLosses();
-                    winAlert(player2.getName(),getActivity());
-                }
-                else{
-                    player1.incWins();
-                    player2.incLosses();
-                    winAlert(player1.getName(),getActivity());
-                }
-                gameOver = true;
-            }
+
         }
     }
 
