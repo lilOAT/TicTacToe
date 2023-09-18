@@ -1,5 +1,6 @@
 package com.example.tictactoe;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -39,19 +40,32 @@ public class FragmentUserSelection extends Fragment {
 
         View rootView;
 
-        if (screenOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-            // Inflate the layout for this fragment
-            rootView = inflater.inflate(R.layout.fragment_user_selection_landscape, container,
-                    false);
-        } else {
-            // Inflate the layout for this fragment
-            rootView = inflater.inflate(R.layout.fragment_user_selection, container,
-                    false);
+        // Saved Instance.
+        //Update if saved state exists
+        if(savedInstanceState != null) {
+            p1_name.setText(savedInstanceState.getString("p1_name"));
+            p2_name.setText(savedInstanceState.getString("p2_name"));
         }
 
         // Introduce the Activity Data Store
         MainActivityData dataStore = new ViewModelProvider(getActivity()).
                 get(MainActivityData.class);
+
+        // Check screen orientation.
+        if (screenOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // Inflate the layout for this fragment
+            rootView = inflater.inflate(R.layout.fragment_user_selection_landscape, container,
+                    false);
+
+            updateImageButtons(dataStore);
+
+        } else {
+            // Inflate the layout for this fragment
+            rootView = inflater.inflate(R.layout.fragment_user_selection, container,
+                    false);
+
+            updateImageButtons(dataStore);
+        }
 
         //Linking to XML file.
 
@@ -88,15 +102,7 @@ public class FragmentUserSelection extends Fragment {
                     //Reset profile to edit.
                     dataStore.setUserSelection_profileToEdit(0);
 
-                    //Retain the selected image for the player upon fragment loading.
-                    for(Player player : dataStore.getPlayerList()) {
-                        if(player.getName().equals(p1_name.getText().toString())) {
-                            p1_button.setImageBitmap(dataStore.getImagesList().get(player.getAvatar()));
-                        }
-                        else if(player.getName().equals(p2_name.getText().toString())) {
-                            p2_button.setImageBitmap(dataStore.getImagesList().get(player.getAvatar()));
-                        }
-                    }
+                    updateImageButtons(dataStore);
                 }
             }
         });
@@ -269,5 +275,24 @@ public class FragmentUserSelection extends Fragment {
         dataStore.setUserCustomization_profileID(-1);
         p1_button.setBackgroundResource(R.drawable.profile_standby);
         p2_button.setBackgroundResource(R.drawable.profile_standby);
+    }
+
+    private void updateImageButtons(MainActivityData dataStore) {
+        //Retain the selected image for the player upon fragment loading.
+        for(Player player : dataStore.getPlayerList()) {
+            if(player.getName().equals(p1_name.getText().toString())) {
+                p1_button.setImageBitmap(dataStore.getImagesList().get(player.getAvatar()));
+            }
+            else if(player.getName().equals(p2_name.getText().toString())) {
+                p2_button.setImageBitmap(dataStore.getImagesList().get(player.getAvatar()));
+            }
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putString("p1_name", p1_name.getText().toString()); // Save profile 1 name.
+        outState.putString("p2_name", p2_name.getText().toString()); // Save profile 2 name.
     }
 }
