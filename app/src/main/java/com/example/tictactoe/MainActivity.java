@@ -61,28 +61,6 @@ public class MainActivity extends AppCompatActivity {
         mainActivityDataViewModel.addProfileImage("tennisball", tennisball);
         mainActivityDataViewModel.addProfileImage("volleyball", volleyball);
 
-
-        //TODO DEBUGGING - REMOVE AFTER TESTING COMPLETE!!!!!!!!!
-        //The following method is to populate the player list with dummy players for debugging
-            Player player1 = new Player("player1", "baseball");
-            Player player2 = new Player("player2", "baseball");
-            Player player3 = new Player("player3", "baseball");
-            ArrayList<Player> list = new ArrayList<Player>();
-            list.add(player1);
-            list.add(player2);
-            list.add(player3);
-            mainActivityDataViewModel.playerList.setValue(list);
-            // TODO Debugging: allocate player1 and player2 for testing
-            mainActivityDataViewModel.setPlayer1(player3);
-            mainActivityDataViewModel.setPlayer2(player2);
-            //playerList.getValue().add(player1);
-            //playerList.getValue().add(player2);
-            //playerList.getValue().add(player3);
-
-
-        //TODO Let values be set from settings fragments
-//        mainActivityDataViewModel.setVsAI(false);
-
         //Loads menu fragment
         if(mainActivityDataViewModel.getCurrentFrag() == -1) {
             mainActivityDataViewModel.setCurrentFrag(0);
