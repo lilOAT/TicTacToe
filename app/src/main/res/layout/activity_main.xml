@@ -14,11 +14,12 @@
         android:id="@+id/titleBar"
         android:orientation="horizontal">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/menuButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Menu"
-            android:id="@+id/menuButton"
+            android:background="@drawable/square_button"
             android:layout_weight="1"
             />
 

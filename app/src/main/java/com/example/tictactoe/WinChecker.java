@@ -14,6 +14,7 @@ public class WinChecker {
         boolean win = false;
         int count = 0;
         char currChar;
+        System.out.println(board[size-1][0]);
         for(int i = 0; i < size; i++) {
             currChar = board[i][0];
             for(int j = 0; j < size; j++) {
@@ -24,7 +25,7 @@ public class WinChecker {
                     }
                 } else {
                     currChar = board[i][j];
-                    count = 0;
+                    count = 1;
                 }
             }
             count = 0;
@@ -45,7 +46,7 @@ public class WinChecker {
                     }
                 } else {
                     currChar = board[j][i];
-                    count = 0;
+                    count = 1;
                 }
             }
             count = 0;

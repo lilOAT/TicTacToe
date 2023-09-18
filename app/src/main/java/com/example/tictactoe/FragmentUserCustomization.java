@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class FragmentUserCustomization extends Fragment {
 
@@ -221,7 +222,9 @@ public class FragmentUserCustomization extends Fragment {
                 dataStore.getPlayerList().
                         get(dataStore.getUserCustomization_profileID()).
                         setAvatar(profilePicName);
-
+                Toast toast = Toast.makeText(getContext(),
+                        "Saved", Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
 

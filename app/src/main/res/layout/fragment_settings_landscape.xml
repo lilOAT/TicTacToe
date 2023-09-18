@@ -221,26 +221,26 @@
         <TextView
             android:id="@+id/p1_label"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
             android:layout_margin="5dp"
             android:background="@drawable/coloured_label"
             android:text="@string/fragment_settings_character_selection_p1"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:textStyle="bold"
             />
 
         <TextView
             android:id="@+id/p1_logo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:background="@drawable/coloured_logo_x"
             android:gravity="center"
             android:text="@string/fragment_settings_character_selection_X"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatImageButton
@@ -253,31 +253,31 @@
             android:background="@color/white"
             android:src="@drawable/swap"
             android:scaleType="fitCenter"
-            android:textSize="30sp" />
+            android:textSize="30dp" />
 
         <TextView
             android:id="@+id/p2_label"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
             android:layout_margin="5dp"
             android:background="@drawable/coloured_label"
             android:text="@string/fragment_settings_character_selection_p2"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:textStyle="bold"
             />
 
         <TextView
             android:id="@+id/p2_logo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:background="@drawable/coloured_logo_o"
             android:gravity="center"
             android:text="@string/fragment_settings_character_selection_O"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:textStyle="bold" />
 
     </LinearLayout>

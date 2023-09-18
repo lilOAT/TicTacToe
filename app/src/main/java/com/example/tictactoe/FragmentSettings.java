@@ -1,6 +1,7 @@
 package com.example.tictactoe;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class FragmentSettings extends Fragment {
@@ -26,14 +28,11 @@ public class FragmentSettings extends Fragment {
     //Character selection - logos.
     TextView p1_logo;
     TextView p2_logo;
-    Button swapLogo;
+    ImageButton swapLogo;
 
     //Action bar - TODO.
     Button actionButton;
 
-    //Variables to act as main data store.
-    private int boardSize = 0;
-    private int winCondition = 0;
     //************************************
 
     @Override
@@ -44,9 +43,7 @@ public class FragmentSettings extends Fragment {
                              Bundle savedInstanceState) {
 
         int screenOrientation = getResources().getConfiguration().orientation;
-
         View rootView;
-
         if (screenOrientation == Configuration.ORIENTATION_LANDSCAPE) {
             // Inflate the layout for this fragment
             rootView = inflater.inflate(R.layout.fragment_settings_landscape, container,
@@ -57,6 +54,10 @@ public class FragmentSettings extends Fragment {
                     false);
         }
 
+        // Introduce the Activity Data Store
+        MainActivityData dataStore = new ViewModelProvider(getActivity()).
+                get(MainActivityData.class);
+
         //Linking java to XML layout.
 
         //Board size.
@@ -64,10 +65,40 @@ public class FragmentSettings extends Fragment {
         boardSize4 = rootView.findViewById(R.id.board_size_four);
         boardSize5 = rootView.findViewById(R.id.board_size_five);
 
+        //Highlight button from current setting
+        if(dataStore.getSize() == 3) {
+            boardSize3.setBackgroundResource(R.color.button_blue);
+            boardSize4.setBackgroundResource(R.color.paled_blue);
+            boardSize5.setBackgroundResource(R.color.paled_blue);
+        } else if(dataStore.getSize() == 4) {
+            boardSize3.setBackgroundResource(R.color.paled_blue);
+            boardSize4.setBackgroundResource(R.color.button_blue);
+            boardSize5.setBackgroundResource(R.color.paled_blue);
+        } else if(dataStore.getSize() == 5) {
+            boardSize3.setBackgroundResource(R.color.paled_blue);
+            boardSize4.setBackgroundResource(R.color.paled_blue);
+            boardSize5.setBackgroundResource(R.color.button_blue);
+        }
+
         //Win conditions.
         winCondition3 = rootView.findViewById(R.id.win_condition_three);
         winCondition4 = rootView.findViewById(R.id.win_condition_four);
         winCondition5 = rootView.findViewById(R.id.win_condition_five);
+
+        //Highlight button from current setting
+        if(dataStore.getWinCondition() == 3) {
+            winCondition3.setBackgroundResource(R.color.button_blue);
+            winCondition4.setBackgroundResource(R.color.paled_blue);
+            winCondition5.setBackgroundResource(R.color.paled_blue);
+        } else if(dataStore.getWinCondition() == 4) {
+            winCondition3.setBackgroundResource(R.color.paled_blue);
+            winCondition4.setBackgroundResource(R.color.button_blue);
+            winCondition5.setBackgroundResource(R.color.paled_blue);
+        } else if(dataStore.getWinCondition() == 5) {
+            winCondition3.setBackgroundResource(R.color.paled_blue);
+            winCondition4.setBackgroundResource(R.color.paled_blue);
+            winCondition5.setBackgroundResource(R.color.button_blue);
+        }
 
         //Character selection - logos.
         p1_logo = rootView.findViewById(R.id.p1_logo);
@@ -81,7 +112,7 @@ public class FragmentSettings extends Fragment {
             @Override
             public void onClick(View view) {
                 //Set board size to 3x3.
-                boardSize = 3;
+                dataStore.setSize(3);
 
                 //Set other two buttons to lae color to signify button pressed.
                 boardSize3.setBackgroundResource(R.color.button_blue);
@@ -93,7 +124,7 @@ public class FragmentSettings extends Fragment {
             @Override
             public void onClick(View view) {
                 //Set board size to 4x4.
-                boardSize = 4;
+                dataStore.setSize(4);
 
                 //Set other two buttons to lae color to signify button pressed.
                 boardSize3.setBackgroundResource(R.color.paled_blue);
@@ -105,7 +136,7 @@ public class FragmentSettings extends Fragment {
             @Override
             public void onClick(View view) {
                 //Set board size to 5x5.
-                boardSize = 5;
+                dataStore.setSize(5);
 
                 //Set other two buttons to lae color to signify button pressed.
                 boardSize3.setBackgroundResource(R.color.paled_blue);
@@ -119,7 +150,7 @@ public class FragmentSettings extends Fragment {
             @Override
             public void onClick(View view) {
                 //Set win condition to 3 logo's in a row.
-                winCondition = 3;
+                dataStore.setWinCondition(3);
 
                 //Set other two buttons to pale colour to signify pressed button.
                 winCondition3.setBackgroundResource(R.color.button_blue);
@@ -131,7 +162,7 @@ public class FragmentSettings extends Fragment {
             @Override
             public void onClick(View view) {
                 //Set win condition to 4 logo's in a row.
-                winCondition = 4;
+                dataStore.setWinCondition(4);
 
                 //Set other two buttons to pale colour to signify pressed button.
                 winCondition3.setBackgroundResource(R.color.paled_blue);
@@ -143,7 +174,7 @@ public class FragmentSettings extends Fragment {
             @Override
             public void onClick(View view) {
                 //Set win condition to 5 logo's in a row.
-                winCondition = 5;
+                dataStore.setWinCondition(5);
 
                 //Set other two buttons to pale colour to signify pressed button.
                 winCondition3.setBackgroundResource(R.color.paled_blue);

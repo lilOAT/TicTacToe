@@ -79,12 +79,9 @@ public class MainActivity extends AppCompatActivity {
             //playerList.getValue().add(player2);
             //playerList.getValue().add(player3);
 
-        //TODO Set fragment to main menu, call subsequent fragments from fragments.
 
-        //TODO Let values be set from menu fragments
-        mainActivityDataViewModel.setSize(3);
-        mainActivityDataViewModel.setWinCondition(3);
-        mainActivityDataViewModel.setVsAI(false);
+        //TODO Let values be set from settings fragments
+//        mainActivityDataViewModel.setVsAI(false);
 
         //Loads menu fragment
         if(mainActivityDataViewModel.getCurrentFrag() == -1) {

@@ -80,7 +80,7 @@ public class ScoreboardFragment extends Fragment {
         // Apply data of each player to recyclerview using the PlayerAdapter
         // List of players -> PlayerAdapter -> PlayerVH -> Recycler View
         rv.setLayoutManager(new LinearLayoutManager(rv.getContext(), LinearLayoutManager.VERTICAL,false));
-        PlayerAdapter adapter = new PlayerAdapter(playerList);
+        PlayerAdapter adapter = new PlayerAdapter(playerList, mainActivityDataViewModel);
         rv.setAdapter(adapter);
 
         return view;
