@@ -119,8 +119,8 @@ public class FragmentUserCustomization extends Fragment {
 
             for(int i = 0; i < possibleAvatars.length; i++) {
                 if(possibleAvatars[i].equals(profilePicName)) {
-                    buttonList[i].setBackgroundResource(R.drawable.profile_edit_mode);
                     resetOtherImages(buttonList);
+                    buttonList[i].setBackgroundResource(R.drawable.profile_edit_mode);
                 }
             }
         }
