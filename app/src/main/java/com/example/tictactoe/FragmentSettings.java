@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class FragmentSettings extends Fragment {
     //Declaring all actionable elements.
@@ -42,17 +43,8 @@ public class FragmentSettings extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        int screenOrientation = getResources().getConfiguration().orientation;
-        View rootView;
-        if (screenOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-            // Inflate the layout for this fragment
-            rootView = inflater.inflate(R.layout.fragment_settings_landscape, container,
+        View rootView = inflater.inflate(R.layout.fragment_settings, container,
                     false);
-        } else {
-            // Inflate the layout for this fragment
-            rootView = inflater.inflate(R.layout.fragment_settings, container,
-                    false);
-        }
 
         // Introduce the Activity Data Store
         MainActivityData dataStore = new ViewModelProvider(getActivity()).
@@ -114,6 +106,10 @@ public class FragmentSettings extends Fragment {
                 //Set board size to 3x3.
                 dataStore.setSize(3);
 
+                //Disable non-applicable win conditions.
+                winCondition4.setEnabled(false);
+                winCondition5.setEnabled(false);
+
                 //Set other two buttons to lae color to signify button pressed.
                 boardSize3.setBackgroundResource(R.color.button_blue);
                 boardSize4.setBackgroundResource(R.color.paled_blue);
@@ -125,6 +121,9 @@ public class FragmentSettings extends Fragment {
             public void onClick(View view) {
                 //Set board size to 4x4.
                 dataStore.setSize(4);
+
+                //Disable non-applicable win conditions.
+                winCondition5.setEnabled(false);
 
                 //Set other two buttons to lae color to signify button pressed.
                 boardSize3.setBackgroundResource(R.color.paled_blue);
@@ -164,6 +163,13 @@ public class FragmentSettings extends Fragment {
                 //Set win condition to 4 logo's in a row.
                 dataStore.setWinCondition(4);
 
+                //Check whether win conditions are available.
+                if(!winCondition4.isEnabled()) {
+                    Toast toast = Toast.makeText(getContext(),
+                            "You cannot use this win condition!", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+
                 //Set other two buttons to pale colour to signify pressed button.
                 winCondition3.setBackgroundResource(R.color.paled_blue);
                 winCondition4.setBackgroundResource(R.color.button_blue);
@@ -175,6 +181,13 @@ public class FragmentSettings extends Fragment {
             public void onClick(View view) {
                 //Set win condition to 5 logo's in a row.
                 dataStore.setWinCondition(5);
+
+                //Check whether win conditions are available.
+                if(!winCondition5.isEnabled()) {
+                    Toast toast = Toast.makeText(getContext(),
+                            "You cannot use this win condition!", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
 
                 //Set other two buttons to pale colour to signify pressed button.
                 winCondition3.setBackgroundResource(R.color.paled_blue);
@@ -198,6 +211,9 @@ public class FragmentSettings extends Fragment {
 
                     p2_logo.setText("X");
                     p2_logo.setBackgroundResource(R.color.light_red);
+
+                    dataStore.getPlayer1().setPlayerCharacter('O');
+                    dataStore.getPlayer2().setPlayerCharacter('X');
                 }
                 else if(logo_check.equals("O")) {
                     p1_logo.setText("X");
@@ -205,6 +221,9 @@ public class FragmentSettings extends Fragment {
 
                     p2_logo.setText("O");
                     p2_logo.setBackgroundResource(R.color.light_green);
+
+                    dataStore.getPlayer1().setPlayerCharacter('X');
+                    dataStore.getPlayer2().setPlayerCharacter('O');
                 }
             }
         });
