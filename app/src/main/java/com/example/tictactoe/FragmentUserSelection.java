@@ -279,12 +279,18 @@ public class FragmentUserSelection extends Fragment {
 
     private void updateImageButtons(MainActivityData dataStore) {
         //Retain the selected image for the player upon fragment loading.
-        for(Player player : dataStore.getPlayerList()) {
-            if(player.getName().equals(p1_name.getText().toString())) {
-                p1_button.setImageBitmap(dataStore.getImagesList().get(player.getAvatar()));
+        if(dataStore.getPlayer1() != null) {
+            for (Player player : dataStore.getPlayerList()) {
+                if (player.getName().equals(p1_name.getText().toString())) {
+                    p1_button.setImageBitmap(dataStore.getImagesList().get(player.getAvatar()));
+                }
             }
-            else if(player.getName().equals(p2_name.getText().toString())) {
-                p2_button.setImageBitmap(dataStore.getImagesList().get(player.getAvatar()));
+        }
+        if(dataStore.getPlayer2() != null) {
+            for (Player player : dataStore.getPlayerList()) {
+                if(player.getName().equals(p2_name.getText().toString())) {
+                    p2_button.setImageBitmap(dataStore.getImagesList().get(player.getAvatar()));
+                }
             }
         }
     }
