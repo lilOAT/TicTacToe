@@ -36,9 +36,6 @@ public class FragmentUserCustomization extends Fragment {
     //Save Button.
     Button saveButton;
 
-    //Back Button.
-    Button backButton;
-
     //Profile picture number.
     private String profilePicName = "";
 
@@ -87,8 +84,6 @@ public class FragmentUserCustomization extends Fragment {
         // Save Button
         saveButton = rootView.findViewById(R.id.save_button);
 
-        // Back Button
-        backButton = rootView.findViewById(R.id.back_button);
         // **********************************************
 
         // Keeps a user's avatar selection updated.
@@ -225,14 +220,6 @@ public class FragmentUserCustomization extends Fragment {
                 Toast toast = Toast.makeText(getContext(),
                         "Saved", Toast.LENGTH_SHORT);
                 toast.show();
-            }
-        });
-
-        //Logic for Back Button.
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Takes user back to the user selection screen.
                 dataStore.setCurrentFrag(1);
             }
         });
