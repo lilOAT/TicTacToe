@@ -31,9 +31,6 @@ public class FragmentSettings extends Fragment {
     TextView p2_logo;
     ImageButton swapLogo;
 
-    //Action bar - TODO.
-    Button actionButton;
-
     //************************************
 
     @Override

@@ -169,40 +169,32 @@ public class FragmentUserSelection extends Fragment {
                         }
                     }
 
-
                     //Profile doesn't exist in table yet.
                     if(dataStore.getUserCustomization_profileID() == -1) {
-                        if(dataStore.getPlayerList().size() == 9) {
-                            Toast toast = Toast.makeText(getContext(),
-                                    "Maximum Profiles Reached! Please use an existing one...", Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
-                        else {
-                            if(dataStore.getUserSelection_profileToEdit() == 1) {
-                                if(p1_name.getText().toString().equals("")) {
-                                    Toast toast = Toast.makeText(getContext(),
-                                            "Player's must have a name!", Toast.LENGTH_SHORT);
-                                    toast.show();
-                                }
-                                else {
-                                    dataStore.addProfile(
-                                            new Player(p1_name.getText().toString(), "basic")
-                                    );
-                                    dataStore.setUserCustomization_profileID(dataStore.getPlayerList().size() - 1);
-                                }
+                        if(dataStore.getUserSelection_profileToEdit() == 1) {
+                            if(p1_name.getText().toString().equals("")) {
+                                Toast toast = Toast.makeText(getContext(),
+                                        "Player's must have a name!", Toast.LENGTH_SHORT);
+                                toast.show();
                             }
-                            else if(dataStore.getUserSelection_profileToEdit() == 2) {
-                                if(p2_name.getText().toString().equals("")) {
-                                    Toast toast = Toast.makeText(getContext(),
-                                            "Player's must have a name!", Toast.LENGTH_SHORT);
-                                    toast.show();
-                                }
-                                else {
-                                    dataStore.addProfile(
-                                            new Player(p2_name.getText().toString(), "basic")
-                                    );
-                                    dataStore.setUserCustomization_profileID(dataStore.getPlayerList().size() - 1);
-                                }
+                            else {
+                                dataStore.addProfile(
+                                        new Player(p1_name.getText().toString(), "basic")
+                                );
+                                dataStore.setUserCustomization_profileID(dataStore.getPlayerList().size() - 1);
+                            }
+                        }
+                        else if(dataStore.getUserSelection_profileToEdit() == 2) {
+                            if(p2_name.getText().toString().equals("")) {
+                                Toast toast = Toast.makeText(getContext(),
+                                        "Player's must have a name!", Toast.LENGTH_SHORT);
+                                toast.show();
+                            }
+                            else {
+                                dataStore.addProfile(
+                                        new Player(p2_name.getText().toString(), "basic")
+                                );
+                                dataStore.setUserCustomization_profileID(dataStore.getPlayerList().size() - 1);
                             }
                         }
                     }
@@ -230,11 +222,25 @@ public class FragmentUserSelection extends Fragment {
                 }
                 else {
                     // Set active Player 1 and Player 2.
+                    int i = 0;
                     for(Player player : dataStore.getPlayerList()) {
                         if(player.getName().equals(p1_name.getText().toString())) {
                             dataStore.setPlayer1(player);
                         }
                         if(player.getName().equals(p2_name.getText().toString())) {
+                            dataStore.setPlayer2(player);
+                        }
+                        i++;
+                    }
+                    if(i == dataStore.getPlayerList().size()) {
+                        if(dataStore.getPlayer1() == null) {
+                            Player player = new Player(p1_name.getText().toString(), "basic");
+                            dataStore.addProfile(player);
+                            dataStore.setPlayer1(player);
+                        }
+                        else if(dataStore.getPlayer2() == null) {
+                            Player player = new Player(p2_name.getText().toString(), "basic");
+                            dataStore.addProfile(player);
                             dataStore.setPlayer2(player);
                         }
                     }

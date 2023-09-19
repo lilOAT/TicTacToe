@@ -92,10 +92,11 @@
 
             <EditText
                 android:id="@+id/profile1_name"
-                android:layout_width="wrap_content"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="left"
                 android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
                 android:text=""
                 android:textColor="@color/black"
                 android:textStyle="bold"
@@ -137,14 +138,15 @@
 
             <EditText
                 android:id="@+id/profile2_name"
-                android:layout_width="wrap_content"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="left"
                 android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
                 android:text=""
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:clickable="false" />
+                android:clickable="false"/>
 
         </FrameLayout>
 
