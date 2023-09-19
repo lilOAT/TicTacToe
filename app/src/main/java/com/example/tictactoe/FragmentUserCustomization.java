@@ -3,6 +3,7 @@ package com.example.tictactoe;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -36,7 +37,7 @@ public class FragmentUserCustomization extends Fragment {
     //Save Button.
     Button saveButton;
 
-    //Profile picture number.
+    //Profile picture name.
     private String profilePicName = "";
 
     @Override
@@ -110,6 +111,19 @@ public class FragmentUserCustomization extends Fragment {
                 profile8Image,
                 profile9Image
         };
+
+        // Saved Instance.
+        //Update if saved state exists
+        if(savedInstanceState != null) {
+            profilePicName = savedInstanceState.getString("profile_pic");
+
+            for(int i = 0; i < possibleAvatars.length; i++) {
+                if(possibleAvatars[i].equals(profilePicName)) {
+                    resetOtherImages(buttonList);
+                    buttonList[i].setBackgroundResource(R.drawable.profile_edit_mode);
+                }
+            }
+        }
 
         //First, checks the current editable player's data to see if there is already a selected avatar.
         //If yes, then that avatar's image will be pre-selected - else the basic profile will be selected.
@@ -213,9 +227,6 @@ public class FragmentUserCustomization extends Fragment {
             public void onClick(View view) {
                 dataStore.getPlayerList().
                         get(dataStore.getUserCustomization_profileID()).
-                        setName(profileName.getText().toString());
-                dataStore.getPlayerList().
-                        get(dataStore.getUserCustomization_profileID()).
                         setAvatar(profilePicName);
                 Toast toast = Toast.makeText(getContext(),
                         "Saved", Toast.LENGTH_SHORT);
@@ -233,4 +244,9 @@ public class FragmentUserCustomization extends Fragment {
         }
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putString("profile_pic", profilePicName); // Save selected profile pic.
+    }
 }
