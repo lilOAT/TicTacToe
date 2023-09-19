@@ -6,7 +6,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.res.Configuration;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
-import java.util.ArrayList;
 
 public class FragmentUserSelection extends Fragment {
 
@@ -40,27 +37,13 @@ public class FragmentUserSelection extends Fragment {
 
         View rootView;
 
-        // Saved Instance.
-        //Update if saved state exists
-        if(savedInstanceState != null) {
-            p1_name.setText(savedInstanceState.getString("p1_name"));
-            p2_name.setText(savedInstanceState.getString("p2_name"));
-        }
+
+        rootView = inflater.inflate(R.layout.fragment_user_selection, container,
+                false);
 
         // Introduce the Activity Data Store
         MainActivityData dataStore = new ViewModelProvider(getActivity()).
                 get(MainActivityData.class);
-
-        // Check screen orientation.
-        if (screenOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-            // Inflate the layout for this fragment
-            rootView = inflater.inflate(R.layout.fragment_user_selection_landscape, container,
-                    false);
-        } else {
-            // Inflate the layout for this fragment
-            rootView = inflater.inflate(R.layout.fragment_user_selection, container,
-                    false);
-        }
 
         //Linking to XML file.
 
@@ -76,6 +59,15 @@ public class FragmentUserSelection extends Fragment {
         editButton = rootView.findViewById(R.id.edit_button);
         playButton = rootView.findViewById(R.id.play_button);
 
+        // Saved Instance.
+        //Update if saved state exists
+        if(savedInstanceState != null) {
+            p1_name.setText(savedInstanceState.getString("p1_name"));
+            p2_name.setText(savedInstanceState.getString("p2_name"));
+        } else {
+            p1_name.setText(dataStore.getPlayer1().getName());
+            p2_name.setText(dataStore.getPlayer2().getName());
+        }
         // **********************************************
 
         dataStore.currentFrag.observe(getViewLifecycleOwner(), new Observer<Integer>() {

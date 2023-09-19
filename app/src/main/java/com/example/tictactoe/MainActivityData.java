@@ -81,7 +81,9 @@ public class MainActivityData  extends ViewModel {
     }
     public void setVsAI(boolean pAI){
         vsAI = pAI;
-        setPlayer2(ai);
+        if(pAI) {
+            setPlayer2(ai);
+        }
     }
     public void setWinCondition(int pCondition){
         winCondition = pCondition;
