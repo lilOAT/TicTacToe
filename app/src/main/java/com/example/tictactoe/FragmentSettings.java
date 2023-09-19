@@ -54,12 +54,20 @@ public class FragmentSettings extends Fragment {
         boardSize4 = rootView.findViewById(R.id.board_size_four);
         boardSize5 = rootView.findViewById(R.id.board_size_five);
 
+        //Win conditions.
+        winCondition3 = rootView.findViewById(R.id.win_condition_three);
+        winCondition4 = rootView.findViewById(R.id.win_condition_four);
+        winCondition5 = rootView.findViewById(R.id.win_condition_five);
+
         //Highlight button from current setting
         if(dataStore.getSize() == 3) {
+            winCondition4.setEnabled(false);
+            winCondition5.setEnabled(false);
             boardSize3.setBackgroundResource(R.color.button_blue);
             boardSize4.setBackgroundResource(R.color.paled_blue);
             boardSize5.setBackgroundResource(R.color.paled_blue);
         } else if(dataStore.getSize() == 4) {
+            winCondition5.setEnabled(false);
             boardSize3.setBackgroundResource(R.color.paled_blue);
             boardSize4.setBackgroundResource(R.color.button_blue);
             boardSize5.setBackgroundResource(R.color.paled_blue);
@@ -68,11 +76,6 @@ public class FragmentSettings extends Fragment {
             boardSize4.setBackgroundResource(R.color.paled_blue);
             boardSize5.setBackgroundResource(R.color.button_blue);
         }
-
-        //Win conditions.
-        winCondition3 = rootView.findViewById(R.id.win_condition_three);
-        winCondition4 = rootView.findViewById(R.id.win_condition_four);
-        winCondition5 = rootView.findViewById(R.id.win_condition_five);
 
         //Highlight button from current setting
         if(dataStore.getWinCondition() == 3) {
@@ -106,6 +109,10 @@ public class FragmentSettings extends Fragment {
                 //Disable non-applicable win conditions.
                 winCondition4.setEnabled(false);
                 winCondition5.setEnabled(false);
+                dataStore.setWinCondition(3);
+                winCondition3.setBackgroundResource(R.color.button_blue);
+                winCondition4.setBackgroundResource(R.color.paled_blue);
+                winCondition5.setBackgroundResource(R.color.paled_blue);
 
                 //Set other two buttons to lae color to signify button pressed.
                 boardSize3.setBackgroundResource(R.color.button_blue);
@@ -120,7 +127,14 @@ public class FragmentSettings extends Fragment {
                 dataStore.setSize(4);
 
                 //Disable non-applicable win conditions.
+                winCondition4.setEnabled(true);
                 winCondition5.setEnabled(false);
+                if(dataStore.getWinCondition() == 5) {
+                    dataStore.setWinCondition(4);
+                    winCondition3.setBackgroundResource(R.color.paled_blue);
+                    winCondition4.setBackgroundResource(R.color.button_blue);
+                    winCondition5.setBackgroundResource(R.color.paled_blue);
+                }
 
                 //Set other two buttons to lae color to signify button pressed.
                 boardSize3.setBackgroundResource(R.color.paled_blue);
@@ -133,6 +147,10 @@ public class FragmentSettings extends Fragment {
             public void onClick(View view) {
                 //Set board size to 5x5.
                 dataStore.setSize(5);
+
+                //Enable all win conditions
+                winCondition4.setEnabled(true);
+                winCondition5.setEnabled(true);
 
                 //Set other two buttons to lae color to signify button pressed.
                 boardSize3.setBackgroundResource(R.color.paled_blue);
