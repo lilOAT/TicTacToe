@@ -56,15 +56,10 @@ public class FragmentUserSelection extends Fragment {
             // Inflate the layout for this fragment
             rootView = inflater.inflate(R.layout.fragment_user_selection_landscape, container,
                     false);
-
-            updateImageButtons(dataStore);
-
         } else {
             // Inflate the layout for this fragment
             rootView = inflater.inflate(R.layout.fragment_user_selection, container,
                     false);
-
-            updateImageButtons(dataStore);
         }
 
         //Linking to XML file.
@@ -286,7 +281,7 @@ public class FragmentUserSelection extends Fragment {
                 }
             }
         }
-        if(dataStore.getPlayer2() != null) {
+        if(dataStore.getPlayer2() != null || dataStore.getPlayer2().getName().equals("AI")) {
             for (Player player : dataStore.getPlayerList()) {
                 if(player.getName().equals(p2_name.getText().toString())) {
                     p2_button.setImageBitmap(dataStore.getImagesList().get(player.getAvatar()));
