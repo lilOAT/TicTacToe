@@ -21,6 +21,7 @@ public class MainActivityData  extends ViewModel {
     private MutableLiveData<Integer> userSelection_profileToEdit;
     private MutableLiveData<Integer> userCustomization_profileID;
     private MutableLiveData<Player> player1, player2;
+    private Player ai;
 
     public MainActivityData(){
         size = new MutableLiveData<>();
@@ -34,6 +35,7 @@ public class MainActivityData  extends ViewModel {
         currentFrag.setValue(-1);
         player1 = new MutableLiveData<Player>();
         player2 = new MutableLiveData<Player>();
+        ai = new Player("ai", "basic");
 
         //Set Default Values
         size.setValue(3);
@@ -84,6 +86,7 @@ public class MainActivityData  extends ViewModel {
     }
     public void setVsAI(boolean pAI){
         vsAI.setValue(pAI);
+        setPlayer2(ai);
     }
     public void setWinCondition(int pCondition){
         winCondition.setValue(pCondition);
