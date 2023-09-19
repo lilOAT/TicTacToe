@@ -172,6 +172,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.25"
+                android:layout_marginLeft="1dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/pause"
                 android:id="@+id/pauseButton"/>

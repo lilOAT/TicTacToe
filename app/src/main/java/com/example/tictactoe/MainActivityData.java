@@ -31,6 +31,13 @@ public class MainActivityData  extends ViewModel {
         currentFrag.setValue(-1);
         ai = new Player("AI", "basic");
         playerList = new ArrayList<>();
+        Player guest1 = new Player("Guest 1", "basic");
+        Player guest2 = new Player("Guest 2", "basic");
+        playerList.add(guest1);
+        playerList.add(guest2);
+        player1 = guest1;
+        player2 = guest2;
+
 
         //Set Default Values
         userSelection_profileToEdit = 0;
