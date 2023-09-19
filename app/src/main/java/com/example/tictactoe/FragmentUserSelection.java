@@ -88,11 +88,6 @@ public class FragmentUserSelection extends Fragment {
                         p2_name.setEnabled(false);
                         p2_button.setEnabled(false);
                     }
-                    else {
-                        p2_name.setText("");
-                        p2_name.setEnabled(true);
-                        p2_button.setEnabled(true);
-                    }
 
                     //Reset profile to edit.
                     dataStore.setUserSelection_profileToEdit(0);
