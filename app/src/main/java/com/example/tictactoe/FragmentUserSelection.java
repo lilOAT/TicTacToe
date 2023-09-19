@@ -80,8 +80,8 @@ public class FragmentUserSelection extends Fragment {
 
         dataStore.currentFrag.observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
-            public void onChanged(Integer integer) {
-                if(integer == 1) {
+            public void onChanged(Integer currentFrag) {
+                if(currentFrag == 1) {
                     //Checks whether we are vsing an AI.
                     if(dataStore.getVsAI()) {
                         p2_name.setText("AI");
