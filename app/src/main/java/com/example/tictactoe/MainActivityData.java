@@ -19,7 +19,7 @@ public class MainActivityData  extends ViewModel {
     private Hashtable<String, Bitmap> imagesTable;
     private int userSelection_profileToEdit;
     private int userCustomization_profileID;
-    private Player player1, player2, ai;
+    private Player player1, player2, prevPlayer2, ai;
 
     public MainActivityData(){
         size = 3;
@@ -37,6 +37,7 @@ public class MainActivityData  extends ViewModel {
         playerList.add(guest2);
         player1 = guest1;
         player2 = guest2;
+        prevPlayer2 = player2;
 
 
         //Set Default Values
@@ -65,6 +66,13 @@ public class MainActivityData  extends ViewModel {
 
     public Player getPlayer1(){return player1;}
     public Player getPlayer2(){return player2;}
+    public Player getPlayerAI() {return ai;}
+    public Player getPrevPlayer2() {return prevPlayer2;}
+    public void setPlayer1(Player player){player1 = player;}
+    public void setPlayer2(Player player){player2 = player;}
+    public void setPrevPlayer2() {
+        prevPlayer2 = player2;
+    }
 
     public Hashtable<String, Bitmap> getImagesList() {
         return imagesTable;
@@ -81,9 +89,9 @@ public class MainActivityData  extends ViewModel {
     }
     public void setVsAI(boolean pAI){
         vsAI = pAI;
-        if(pAI) {
-            setPlayer2(ai);
-        }
+//        if(pAI) {
+//            setPlayer2(ai);
+//        }
     }
     public void setWinCondition(int pCondition){
         winCondition = pCondition;
@@ -114,9 +122,6 @@ public class MainActivityData  extends ViewModel {
     public void addProfile(Player player) {
         playerList.add(player);
     }
-
-    public void setPlayer1(Player player){player1 = player;}
-    public void setPlayer2(Player player){player2 = player;}
 
     public int getCurrentFrag() {return currentFrag.getValue();}
 

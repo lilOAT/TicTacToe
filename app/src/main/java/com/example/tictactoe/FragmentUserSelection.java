@@ -47,18 +47,29 @@ public class FragmentUserSelection extends Fragment {
                 get(MainActivityData.class);
 
         //Linking to XML file.
-
         //Player Usernames
         p1_name = rootView.findViewById(R.id.profile1_name);
         p2_name = rootView.findViewById(R.id.profile2_name);
-
         //Player Avatars
         p1_button = rootView.findViewById(R.id.profile1);
         p2_button = rootView.findViewById(R.id.profile2);
-
         //Action Bar
         editButton = rootView.findViewById(R.id.edit_button);
         playButton = rootView.findViewById(R.id.play_button);
+
+        //Checks whether we are vsing an AI.
+        if(dataStore.getVsAI()) {
+            if(dataStore.getPlayer2() != dataStore.getPlayerAI()) {
+                dataStore.setPrevPlayer2();
+            }
+            dataStore.setPlayer2(dataStore.getPlayerAI());
+            p2_name.setEnabled(false);
+            p2_button.setEnabled(false);
+        } else {
+            if(dataStore.getPlayer2() == dataStore.getPlayerAI()) {
+                dataStore.setPlayer2(dataStore.getPrevPlayer2());
+            }
+        }
 
         // Saved Instance.
         //Update if saved state exists
@@ -71,17 +82,11 @@ public class FragmentUserSelection extends Fragment {
         }
         // **********************************************
 
+
         dataStore.currentFrag.observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer currentFrag) {
                 if(currentFrag == 1) {
-                    //Checks whether we are vsing an AI.
-                    if(dataStore.getVsAI()) {
-                        p2_name.setText("AI");
-                        p2_name.setEnabled(false);
-                        p2_button.setEnabled(false);
-                    }
-
                     //Reset profile to edit.
                     dataStore.setUserSelection_profileToEdit(0);
 
