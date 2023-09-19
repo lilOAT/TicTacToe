@@ -227,8 +227,10 @@ public class FragmentSettings extends Fragment {
                     p2_logo.setText("X");
                     p2_logo.setBackgroundResource(R.color.light_red);
 
-                    dataStore.getPlayer1().setPlayerCharacter('O');
-                    dataStore.getPlayer2().setPlayerCharacter('X');
+//                    dataStore.getPlayer1().setPlayerCharacter('O');
+//                    dataStore.getPlayer2().setPlayerCharacter('X');
+                    dataStore.setPlayer1Icon(R.drawable.nought);
+                    dataStore.setPlayer2Icon(R.drawable.cross);
                 }
                 else if(logo_check.equals("O")) {
                     p1_logo.setText("X");
@@ -237,8 +239,10 @@ public class FragmentSettings extends Fragment {
                     p2_logo.setText("O");
                     p2_logo.setBackgroundResource(R.color.light_green);
 
-                    dataStore.getPlayer1().setPlayerCharacter('X');
-                    dataStore.getPlayer2().setPlayerCharacter('O');
+//                    dataStore.getPlayer1().setPlayerCharacter('X');
+//                    dataStore.getPlayer2().setPlayerCharacter('O');
+                    dataStore.setPlayer1Icon(R.drawable.cross);
+                    dataStore.setPlayer2Icon(R.drawable.nought);
                 }
             }
         });
