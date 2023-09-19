@@ -16,6 +16,7 @@ public class Player {
     private int wins;
     private int losses;
     private int draws;
+    private char playerCharacter;
 
     public Player(String inName, String inAvatar) {
         name = inName;
@@ -23,6 +24,7 @@ public class Player {
         wins = 0;
         losses = 0;
         draws = 0;
+        playerCharacter = '*';
     }
 
     public String getName() {
@@ -55,4 +57,6 @@ public class Player {
     public void incDraws() {
         draws++;
     }
+    public char getPlayerCharacter() {return playerCharacter;}
+    public void setPlayerCharacter(char newChar) {playerCharacter = newChar;}
 }

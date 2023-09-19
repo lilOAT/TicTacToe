@@ -28,13 +28,6 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent=".66" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".85" />
-
     <!-- *********************************************** -->
 
     <!-- Section 1 - Board Size -->
@@ -71,7 +64,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintTop_toTopOf="@id/guideline1"
-        app:layout_constraintBottom_toBottomOf="@id/guideline4"
+        app:layout_constraintBottom_toBottomOf="parent"
         >
 
         <!-- Buttons to select Board Size -->
@@ -144,7 +137,7 @@
         app:layout_constraintStart_toStartOf="@id/guideline2"
         app:layout_constraintEnd_toEndOf="@id/guideline3"
         app:layout_constraintTop_toTopOf="@id/guideline1"
-        app:layout_constraintBottom_toBottomOf="@id/guideline4"
+        app:layout_constraintBottom_toBottomOf="parent"
         >
 
         <!-- Buttons to select Board Size -->
@@ -216,7 +209,7 @@
         app:layout_constraintTop_toTopOf="@id/guideline1"
         app:layout_constraintStart_toStartOf="@id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/guideline4">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
             android:id="@+id/p1_label"
@@ -281,23 +274,5 @@
             android:textStyle="bold" />
 
     </LinearLayout>
-
-
-
-    <!-- Section 4 - Action Bar -->
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/actionbutton"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:layout_margin="5dp"
-        android:background="@drawable/square_button"
-        android:text="actionbutton"
-        android:textSize="30sp"
-        app:layout_constraintStart_toStartOf="@id/guideline2"
-        app:layout_constraintEnd_toEndOf="@id/guideline3"
-        app:layout_constraintTop_toTopOf="@id/guideline4"
-        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
