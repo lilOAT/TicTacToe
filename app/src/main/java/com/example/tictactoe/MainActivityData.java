@@ -35,7 +35,7 @@ public class MainActivityData  extends ViewModel {
         currentFrag.setValue(-1);
         player1 = new MutableLiveData<Player>();
         player2 = new MutableLiveData<Player>();
-        ai = new Player("ai", "basic");
+        ai = new Player("AI", "basic");
 
         //Set Default Values
         size.setValue(3);
@@ -48,6 +48,8 @@ public class MainActivityData  extends ViewModel {
         //Player Data
         ArrayList<Player> list = new ArrayList<Player>();
         playerList = new MutableLiveData<ArrayList<Player>>();
+        playerList.setValue(list);
+        list.add(ai);
         playerList.setValue(list);
 
         //Profile Images.
