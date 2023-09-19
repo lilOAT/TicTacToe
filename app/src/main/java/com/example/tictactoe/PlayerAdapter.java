@@ -1,5 +1,6 @@
 package com.example.tictactoe;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,15 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Hashtable;
 
 public class PlayerAdapter extends RecyclerView.Adapter<PlayerVH> {
 
     ArrayList<Player> data;
 
-    MainActivityData dataStore;
-    public PlayerAdapter(ArrayList<Player> data, MainActivityData mainActivityData){
+    Hashtable<String, Bitmap> imageList;
+    public PlayerAdapter(ArrayList<Player> data, Hashtable<String, Bitmap> inImageList){
         this.data = data;
-        dataStore = mainActivityData;
+        imageList = inImageList;
     }
     @NonNull
     @Override
@@ -34,8 +36,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerVH> {
     @Override
     public void onBindViewHolder(@NonNull PlayerVH holder, int position) {
         Player singleData = data.get(position);
-        //TODO change this to get image bitmap : holder.avatar.setImageBitmap(singleData. GET BITMAP THINGS);
-        holder.avatar.setImageBitmap(dataStore.getImagesList().get(singleData.getAvatar()));
+        holder.avatar.setImageBitmap(imageList.get(singleData.getAvatar()));
         holder.name.setText(singleData.getName());
         holder.wins.setText(String.valueOf(singleData.getWins()));
         holder.losses.setText(String.valueOf(singleData.getLosses()));

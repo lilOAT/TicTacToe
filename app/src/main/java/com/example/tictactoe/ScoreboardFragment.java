@@ -1,5 +1,6 @@
 package com.example.tictactoe;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Hashtable;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -74,13 +76,16 @@ public class ScoreboardFragment extends Fragment {
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).
                 get(MainActivityData.class);
         ArrayList<Player> playerList = mainActivityDataViewModel.getPlayerList();
+        Hashtable<String, Bitmap> imageList = mainActivityDataViewModel.getImagesList();
+
         //Sort playerList by wins
         playerList.sort(Comparator.comparingInt(Player::getWins));
         Collections.reverse(playerList);
+
         // Apply data of each player to recyclerview using the PlayerAdapter
         // List of players -> PlayerAdapter -> PlayerVH -> Recycler View
         rv.setLayoutManager(new LinearLayoutManager(rv.getContext(), LinearLayoutManager.VERTICAL,false));
-        PlayerAdapter adapter = new PlayerAdapter(playerList, mainActivityDataViewModel);
+        PlayerAdapter adapter = new PlayerAdapter(playerList, imageList);
         rv.setAdapter(adapter);
 
         return view;
