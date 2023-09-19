@@ -13,13 +13,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class FragmentUserSelection extends Fragment {
 
     //Declaring all actionable elements.
-    EditText p1_name;
-    EditText p2_name;
+    TextView p1_name;
+    TextView p2_name;
     ImageButton p1_button;
     ImageButton p2_button;
     Button editButton;
@@ -104,6 +105,9 @@ public class FragmentUserSelection extends Fragment {
                 Toast toast = Toast.makeText(getContext(),
                         "Player 1 Selected!", Toast.LENGTH_SHORT);
                 toast.show();
+
+                // Change fragment to user customization.
+                dataStore.setCurrentFrag(5);
             }
         });
 
@@ -121,81 +125,9 @@ public class FragmentUserSelection extends Fragment {
                 Toast toast = Toast.makeText(getContext(),
                         "Player 2 Selected!", Toast.LENGTH_SHORT);
                 toast.show();
-            }
-        });
 
-        //Logic for the Edit Button.
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dataStore.setUserCustomization_profileID(-1);
-
-                //First, check if a Profile has been selected to edit.
-                if(dataStore.getUserSelection_profileToEdit() == 0) {
-                    Toast toast = Toast.makeText(getContext(),
-                            "Please select a Profile to edit!", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-                else {
-                    int i = 0;
-
-                    //Check whether selected profile is is table.
-                    if(dataStore.getUserSelection_profileToEdit() == 1) {
-                        for(Player player : dataStore.getPlayerList()) {
-                            if(player.getName().equals(p1_name.getText().toString())) {
-                                dataStore.setUserCustomization_profileID(i);
-                            }
-                            i++;
-                        }
-                    }
-                    else if(dataStore.getUserSelection_profileToEdit() == 2) {
-                        for(Player player : dataStore.getPlayerList()) {
-                            if(player.getName().equals(p2_name.getText().toString())) {
-                                dataStore.setUserCustomization_profileID(i);
-                            }
-                            i++;
-                        }
-                    }
-
-                    //Profile doesn't exist in table yet.
-                    if(dataStore.getUserCustomization_profileID() == -1) {
-                        if(dataStore.getUserSelection_profileToEdit() == 1) {
-                            if(p1_name.getText().toString().equals("")) {
-                                Toast toast = Toast.makeText(getContext(),
-                                        "Player's must have a name!", Toast.LENGTH_SHORT);
-                                toast.show();
-                            }
-                            else {
-                                dataStore.addProfile(
-                                        new Player(p1_name.getText().toString(), "basic")
-                                );
-                                dataStore.setUserCustomization_profileID(dataStore.getPlayerList().size() - 1);
-                            }
-                        }
-                        else if(dataStore.getUserSelection_profileToEdit() == 2) {
-                            if(p2_name.getText().toString().equals("")) {
-                                Toast toast = Toast.makeText(getContext(),
-                                        "Player's must have a name!", Toast.LENGTH_SHORT);
-                                toast.show();
-                            }
-                            else {
-                                dataStore.addProfile(
-                                        new Player(p2_name.getText().toString(), "basic")
-                                );
-                                dataStore.setUserCustomization_profileID(dataStore.getPlayerList().size() - 1);
-                            }
-                        }
-                    }
-
-                    //If no errors have occurred, proceed with the customization.
-                    if(dataStore.getUserCustomization_profileID() != -1) {
-                        dataStore.setCurrentFrag(5);
-                    }
-                    //If something has gone wrong, reset all parameters and allow user to try again.
-                    else {
-                        resetSelectionFragment(dataStore);
-                    }
-                }
+                //Change fragment to user customization,
+                dataStore.setCurrentFrag(5);
             }
         });
 
@@ -209,27 +141,19 @@ public class FragmentUserSelection extends Fragment {
                     toast.show();
                 }
                 else {
-                    // Set active Player 1 and Player 2.
-                    int i = 0;
-                    for(Player player : dataStore.getPlayerList()) {
-                        if(player.getName().equals(p1_name.getText().toString())) {
-                            dataStore.setPlayer1(player);
+                    if(p1_name.getText().toString().equals("")) {
+                        for(Player player : dataStore.getPlayerList()) {
+                            if(player.getName().equals("Guest 1")) {
+                                dataStore.setPlayer1(player);
+                            }
                         }
-                        if(player.getName().equals(p2_name.getText().toString())) {
-                            dataStore.setPlayer2(player);
-                        }
-                        i++;
                     }
-                    if(i == dataStore.getPlayerList().size()) {
-                        if(dataStore.getPlayer1() == null) {
-                            Player player = new Player(p1_name.getText().toString(), "basic");
-                            dataStore.addProfile(player);
-                            dataStore.setPlayer1(player);
-                        }
-                        else if(dataStore.getPlayer2() == null) {
-                            Player player = new Player(p2_name.getText().toString(), "basic");
-                            dataStore.addProfile(player);
-                            dataStore.setPlayer2(player);
+
+                    if(p2_name.getText().toString().equals("")) {
+                        for(Player player : dataStore.getPlayerList()) {
+                            if(player.getName().equals("Guest 2")) {
+                                dataStore.setPlayer2(player);
+                            }
                         }
                     }
 
@@ -240,9 +164,10 @@ public class FragmentUserSelection extends Fragment {
 
                         resetSelectionFragment(dataStore);
                     }
-
-                    // Continue with the game.
-                    dataStore.setCurrentFrag(2);
+                    else {
+                        // Continue with the game.
+                        dataStore.setCurrentFrag(2);
+                    }
                 }
             }
         });
@@ -261,14 +186,13 @@ public class FragmentUserSelection extends Fragment {
 
     private void updateImageButtons(MainActivityData dataStore) {
         //Retain the selected image for the player upon fragment loading.
-
-        for (Player player : dataStore.getPlayerList()) {
-            if (player.getName().equals(p1_name.getText().toString())) {
-                p1_button.setImageBitmap(dataStore.getImagesList().get(player.getAvatar()));
-            }
-            if(player.getName().equals(p2_name.getText().toString())) {
-                p2_button.setImageBitmap(dataStore.getImagesList().get(player.getAvatar()));
-            }
+        if(dataStore.getPlayer1() != null) {
+            p1_name.setText(dataStore.getPlayer1().getName());
+            p1_button.setImageBitmap(dataStore.getImagesList().get(dataStore.getPlayer1().getAvatar()));
+        }
+        if(dataStore.getPlayer2() != null) {
+            p2_name.setText(dataStore.getPlayer2().getName());
+            p2_button.setImageBitmap(dataStore.getImagesList().get(dataStore.getPlayer2().getAvatar()));
         }
     }
 

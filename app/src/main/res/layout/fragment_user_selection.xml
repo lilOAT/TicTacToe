@@ -91,7 +91,7 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/basic_profile_pic" />
 
-            <EditText
+            <TextView
                 android:id="@+id/profile1_name"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
@@ -136,7 +136,7 @@
                 android:src="@drawable/basic_profile_pic"
                 android:scaleType="fitCenter" />
 
-            <EditText
+            <TextView
                 android:id="@+id/profile2_name"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
@@ -165,34 +165,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <!-- Guideline to separate action buttons. -->
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/actionBar_guideline1"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent=".50" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/actionBar_guideline2"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent=".66" />
-        <!-- ************************************** -->
-
         <!-- Buttons. -->
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/edit_button"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="10dp"
-            android:text="@string/edit"
-            android:background="@drawable/square_button"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/actionBar_guideline1"
-            app:layout_constraintBottom_toBottomOf="@id/actionBar_guideline2" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/play_button"
@@ -202,9 +175,9 @@
             android:text="@string/play"
             android:background="@drawable/square_button"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="@id/actionBar_guideline1"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/actionBar_guideline2" />
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

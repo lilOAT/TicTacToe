@@ -21,7 +21,7 @@ public class FragmentUserCustomization extends Fragment {
 
     //Declaring all actionable elements.
     //Profile Name.
-    TextView profileName;
+    EditText profileName;
 
     //Profile Avatar Images.
     ImageButton profile1Image;
@@ -48,19 +48,7 @@ public class FragmentUserCustomization extends Fragment {
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        int screenOrientation = getResources().getConfiguration().orientation;
-
-        View rootView;
-
-        if (screenOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-            // Inflate the layout for this fragment
-            rootView = inflater.inflate(R.layout.fragment_user_customization_landscape, container,
-                    false);
-        } else {
-            // Inflate the layout for this fragment
-            rootView = inflater.inflate(R.layout.fragment_user_customization, container,
-                    false);
-        }
+        View rootView = inflater.inflate(R.layout.fragment_user_customization, container, false);
 
         // Introduce the Activity Data Store
         MainActivityData dataStore = new ViewModelProvider(getActivity()).
@@ -69,7 +57,6 @@ public class FragmentUserCustomization extends Fragment {
         //Linking to XML file.
         //Profile Name.
         profileName = rootView.findViewById(R.id.profileName);
-        profileName.setText(dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).getName());
 
         // Image Buttons.
         profile1Image = rootView.findViewById(R.id.profile1Image);
@@ -115,6 +102,7 @@ public class FragmentUserCustomization extends Fragment {
         // Saved Instance.
         //Update if saved state exists
         if(savedInstanceState != null) {
+            profileName.setText(savedInstanceState.getString("name"));
             profilePicName = savedInstanceState.getString("profile_pic");
 
             for(int i = 0; i < possibleAvatars.length; i++) {
@@ -131,15 +119,31 @@ public class FragmentUserCustomization extends Fragment {
             @Override
             public void onChanged(Integer integer) {
                 if(integer == 5) {
-                    for(Player player : dataStore.getPlayerList()) {
-                        if(player.getName().equals(profileName.getText().toString())) {
-                            if(!player.getAvatar().equals("")) {
-                                int i = 0;
-                                for(String possibleAvatarName : possibleAvatars) {
-                                    if(possibleAvatarName.equals(player.getAvatar())) {
-                                        buttonList[i].setBackgroundResource(R.drawable.profile_edit_mode);
-                                    }
+                    if(dataStore.getUserSelection_profileToEdit() == 1) {
+                        if(dataStore.getPlayer1() != null) {
+                            profileName.setText(dataStore.getPlayer1().getName());
+
+                            int i = 0;
+                            for(String avatarName : possibleAvatars) {
+                                if(avatarName.equals(dataStore.getPlayer1().getAvatar())) {
+                                    resetOtherImages(buttonList);
+                                    buttonList[i].setBackgroundResource(R.drawable.profile_edit_mode);
                                 }
+                                i++;
+                            }
+                        }
+                    }
+                    else if(dataStore.getUserSelection_profileToEdit() == 2) {
+                        if(dataStore.getPlayer2() != null) {
+                            profileName.setText(dataStore.getPlayer2().getName());
+
+                            int i = 0;
+                            for(String avatarName : possibleAvatars) {
+                                if(avatarName.equals(dataStore.getPlayer2().getAvatar())) {
+                                    resetOtherImages(buttonList);
+                                    buttonList[i].setBackgroundResource(R.drawable.profile_edit_mode);
+                                }
+                                i++;
                             }
                         }
                     }
@@ -225,12 +229,48 @@ public class FragmentUserCustomization extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dataStore.getPlayerList().
-                        get(dataStore.getUserCustomization_profileID()).
-                        setAvatar(profilePicName);
+                dataStore.setUserCustomization_profileID(-1);
+
+                int i = 0;
+                //Check whether profile is is table.
+                for(Player player : dataStore.getPlayerList()) {
+                    if(player.getName().equals(profileName.getText().toString())) {
+                        dataStore.setUserCustomization_profileID(i);
+                        dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setName(profileName.getText().toString());
+                        dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar(profilePicName);
+                    }
+                    i++;
+                }
+
+                //Profile doesn't exist in table yet.
+                if(dataStore.getUserCustomization_profileID() == -1) {
+                    if(profileName.getText().toString().equals("")) {
+                        Toast toast = Toast.makeText(getContext(),
+                                "Player's must have a name!", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                    else {
+                        dataStore.addProfile(
+                                new Player(profileName.getText().toString(), profilePicName)
+                        );
+                        dataStore.setUserCustomization_profileID(dataStore.getPlayerList().size() - 1);
+                    }
+                }
+
+                //Update who the current Player 1 / 2 is.
+                if(dataStore.getUserCustomization_profileID() != -1) {
+                    if(dataStore.getUserSelection_profileToEdit() == 1) {
+                        dataStore.setPlayer1(dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()));
+                    }
+                    if(dataStore.getUserSelection_profileToEdit() == 2) {
+                        dataStore.setPlayer2(dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()));
+                    }
+                }
+
                 Toast toast = Toast.makeText(getContext(),
                         "Saved", Toast.LENGTH_SHORT);
                 toast.show();
+
                 dataStore.setCurrentFrag(1);
             }
         });
@@ -247,6 +287,7 @@ public class FragmentUserCustomization extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState){
         super.onSaveInstanceState(outState);
+        outState.putString("name", profileName.getText().toString());
         outState.putString("profile_pic", profilePicName); // Save selected profile pic.
     }
 }
