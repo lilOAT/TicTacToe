@@ -1,9 +1,5 @@
 package com.example.tictactoe;
 
-import android.graphics.drawable.Drawable;
-
-import androidx.lifecycle.MutableLiveData;
-
 /*
     - I think MutableLiveData is used, otherwise each instance won't be communicated between fragments??
     - Player() constructor
@@ -18,6 +14,8 @@ public class Player {
     private int draws;
     private char playerCharacter;
 
+    private int playerIconID;
+
     public Player(String inName, String inAvatar) {
         name = inName;
         avatar = inAvatar;
@@ -25,6 +23,7 @@ public class Player {
         losses = 0;
         draws = 0;
         playerCharacter = '*';
+        playerIconID = R.drawable.cross;
     }
 
     public String getName() {
@@ -57,6 +56,10 @@ public class Player {
     public void incDraws() {
         draws++;
     }
-    public char getPlayerCharacter() {return playerCharacter;}
-    public void setPlayerCharacter(char newChar) {playerCharacter = newChar;}
+    public int getPlayerIconID() {
+        return playerIconID;
+    }
+    public void setPlayerIconID(int playerIconID) {
+        this.playerIconID = playerIconID;
+    }
 }

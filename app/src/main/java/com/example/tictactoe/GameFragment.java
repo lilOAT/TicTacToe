@@ -70,10 +70,10 @@ public class GameFragment extends Fragment {
         size = mainActivityDataViewModel.getSize();
         winCondition = mainActivityDataViewModel.getWinCondition();
         vsAI = mainActivityDataViewModel.getVsAI();
-        p1IconID = mainActivityDataViewModel.getPlayer1Icon();
-        p2IconID = mainActivityDataViewModel.getPlayer2Icon();
         player1 = mainActivityDataViewModel.getPlayer1();
         player2 = mainActivityDataViewModel.getPlayer2();
+        p1IconID = player1.getPlayerIconID();
+        p2IconID = player2.getPlayerIconID();
 
         //Find and adjust xml placeholders
         player1Name = rootView.findViewById(R.id.player1);

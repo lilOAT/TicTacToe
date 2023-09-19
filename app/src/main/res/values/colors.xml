@@ -8,4 +8,5 @@
     <color name="button_blue">#63C5DA</color>
     <color name="paled_blue">#757C88</color>
     <color name="label_orange">#FECC91</color>
+    <color name="selector_shader_green">#33C1E1C1</color>
 </resources>

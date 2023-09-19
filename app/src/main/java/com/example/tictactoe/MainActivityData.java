@@ -13,7 +13,6 @@ public class MainActivityData  extends ViewModel {
     private int size; //Size of the board
     private boolean vsAI; //True if versing AI
     private int winCondition; //Number in a row needed to win the game
-    private int player1Icon, player2Icon;
     public MutableLiveData<Integer> currentFrag; //Represents current fragment displayed
     public ArrayList<Player> playerList;
     private Hashtable<String, Bitmap> imagesTable;
@@ -25,8 +24,6 @@ public class MainActivityData  extends ViewModel {
         size = 3;
         vsAI = true;
         winCondition = 3;
-        player1Icon = R.drawable.cross;
-        player2Icon = R.drawable.nought;
         currentFrag = new MutableLiveData<>();
         currentFrag.setValue(-1);
         ai = new Player("AI", "basic");
@@ -61,9 +58,6 @@ public class MainActivityData  extends ViewModel {
     public int getWinCondition(){
         return winCondition;
     }
-    public int getPlayer1Icon(){return player1Icon;}
-    public int getPlayer2Icon(){return player2Icon;}
-
     public Player getPlayer1(){return player1;}
     public Player getPlayer2(){return player2;}
     public Player getPlayerAI() {return ai;}
@@ -95,13 +89,6 @@ public class MainActivityData  extends ViewModel {
     }
     public void setWinCondition(int pCondition){
         winCondition = pCondition;
-    }
-
-    public void setPlayer1Icon(int p1IconRID) {
-        player1Icon = p1IconRID;
-    }
-    public void setPlayer2Icon(int p2IconRID) {
-        player2Icon = p2IconRID;
     }
 
     public void addProfileImage(String name, Bitmap newImage) {

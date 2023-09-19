@@ -3,14 +3,11 @@ package com.example.tictactoe;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class FragmentSettings extends Fragment {
@@ -26,10 +23,6 @@ public class FragmentSettings extends Fragment {
     Button winCondition4;
     Button winCondition5;
 
-    //Character selection - logos.
-    TextView p1_logo;
-    TextView p2_logo;
-    ImageButton swapLogo;
 
     //************************************
 
@@ -91,11 +84,6 @@ public class FragmentSettings extends Fragment {
             winCondition4.setBackgroundResource(R.color.paled_blue);
             winCondition5.setBackgroundResource(R.color.button_blue);
         }
-
-        //Character selection - logos.
-        p1_logo = rootView.findViewById(R.id.p1_logo);
-        p2_logo = rootView.findViewById(R.id.p2_logo);
-        swapLogo = rootView.findViewById(R.id.swap_button);
 
         // ******************************************************* //
 
@@ -208,42 +196,6 @@ public class FragmentSettings extends Fragment {
                 winCondition3.setBackgroundResource(R.color.paled_blue);
                 winCondition4.setBackgroundResource(R.color.paled_blue);
                 winCondition5.setBackgroundResource(R.color.button_blue);
-            }
-        });
-
-        //Logic for swap button.
-        swapLogo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Swap current logo for each player.
-
-                //Get colour and character for P1 logo.
-                String logo_check = p1_logo.getText().toString();
-
-                if(logo_check.equals("X")) {
-                    p1_logo.setText("O");
-                    p1_logo.setBackgroundResource(R.color.light_green);
-
-                    p2_logo.setText("X");
-                    p2_logo.setBackgroundResource(R.color.light_red);
-
-//                    dataStore.getPlayer1().setPlayerCharacter('O');
-//                    dataStore.getPlayer2().setPlayerCharacter('X');
-                    dataStore.setPlayer1Icon(R.drawable.nought);
-                    dataStore.setPlayer2Icon(R.drawable.cross);
-                }
-                else if(logo_check.equals("O")) {
-                    p1_logo.setText("X");
-                    p1_logo.setBackgroundResource(R.color.light_red);
-
-                    p2_logo.setText("O");
-                    p2_logo.setBackgroundResource(R.color.light_green);
-
-//                    dataStore.getPlayer1().setPlayerCharacter('X');
-//                    dataStore.getPlayer2().setPlayerCharacter('O');
-                    dataStore.setPlayer1Icon(R.drawable.cross);
-                    dataStore.setPlayer2Icon(R.drawable.nought);
-                }
             }
         });
 

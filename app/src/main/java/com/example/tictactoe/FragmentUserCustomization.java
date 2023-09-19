@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +16,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
-public class FragmentUserCustomization extends Fragment {
+import java.util.ArrayList;
+
+public class FragmentUserCustomization extends Fragment implements ImageIconAdapter.OnIconClickListener {
 
     //Declaring all actionable elements.
     //Profile Name.
@@ -39,6 +42,16 @@ public class FragmentUserCustomization extends Fragment {
 
     //Profile picture name.
     private String profilePicName = "";
+
+    //Array of Icon ID's for recyclerview
+    ArrayList<Integer> imageIconIDs;
+
+    //Selected game icon ID
+    int iconID;
+    //mutator method for iconID
+    private void setIconId(int iconID){
+        this.iconID = iconID;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
@@ -98,6 +111,37 @@ public class FragmentUserCustomization extends Fragment {
                 profile8Image,
                 profile9Image
         };
+
+        //Add image icons to array list for recycler view
+        imageIconIDs = new ArrayList<>();
+        imageIconIDs.add(R.drawable.add);
+        imageIconIDs.add(R.drawable.block);
+        imageIconIDs.add(R.drawable.bolt);
+        imageIconIDs.add(R.drawable.check_box_outline_blank);
+        imageIconIDs.add(R.drawable.cross);
+        imageIconIDs.add(R.drawable.done);
+        imageIconIDs.add(R.drawable.nought);
+        imageIconIDs.add(R.drawable.favorite);
+        imageIconIDs.add(R.drawable.star);
+        imageIconIDs.add(R.drawable.view_timeline);
+
+
+        RecyclerView rv = rootView.findViewById(R.id.iconRecyclerView);
+        LinearLayoutManager llm = new LinearLayoutManager(this.getContext());
+
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            llm.setOrientation(RecyclerView.HORIZONTAL);
+        }
+        rv.setLayoutManager(llm);
+
+        ImageIconAdapter adapter = new ImageIconAdapter(imageIconIDs);
+        adapter.setOnIconClickListener(new ImageIconAdapter.OnIconClickListener() {
+            @Override
+            public void onIconClickListener(Integer iconID) {
+                setIconId(iconID);
+            }
+        });
+        rv.setAdapter(adapter);
 
         // Saved Instance.
         //Update if saved state exists
@@ -240,6 +284,7 @@ public class FragmentUserCustomization extends Fragment {
                         dataStore.setUserCustomization_profileID(i);
                         dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setName(profileName.getText().toString());
                         dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setAvatar(profilePicName);
+                        dataStore.getPlayerList().get(dataStore.getUserCustomization_profileID()).setPlayerIconID(iconID);
                     }
                     i++;
                 }
@@ -252,8 +297,10 @@ public class FragmentUserCustomization extends Fragment {
                         toast.show();
                     }
                     else {
+                        Player newPlayer = new Player(profileName.getText().toString(), profilePicName);
+                        newPlayer.setPlayerIconID(iconID);
                         dataStore.addProfile(
-                                new Player(profileName.getText().toString(), profilePicName)
+                                newPlayer
                         );
                         dataStore.setUserCustomization_profileID(dataStore.getPlayerList().size() - 1);
                     }
@@ -269,11 +316,18 @@ public class FragmentUserCustomization extends Fragment {
                     }
                 }
 
-                Toast toast = Toast.makeText(getContext(),
-                        "Saved", Toast.LENGTH_SHORT);
-                toast.show();
+                //Check if newly updated/posted player's icon matches the other players
+                if(dataStore.getPlayer1().getPlayerIconID()==dataStore.getPlayer2().getPlayerIconID()){
+                    Toast toast = Toast.makeText(getContext(), "Selected Icon is the same as other player. Please select another.", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                else{
+                    Toast toast = Toast.makeText(getContext(),
+                            "Saved", Toast.LENGTH_SHORT);
+                    toast.show();
 
-                dataStore.setCurrentFrag(1);
+                    dataStore.setCurrentFrag(1);
+                }
             }
         });
 
@@ -291,5 +345,11 @@ public class FragmentUserCustomization extends Fragment {
         super.onSaveInstanceState(outState);
         outState.putString("name", profileName.getText().toString());
         outState.putString("profile_pic", profilePicName); // Save selected profile pic.
+        outState.putInt("iconID", iconID); //Save selected Icon
+    }
+
+    @Override
+    public void onIconClickListener(Integer iconID) {
+        this.iconID = iconID;
     }
 }
