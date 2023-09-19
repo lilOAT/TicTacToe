@@ -151,6 +151,8 @@ public class FragmentUserCustomization extends Fragment {
             }
         });
 
+        //TODO TESTING COMMIT
+
         //Logic for Profile Avatar Buttons.
         profile1Image.setOnClickListener(new View.OnClickListener() {
             @Override
