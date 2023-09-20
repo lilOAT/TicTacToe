@@ -27,6 +27,7 @@ public class MainActivityData  extends ViewModel {
         currentFrag = new MutableLiveData<>();
         currentFrag.setValue(-1);
         ai = new Player("AI", "basic");
+        ai.setPlayerIconID(R.drawable.android);
         playerList = new ArrayList<>();
         Player guest1 = new Player("Guest 1", "basic");
         Player guest2 = new Player("Guest 2", "basic");
