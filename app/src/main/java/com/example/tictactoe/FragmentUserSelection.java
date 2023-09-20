@@ -20,7 +20,6 @@ public class FragmentUserSelection extends Fragment {
     TextView p2_name;
     ImageButton p1_button;
     ImageButton p2_button;
-    Button editButton;
     Button playButton;
 
     @Override
@@ -47,7 +46,6 @@ public class FragmentUserSelection extends Fragment {
         p1_button = rootView.findViewById(R.id.profile1);
         p2_button = rootView.findViewById(R.id.profile2);
         //Action Bar
-        editButton = rootView.findViewById(R.id.edit_button);
         playButton = rootView.findViewById(R.id.play_button);
 
         //Checks whether we are vsing an AI.
