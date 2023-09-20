@@ -1,15 +1,5 @@
 package com.example.tictactoe;
 
-import android.graphics.drawable.Drawable;
-
-import androidx.lifecycle.MutableLiveData;
-
-/*
-    - I think MutableLiveData is used, otherwise each instance won't be communicated between fragments??
-    - Player() constructor
-        Will Player instance be created when the "Play" button is created?
-        If so then initiate with name and avatar
- */
 public class Player {
     private String name;
     private String avatar;

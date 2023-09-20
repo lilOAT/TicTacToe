@@ -1,20 +1,16 @@
 package com.example.tictactoe;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class FragmentUserCustomization extends Fragment {
@@ -150,8 +146,6 @@ public class FragmentUserCustomization extends Fragment {
                 }
             }
         });
-
-        //TODO TESTING COMMIT
 
         //Logic for Profile Avatar Buttons.
         profile1Image.setOnClickListener(new View.OnClickListener() {

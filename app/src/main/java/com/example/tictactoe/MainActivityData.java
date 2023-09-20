@@ -1,10 +1,8 @@
 package com.example.tictactoe;
 
 import android.graphics.Bitmap;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -13,13 +11,13 @@ public class MainActivityData  extends ViewModel {
     private int size; //Size of the board
     private boolean vsAI; //True if versing AI
     private int winCondition; //Number in a row needed to win the game
-    private int player1Icon, player2Icon;
+    private int player1Icon, player2Icon; //Players icon to be used in game board
     public MutableLiveData<Integer> currentFrag; //Represents current fragment displayed
-    public ArrayList<Player> playerList;
-    private Hashtable<String, Bitmap> imagesTable;
-    private int userSelection_profileToEdit;
-    private int userCustomization_profileID;
-    private Player player1, player2, prevPlayer2, ai;
+    public ArrayList<Player> playerList; //List of all saved players
+    private Hashtable<String, Bitmap> imagesTable; //Table containing all images
+    private int userSelection_profileToEdit; //Stores which profile is currently selected
+    private int userCustomization_profileID; //Stores which profile is currently selected
+    private Player player1, player2, prevPlayer2, ai; //Storage for current players. PrevPlayer2 is used to reload player after playing against AI
 
     public MainActivityData(){
         size = 3;

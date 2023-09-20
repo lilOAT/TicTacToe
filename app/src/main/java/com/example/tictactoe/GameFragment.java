@@ -4,13 +4,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +18,6 @@ import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -34,9 +31,7 @@ public class GameFragment extends Fragment {
     private ArrayList<Button> lastButtonTouched;
     private int p1IconID, p2IconID;
     private char[][] gameArray;
-
     private Player player1, player2;
-
     private TextView player1Name, player2Name;
     private int timer_in_seconds;
     private MutableLiveData<Integer> turnsTaken;

@@ -1,14 +1,10 @@
 package com.example.tictactoe;
 
-
-
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
@@ -18,11 +14,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-
 public class MainActivity extends AppCompatActivity {
 
+    // All fragments to be used // with corresponding value represented in MainActivityData.currentFrag
     FragmentMenu menuFragment = new FragmentMenu(); // 0
     FragmentUserSelection userSelectionFragment = new FragmentUserSelection(); // 1
     GameFragment gameFragment = new GameFragment(); // 2
@@ -61,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         mainActivityDataViewModel.addProfileImage("tennisball", tennisball);
         mainActivityDataViewModel.addProfileImage("volleyball", volleyball);
 
-        //Loads menu fragment
+        //Loads menu fragment on launch
         if(mainActivityDataViewModel.getCurrentFrag() == -1) {
             mainActivityDataViewModel.setCurrentFrag(0);
         }
