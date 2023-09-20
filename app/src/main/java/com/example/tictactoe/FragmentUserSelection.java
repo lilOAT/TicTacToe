@@ -4,14 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +20,6 @@ public class FragmentUserSelection extends Fragment {
     TextView p2_name;
     ImageButton p1_button;
     ImageButton p2_button;
-    Button editButton;
     Button playButton;
 
     @Override
@@ -33,11 +29,7 @@ public class FragmentUserSelection extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        int screenOrientation = getResources().getConfiguration().orientation;
-
         View rootView;
-
 
         rootView = inflater.inflate(R.layout.fragment_user_selection, container,
                 false);
@@ -47,18 +39,28 @@ public class FragmentUserSelection extends Fragment {
                 get(MainActivityData.class);
 
         //Linking to XML file.
-
         //Player Usernames
         p1_name = rootView.findViewById(R.id.profile1_name);
         p2_name = rootView.findViewById(R.id.profile2_name);
-
         //Player Avatars
         p1_button = rootView.findViewById(R.id.profile1);
         p2_button = rootView.findViewById(R.id.profile2);
-
         //Action Bar
-        editButton = rootView.findViewById(R.id.edit_button);
         playButton = rootView.findViewById(R.id.play_button);
+
+        //Checks whether we are vsing an AI.
+        if(dataStore.getVsAI()) {
+            if(dataStore.getPlayer2() != dataStore.getPlayerAI()) {
+                dataStore.setPrevPlayer2();
+            }
+            dataStore.setPlayer2(dataStore.getPlayerAI());
+            p2_name.setEnabled(false);
+            p2_button.setEnabled(false);
+        } else {
+            if(dataStore.getPlayer2() == dataStore.getPlayerAI()) {
+                dataStore.setPlayer2(dataStore.getPrevPlayer2());
+            }
+        }
 
         // Saved Instance.
         //Update if saved state exists
@@ -71,17 +73,11 @@ public class FragmentUserSelection extends Fragment {
         }
         // **********************************************
 
+
         dataStore.currentFrag.observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer currentFrag) {
                 if(currentFrag == 1) {
-                    //Checks whether we are vsing an AI.
-                    if(dataStore.getVsAI()) {
-                        p2_name.setText("AI");
-                        p2_name.setEnabled(false);
-                        p2_button.setEnabled(false);
-                    }
-
                     //Reset profile to edit.
                     dataStore.setUserSelection_profileToEdit(0);
 

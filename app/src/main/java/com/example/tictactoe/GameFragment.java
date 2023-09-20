@@ -4,13 +4,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +18,6 @@ import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -34,9 +31,7 @@ public class GameFragment extends Fragment {
     private ArrayList<Button> lastButtonTouched;
     private int p1IconID, p2IconID;
     private char[][] gameArray;
-
     private Player player1, player2;
-
     private TextView player1Name, player2Name;
     private int timer_in_seconds;
     private MutableLiveData<Integer> turnsTaken;
@@ -70,10 +65,10 @@ public class GameFragment extends Fragment {
         size = mainActivityDataViewModel.getSize();
         winCondition = mainActivityDataViewModel.getWinCondition();
         vsAI = mainActivityDataViewModel.getVsAI();
-        p1IconID = mainActivityDataViewModel.getPlayer1Icon();
-        p2IconID = mainActivityDataViewModel.getPlayer2Icon();
         player1 = mainActivityDataViewModel.getPlayer1();
         player2 = mainActivityDataViewModel.getPlayer2();
+        p1IconID = player1.getPlayerIconID();
+        p2IconID = player2.getPlayerIconID();
 
         //Find and adjust xml placeholders
         player1Name = rootView.findViewById(R.id.player1);
@@ -103,6 +98,9 @@ public class GameFragment extends Fragment {
 
             timer_in_seconds = savedInstanceState.getInt("timeSec");
             timerRunning = savedInstanceState.getBoolean("timeRun");
+            if(!timerRunning){
+                pauseButton.setImageResource(R.drawable.play);
+            }
 
             turnsTaken.setValue(savedInstanceState.getInt("turnsTakenInt"));
         }

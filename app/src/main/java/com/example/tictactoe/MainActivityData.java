@@ -13,23 +13,21 @@ public class MainActivityData  extends ViewModel {
     private int size; //Size of the board
     private boolean vsAI; //True if versing AI
     private int winCondition; //Number in a row needed to win the game
-    private int player1Icon, player2Icon;
     public MutableLiveData<Integer> currentFrag; //Represents current fragment displayed
     public ArrayList<Player> playerList;
     private Hashtable<String, Bitmap> imagesTable;
     private int userSelection_profileToEdit;
     private int userCustomization_profileID;
-    private Player player1, player2, ai;
+    private Player player1, player2, prevPlayer2, ai;
 
     public MainActivityData(){
         size = 3;
         vsAI = true;
         winCondition = 3;
-        player1Icon = R.drawable.cross;
-        player2Icon = R.drawable.nought;
         currentFrag = new MutableLiveData<>();
         currentFrag.setValue(-1);
         ai = new Player("AI", "basic");
+        ai.setPlayerIconID(R.drawable.android);
         playerList = new ArrayList<>();
         Player guest1 = new Player("Guest 1", "basic");
         Player guest2 = new Player("Guest 2", "basic");
@@ -37,6 +35,7 @@ public class MainActivityData  extends ViewModel {
         playerList.add(guest2);
         player1 = guest1;
         player2 = guest2;
+        prevPlayer2 = player2;
 
 
         //Set Default Values
@@ -60,11 +59,15 @@ public class MainActivityData  extends ViewModel {
     public int getWinCondition(){
         return winCondition;
     }
-    public int getPlayer1Icon(){return player1Icon;}
-    public int getPlayer2Icon(){return player2Icon;}
-
     public Player getPlayer1(){return player1;}
     public Player getPlayer2(){return player2;}
+    public Player getPlayerAI() {return ai;}
+    public Player getPrevPlayer2() {return prevPlayer2;}
+    public void setPlayer1(Player player){player1 = player;}
+    public void setPlayer2(Player player){player2 = player;}
+    public void setPrevPlayer2() {
+        prevPlayer2 = player2;
+    }
 
     public Hashtable<String, Bitmap> getImagesList() {
         return imagesTable;
@@ -81,19 +84,12 @@ public class MainActivityData  extends ViewModel {
     }
     public void setVsAI(boolean pAI){
         vsAI = pAI;
-        if(pAI) {
-            setPlayer2(ai);
-        }
+//        if(pAI) {
+//            setPlayer2(ai);
+//        }
     }
     public void setWinCondition(int pCondition){
         winCondition = pCondition;
-    }
-
-    public void setPlayer1Icon(int p1IconRID) {
-        player1Icon = p1IconRID;
-    }
-    public void setPlayer2Icon(int p2IconRID) {
-        player2Icon = p2IconRID;
     }
 
     public void addProfileImage(String name, Bitmap newImage) {
@@ -114,9 +110,6 @@ public class MainActivityData  extends ViewModel {
     public void addProfile(Player player) {
         playerList.add(player);
     }
-
-    public void setPlayer1(Player player){player1 = player;}
-    public void setPlayer2(Player player){player2 = player;}
 
     public int getCurrentFrag() {return currentFrag.getValue();}
 
