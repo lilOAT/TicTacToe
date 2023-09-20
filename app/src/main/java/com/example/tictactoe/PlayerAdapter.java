@@ -1,18 +1,12 @@
 package com.example.tictactoe;
 
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Hashtable;
 
 public class PlayerAdapter extends RecyclerView.Adapter<PlayerVH> {
@@ -47,5 +41,4 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerVH> {
     public int getItemCount() {
         return data.size();
     }
-
 }
