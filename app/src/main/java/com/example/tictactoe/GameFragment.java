@@ -98,6 +98,9 @@ public class GameFragment extends Fragment {
 
             timer_in_seconds = savedInstanceState.getInt("timeSec");
             timerRunning = savedInstanceState.getBoolean("timeRun");
+            if(!timerRunning){
+                pauseButton.setImageResource(R.drawable.play);
+            }
 
             turnsTaken.setValue(savedInstanceState.getInt("turnsTakenInt"));
         }
